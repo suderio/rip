@@ -105,7 +105,7 @@ localhost().post(&quot;/test&quot;).respond(withFile(&quot;File not found&quot;)
 </pre></div></div>
 </div>
 <div class="section">
-<h3><a name="Criar_uma_classe_extendendo_SparkApplication"></a>Criar uma classe extendendo SparkApplication</h3>
+<h3><a name="Criar_uma_classe_extendendo_RipWebApp"></a>Criar uma classe extendendo RipWebApp</h3>
 
 <div>
 <div>
@@ -114,9 +114,9 @@ localhost().post(&quot;/test&quot;).respond(withFile(&quot;File not found&quot;)
 import static net.technearts.rip.RipServer.localhost;
 import static net.technearts.rip.RipServer.withFile;
 
-import net.technearts.rip.RipWebFilter;
+import net.technearts.rip.RipWebApp;
 
-public class RestMock extends RipWebFilter {
+public class RestMock extends RipWebApp {
 
     @Override
     public void setup() {
