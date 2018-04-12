@@ -124,7 +124,7 @@
 <a class="jxr_linenumber" name="L116" href="#L116">116</a> <em class="jxr_javadoccomment">     */</em>
 <a class="jxr_linenumber" name="L117" href="#L117">117</a>     <strong class="jxr_keyword">public</strong> <a href="../../../net/technearts/rip/RipResponseBuilder.html">RipResponseBuilder</a> containsAll(<strong class="jxr_keyword">final</strong> String... contents) {
 <a class="jxr_linenumber" name="L118" href="#L118">118</a>         Predicate&lt;String&gt; newCondition = body -&gt; Arrays.asList(contents).stream()
-<a class="jxr_linenumber" name="L119" href="#L119">119</a>                 .allMatch(content -&gt; body.contains(content));
+<a class="jxr_linenumber" name="L119" href="#L119">119</a>                 .allMatch(body::contains);
 <a class="jxr_linenumber" name="L120" href="#L120">120</a>         updateConditions(newCondition);
 <a class="jxr_linenumber" name="L121" href="#L121">121</a>         <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">this</strong>;
 <a class="jxr_linenumber" name="L122" href="#L122">122</a>     }
@@ -138,7 +138,7 @@
 <a class="jxr_linenumber" name="L130" href="#L130">130</a> <em class="jxr_javadoccomment">     */</em>
 <a class="jxr_linenumber" name="L131" href="#L131">131</a>     <strong class="jxr_keyword">public</strong> <a href="../../../net/technearts/rip/RipResponseBuilder.html">RipResponseBuilder</a> containsAny(<strong class="jxr_keyword">final</strong> String... contents) {
 <a class="jxr_linenumber" name="L132" href="#L132">132</a>         Predicate&lt;String&gt; newCondition = body -&gt; Arrays.asList(contents).stream()
-<a class="jxr_linenumber" name="L133" href="#L133">133</a>                 .anyMatch(content -&gt; body.contains(content));
+<a class="jxr_linenumber" name="L133" href="#L133">133</a>                 .anyMatch(body::contains);
 <a class="jxr_linenumber" name="L134" href="#L134">134</a>         updateConditions(newCondition);
 <a class="jxr_linenumber" name="L135" href="#L135">135</a>         <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">this</strong>;
 <a class="jxr_linenumber" name="L136" href="#L136">136</a>     }
