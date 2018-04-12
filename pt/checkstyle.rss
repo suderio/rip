@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!--
+Licensed to the Apache Software Foundation (ASF) under one
+or more contributor license agreements.  See the NOTICE file
+distributed with this work for additional information
+regarding copyright ownership.  The ASF licenses this file
+to you under the Apache License, Version 2.0 (the
+"License"); you may not use this file except in compliance
+with the License.  You may obtain a copy of the License at
+
+  http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing,
+software distributed under the License is distributed on an
+"AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+KIND, either express or implied.  See the License for the
+specific language governing permissions and limitations
+under the License.
+-->
+<rss version="0.91">
+  <channel>
+    <title>rip - Checkstyle report</title>
+    <link>https://suderio.github.io/rip</link>
+    <description>rip - Checkstyle report</description>
+    <language>en-us</language>
+    <copyright>&#169;2018 Technearts</copyright>
+    <item>
+      <title>File: 8,
+             Errors: 273,
+             Warnings: 0,
+             Infos: 0
+      </title>
+            <link>https://suderio.github.io/rip/checkstyle.html</link>
+      <description>
+        <p>Click <a href="https://suderio.github.io/rip/checkstyle.html">here</a> for the full Checkstyle report.</p>
+
+        <table summary="Files" boder="1">
+          <thead>
+            <tr>
+              <th>Files</th>
+              <th style="width:30px;"><abbr title="Info">I</abbr></th>
+              <th style="width:30px;"><abbr title="Warning">W</abbr></th>
+              <th style="width:30px;"><abbr title="Error">E</abbr></th>
+            </tr>
+          </thead>
+          <tbody>
+                          <tr>
+                <td>
+                  <a href="https://suderio.github.io/rip/checkstyle.html#net.technearts.rip.RipResponseBuilder.java">net/technearts/rip/RipResponseBuilder.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  87
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://suderio.github.io/rip/checkstyle.html#net.technearts.rip.RipRoute.java">net/technearts/rip/RipRoute.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  89
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://suderio.github.io/rip/checkstyle.html#net.technearts.rip.RipWebFilter.java">net/technearts/rip/RipWebFilter.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  1
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://suderio.github.io/rip/checkstyle.html#net.technearts.rip.CLI.java">net/technearts/rip/CLI.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  13
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://suderio.github.io/rip/checkstyle.html#net.technearts.rip.RipServer.java">net/technearts/rip/RipServer.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  33
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://suderio.github.io/rip/checkstyle.html#net.technearts.rip.HttpRequestParser.java">net/technearts/rip/HttpRequestParser.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  38
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://suderio.github.io/rip/checkstyle.html#net.technearts.rip.RipWebApp.java">net/technearts/rip/RipWebApp.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  9
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://suderio.github.io/rip/checkstyle.html#net.technearts.rip.HttpFormatException.java">net/technearts/rip/HttpFormatException.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  3
+                </td>
+              </tr>
+                      </tbody>
+        </table>
+        
+      </description>
+    </item>
+  </channel>
+</rss>
+
