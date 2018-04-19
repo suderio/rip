@@ -1,0 +1,18 @@
+<project>
+  <publishDate position="right"/>
+  <version position="right"/>
+  <custom>
+    <fluidoSkin>
+      <sourceLineNumbersEnabled>true</sourceLineNumbersEnabled>
+    </fluidoSkin>
+  </custom>
+  <body>
+    <links>
+      <item name="Technearts" href="http://www.technearts.net"/>
+    </links>
+    <menu name="Overview">
+      <item name="Read Me!" href="README.html" />
+    </menu>
+    <menu ref="reports" />
+  </body>
+</project>
