@@ -1,9 +1,9 @@
 package net.technearts.rip;
 
+import static spark.Spark.stop;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import static spark.Spark.stop;
 
 import spark.servlet.SparkApplication;
 
@@ -19,13 +19,13 @@ public abstract class RipWebApp implements SparkApplication {
         logger.warn("#####################################################");
         try {
             setup();
-        } catch (Exception e) {
+        } catch (final Exception e) {
             logger.warn("#####################################################");
             logger.warn("RipWebApp não iniciou corretamente");
             logger.warn("Erro: {}", e.getMessage());
             logger.warn("#####################################################");
             stop();
-            this.destroy();
+            destroy();
         }
         logger.warn("#####################################################");
         logger.warn("###                                               ###");

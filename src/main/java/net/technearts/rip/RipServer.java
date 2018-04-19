@@ -1,5 +1,7 @@
 package net.technearts.rip;
 
+import static spark.Service.ignite;
+
 import java.net.URISyntaxException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -9,15 +11,11 @@ import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import static spark.Service.ignite;
-
 import spark.Service;
 
 /**
- * Servidor Rip rodando em um Jetty, para criação de serviços rest
- * (ou qualquer requisição http) a serem usados para mocks de serviços
- * reais. Os serviços respondem com base apenas no conteúdo do body da
- * requisição.
+ * Servidor Rip rodando em um Jetty, para criação de serviços rest (ou qualquer requisição http) a serem usados para
+ * mocks de serviços reais. Os serviços respondem com base apenas no conteúdo do body da requisição.
  */
 public class RipServer {
     private static final Logger logger = LoggerFactory.getLogger(RipServer.class);
@@ -25,7 +23,7 @@ public class RipServer {
 
     /**
      * Cria um RipServer na porta padrão (7777)
-     * 
+     *
      * @return Um RipRoute para criação das rotas
      */
     public static RipRoute localhost() {
@@ -34,25 +32,25 @@ public class RipServer {
 
     /**
      * Cria um RipServer na porta <code>port</code>
-     * 
+     *
      * @param port
      *            a porta do servidor
      * @return Um RipRoute para criação das rotas
      */
-    public static RipRoute localhost(int port) {
+    public static RipRoute localhost(final int port) {
         return localhost(port, "/");
     }
 
     /**
      * Cria um RipServer na porta <code>port</code>
-     * 
+     *
      * @param port
      *            a porta do servidor
      * @param location
      *            o local dos arquivos
      * @return Um RipRoute para criação das rotas
      */
-    public static RipRoute localhost(int port, String location) {
+    public static RipRoute localhost(final int port, final String location) {
         if (!instance.containsKey(port)) {
             logger.debug("Criando servidor local na porta {}", port);
             instance.put(port, new RipServer(port, location));
@@ -61,51 +59,54 @@ public class RipServer {
     }
 
     /**
-     * Transforma um caminho de arquivo informado em um objeto <code>Path</code>
-     * 
-     * @param fileName
-     *            o caminho/nome do arquivo, com raiz em src/main/resources
-     * @return Um <code>Path</code> para o arquivo
+     * Para o servidor na porta <code>port</code>
+     *
+     * @param port
+     *            a porta do servidor
      */
-    public static Path withFile(String fileName) {
-        try {
-            return Paths.get(RipServer.class.getResource(fileName).toURI());
-        } catch (URISyntaxException e) {
-            return null;
+    public static void stop(final int port) {
+        if (!instance.containsKey(port)) {
+            instance.get(port).service.stop();
         }
     }
 
     /**
-     * Para o servidor na porta <code>port</code>
-     * 
-     * @param port
-     *            a porta do servidor
+     * Transforma um caminho de arquivo informado em um objeto <code>Path</code>
+     *
+     * @param fileName
+     *            o caminho/nome do arquivo, com raiz em src/main/resources
+     * @return Um <code>Path</code> para o arquivo
      */
-    public static void stop(int port) {
-        if (!instance.containsKey(port)) {
-            instance.get(port).service.stop();
+    public static Path withFile(final String fileName) {
+        try {
+            return Paths.get(RipServer.class.getResource(fileName).toURI());
+        } catch (final URISyntaxException e) {
+            return null;
         }
     }
 
     private final int port;
     final Service service;
 
-    private RipServer(int port, String location) {
+    private RipServer(final int port, final String location) {
         this.port = port;
-        this.service = ignite();
-        this.service.port(port);
-        this.service.staticFiles.location(location);
+        service = ignite();
+        service.port(port);
+        service.staticFiles.location(location);
     }
 
     @Override
-    public boolean equals(Object obj) {
-        if (this == obj)
+    public boolean equals(final Object obj) {
+        if (this == obj) {
             return true;
-        if (obj == null)
+        }
+        if (obj == null) {
             return false;
-        if (getClass() != obj.getClass())
+        }
+        if (getClass() != obj.getClass()) {
             return false;
-        RipServer other = (RipServer) obj;
+        }
+        final RipServer other = (RipServer) obj;
         return port == other.port;
     }
 

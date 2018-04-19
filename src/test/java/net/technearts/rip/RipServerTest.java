@@ -1,20 +1,19 @@
 package net.technearts.rip;
 
-import java.util.stream.IntStream;
-
-import org.apache.http.HttpStatus;
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
-
 import static io.restassured.RestAssured.given;
 import static io.restassured.RestAssured.when;
 import static net.technearts.rip.RipServer.localhost;
 import static net.technearts.rip.RipServer.stop;
 import static net.technearts.rip.RipServer.withFile;
+import static org.apache.http.HttpStatus.SC_FORBIDDEN;
+import static org.apache.http.HttpStatus.SC_OK;
 import static org.hamcrest.CoreMatchers.containsString;
+
+import java.util.stream.IntStream;
+
+import org.junit.AfterClass;
+import org.junit.BeforeClass;
+import org.junit.Test;
 
 import io.restassured.RestAssured;
 
@@ -28,8 +27,8 @@ public class RipServerTest {
         localhost(8888).put("/test").containsAll("123", "456").respond("123456");
         localhost(8888).put("/test").containsAny("789", "987").respond("789987");
         localhost(8888).put("/test").respond("Ok");
-        localhost(8888).delete("/test").contains("xpto").or().contains("abcd").respond("Ok", HttpStatus.SC_OK);
-        localhost(8888).delete("/test").respond("Not Ok", HttpStatus.SC_FORBIDDEN);
+        localhost(8888).delete("/test").contains("xpto").or().contains("abcd").respond("Ok", SC_OK);
+        localhost(8888).delete("/test").respond("Not Ok", SC_FORBIDDEN);
     }
 
     @AfterClass
@@ -58,16 +57,16 @@ public class RipServerTest {
 
     @Test
     public void testDelete() {
-            given().body("something abcd something...").when().delete("/test").then().statusCode(HttpStatus.SC_OK);
-            given().body("something xpto something...").when().delete("/test").then().statusCode(HttpStatus.SC_OK);
-            given().body("something abcd xpto something...").when().delete("/test").then().statusCode(HttpStatus.SC_OK);
-            when().delete("/test").then().statusCode(HttpStatus.SC_FORBIDDEN);
+            given().body("something abcd something...").when().delete("/test").then().statusCode(SC_OK);
+            given().body("something xpto something...").when().delete("/test").then().statusCode(SC_OK);
+            given().body("something abcd xpto something...").when().delete("/test").then().statusCode(SC_OK);
+            when().delete("/test").then().statusCode(SC_FORBIDDEN);
     }
     
     @Test
     public void testDeterministic() {
         IntStream.rangeClosed(1, 1000).boxed().parallel().forEach(i -> {
-            given().body("something abcd xpto something...").when().delete("/test").then().statusCode(HttpStatus.SC_OK);
+            given().body("something abcd xpto something...").when().delete("/test").then().statusCode(SC_OK);
             given().body("something 987 something 789...").when().put("/test").then().content(containsString("789987"));
             given().body("teste1").when().post("/test").then().content(containsString("Ok"));
             when().get("/test").then().content(containsString("Ok"));

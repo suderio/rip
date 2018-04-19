@@ -1,5 +1,10 @@
 package net.technearts.rip;
 
+import static net.technearts.rip.OP.AND;
+import static net.technearts.rip.OP.OR;
+import static org.eclipse.jetty.http.HttpStatus.NOT_FOUND_404;
+import static org.eclipse.jetty.http.HttpStatus.OK_200;
+
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -15,7 +20,6 @@ import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 
-import org.eclipse.jetty.http.HttpStatus;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.xml.sax.SAXException;
@@ -23,9 +27,6 @@ import org.xml.sax.helpers.DefaultHandler;
 
 import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.core.JsonParser;
-
-import static net.technearts.rip.OP.AND;
-import static net.technearts.rip.OP.OR;
 
 import lombok.Data;
 import spark.Route;
@@ -39,7 +40,7 @@ class RipResponse {
     private String body;
     private int status;
 
-    public RipResponse(String body, int status) {
+    public RipResponse(final String body, final int status) {
         this.body = body;
         this.status = status;
     }
@@ -56,7 +57,7 @@ public class RipResponseBuilder {
     private Predicate<String> condition;
     private OP op = AND;
 
-    RipResponseBuilder(RipRoute route) {
+    RipResponseBuilder(final RipRoute route) {
         logger.info("Criando RipResponseBuilder para requisição {} {}", route.getMethod(), route.getPath());
         this.route = route;
         if (!conditions.containsKey(route)) {
@@ -64,8 +65,8 @@ public class RipResponseBuilder {
         }
         if (!routes.containsKey(route)) {
             routes.put(route, (req, res) -> {
-                Optional<Map.Entry<Predicate<String>, RipResponse>> optional = conditions.get(route).entrySet().stream()
-                        .filter(entry -> entry.getKey().test(req.body())).findFirst();
+                final Optional<Map.Entry<Predicate<String>, RipResponse>> optional = conditions.get(route).entrySet()
+                        .stream().filter(entry -> entry.getKey().test(req.body())).findFirst();
                 RipResponse response;
                 String result;
                 if (optional.isPresent()) {
@@ -74,7 +75,7 @@ public class RipResponseBuilder {
                     res.status(response.getStatus());
                     result = response.getBody();
                 } else {
-                    res.status(HttpStatus.NOT_FOUND_404);
+                    res.status(NOT_FOUND_404);
                     logger.debug("Resposta para {} {} não encontrada", route.getMethod(), route.getPath());
                     result = "";
                 }
@@ -86,62 +87,59 @@ public class RipResponseBuilder {
 
     /**
      * Operador lógico E
-     * 
+     *
      * @return this
      */
     public RipResponseBuilder and() {
-        this.op = AND;
+        op = AND;
         return this;
     }
 
     /**
      * Verifica se o body da requisição http contém determinada sequência
-     * 
+     *
      * @param content
      *            o conteúdo a ser checado no body
      * @return this
      */
     public RipResponseBuilder contains(final String content) {
-        Predicate<String> newCondition = body -> body.contains(content);
+        final Predicate<String> newCondition = body -> body.contains(content);
         updateConditions(newCondition);
         return this;
     }
 
     /**
      * Verifica se o body da requisição http contém todas as sequências informadas
-     * 
+     *
      * @param contents
      *            os conteúdos a serem checados no body
      * @return this
      */
     public RipResponseBuilder containsAll(final String... contents) {
-        Predicate<String> newCondition = body -> Arrays.asList(contents).stream()
-                .allMatch(body::contains);
+        final Predicate<String> newCondition = body -> Arrays.asList(contents).stream().allMatch(body::contains);
         updateConditions(newCondition);
         return this;
     }
 
     /**
      * Verifica se o body da requisição http contém alguma das sequências informadas
-     * 
+     *
      * @param contents
      *            os conteúdos a serem checados no body
      * @return this
      */
     public RipResponseBuilder containsAny(final String... contents) {
-        Predicate<String> newCondition = body -> Arrays.asList(contents).stream()
-                .anyMatch(body::contains);
+        final Predicate<String> newCondition = body -> Arrays.asList(contents).stream().anyMatch(body::contains);
         updateConditions(newCondition);
         return this;
     }
 
-    private String contentType(String body) {
+    private String contentType(final String body) {
         String result = "text/html;charset=utf-8";
         if (isValidJSON(body)) {
             result = "application/json";
         } else if (isValidXML(body)) {
-            if (body.contains("soap:Envelope") && body.contains("soap:Body")
-                    && body.contains("soap:Header")) {
+            if (body.contains("soap:Envelope") && body.contains("soap:Body") && body.contains("soap:Header")) {
                 result = "application/soap+xml";
             } else {
                 result = "application/xml";
@@ -196,7 +194,7 @@ public class RipResponseBuilder {
                 parser.nextToken();
             }
             valid = true;
-        } catch (IOException e) {
+        } catch (final IOException e) {
             valid = false;
         }
         return valid;
@@ -205,7 +203,7 @@ public class RipResponseBuilder {
     private boolean isValidXML(final String xml) {
         boolean valid = false;
         try (InputStream stream = new ByteArrayInputStream(xml.getBytes("UTF-8"))) {
-            SAXParser saxParser = SAXParserFactory.newInstance().newSAXParser();
+            final SAXParser saxParser = SAXParserFactory.newInstance().newSAXParser();
             saxParser.parse(stream, new DefaultHandler());
             valid = true;
         } catch (SAXException | ParserConfigurationException | IOException e) {
@@ -216,76 +214,75 @@ public class RipResponseBuilder {
 
     /**
      * Operador lógico OU
-     * 
+     *
      * @return this
      */
     public RipResponseBuilder or() {
-        this.op = OR;
+        op = OR;
         return this;
     }
 
     /**
-     * Cria uma resposta com o conteúdo do arquivo informado.
-     * Essa é uma operação terminal.
-     * 
+     * Cria uma resposta com o conteúdo do arquivo informado. Essa é uma operação terminal.
+     *
      * @param withFile
      *            o caminho relativo para o arquivo, com raiz em src/main/resources
      */
-    public void respond(Path withFile) {
-        respond(withFile, HttpStatus.OK_200);
+    public void respond(final Path withFile) {
+        respond(withFile, OK_200);
     }
 
     /**
-     * Cria uma resposta com o conteúdo do arquivo informado, retornando o <code>status</code> http.
-     * Essa é uma operação terminal.
-     * 
+     * Cria uma resposta com o conteúdo do arquivo informado, retornando o <code>status</code> http. Essa é uma operação
+     * terminal.
+     *
      * @param withFile
      *            o caminho relativo para o arquivo, com raiz em src/main/resources
      * @param status
      *            o status de retorno
      */
-    public void respond(Path withFile, int status) {
+    public void respond(final Path withFile, final int status) {
         try {
             respond(new String(Files.readAllBytes(withFile)), status);
-        } catch (IOException e) {
-            respond("Arquivo não encontrado.", HttpStatus.NOT_FOUND_404);
+        } catch (final IOException e) {
+            respond("Arquivo não encontrado.", NOT_FOUND_404);
         }
     }
 
     /**
-     * Cria uma resposta com o conteúdo do arquivo informado, retornando o <code>status</code> http.
-     * Essa é uma operação terminal.
-     * 
+     * Cria uma resposta com o conteúdo do arquivo informado, retornando o <code>status</code> http. Essa é uma operação
+     * terminal.
+     *
      * @param response
      *            o conteúdo do corpo da mensagem de retorno
      */
-    public void respond(String response) {
-        respond(response, HttpStatus.OK_200);
+    public void respond(final String response) {
+        respond(response, OK_200);
     }
 
     /**
-     * Cria uma resposta com o conteúdo do arquivo informado, retornando o <code>status</code> http.
-     * Essa é uma operação terminal.
-     * 
+     * Cria uma resposta com o conteúdo do arquivo informado, retornando o <code>status</code> http. Essa é uma operação
+     * terminal.
+     *
      * @param response
      *            o conteúdo do corpo da mensagem de retorno
      * @param status
      *            o status de retorno
      */
-    public void respond(String response, int status) {
+    public void respond(final String response, final int status) {
         if (condition == null) {
             condition = s -> true;
         }
-        RipResponse res = new RipResponse(response, status);
+        final RipResponse res = new RipResponse(response, status);
         conditions.get(route).put(condition, res);
         createMethod();
     }
 
-    private void updateConditions(Predicate<String> newCondition) {
+    private void updateConditions(final Predicate<String> newCondition) {
         if (condition == null) {
             condition = newCondition;
         } else {
-            switch (this.op) {
+            switch (op) {
             case OR:
                 condition = condition.or(newCondition);
                 break;
