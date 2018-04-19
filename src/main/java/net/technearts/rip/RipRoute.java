@@ -1,5 +1,6 @@
 package net.technearts.rip;
 
+import static java.util.Objects.hash;
 import static spark.route.HttpMethod.connect;
 import static spark.route.HttpMethod.delete;
 import static spark.route.HttpMethod.get;
@@ -10,18 +11,28 @@ import static spark.route.HttpMethod.post;
 import static spark.route.HttpMethod.put;
 import static spark.route.HttpMethod.trace;
 
+import java.util.Objects;
+
+import com.google.common.collect.ComparisonChain;
+
 import spark.route.HttpMethod;
 
 /**
  * Uma rota (Verbo http + Caminho) associado a um servidor Rip
  */
-public class RipRoute {
+public class RipRoute implements Comparable<RipRoute> {
     private final RipServer ripServer;
     private HttpMethod method;
     private String path;
 
     RipRoute(final RipServer ripServer) {
         this.ripServer = ripServer;
+    }
+
+    @Override
+    public int compareTo(final RipRoute that) {
+        return ComparisonChain.start().compare(ripServer, that.ripServer).compare(method, that.method)
+                .compare(path, that.path).result();
     }
 
     /**
@@ -53,35 +64,13 @@ public class RipRoute {
     }
 
     @Override
-    public boolean equals(final Object obj) {
-        if (this == obj) {
-            return true;
+    public boolean equals(final Object object) {
+        if (object instanceof RipRoute) {
+            final RipRoute that = (RipRoute) object;
+            return Objects.equals(ripServer, that.ripServer) && Objects.equals(method, that.method)
+                    && Objects.equals(path, that.path);
         }
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        final RipRoute other = (RipRoute) obj;
-        if (method != other.method) {
-            return false;
-        }
-        if (path == null) {
-            if (other.path != null) {
-                return false;
-            }
-        } else if (!path.equals(other.path)) {
-            return false;
-        }
-        if (ripServer == null) {
-            if (other.ripServer != null) {
-                return false;
-            }
-        } else if (!ripServer.equals(other.ripServer)) {
-            return false;
-        }
-        return true;
+        return false;
     }
 
     /**
@@ -109,12 +98,7 @@ public class RipRoute {
 
     @Override
     public int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + (method == null ? 0 : method.hashCode());
-        result = prime * result + (path == null ? 0 : path.hashCode());
-        result = prime * result + (ripServer == null ? 0 : ripServer.hashCode());
-        return result;
+        return hash(ripServer, method, path);
     }
 
     /**
@@ -187,4 +171,5 @@ public class RipRoute {
     public RipResponseBuilder trace(final String path) {
         return create(path, trace);
     }
+
 }

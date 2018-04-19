@@ -37,32 +37,13 @@ public class RipServerTest {
     }
 
     @Test
-    public void testGet() {
-            when().get("/test").then().content(containsString("Ok"));
-    }
-
-    @Test
-    public void testPost() {
-            when().get("/test").then().content(containsString("Ok"));
-            given().body("teste1").when().post("/test").then().content(containsString("Ok"));
-            given().body("teste2 something xpto").when().post("/test").then().content(containsString("KO"));
-    }
-
-    @Test
-    public void testPut() {
-            given().body("something 123 something 456...").when().put("/test").then().content(containsString("123456"));
-            given().body("something 987 something 789...").when().put("/test").then().content(containsString("789987"));
-            when().put("/test").then().content(containsString("Ok"));
-    }
-
-    @Test
     public void testDelete() {
-            given().body("something abcd something...").when().delete("/test").then().statusCode(SC_OK);
-            given().body("something xpto something...").when().delete("/test").then().statusCode(SC_OK);
-            given().body("something abcd xpto something...").when().delete("/test").then().statusCode(SC_OK);
-            when().delete("/test").then().statusCode(SC_FORBIDDEN);
+        given().body("something abcd something...").when().delete("/test").then().statusCode(SC_OK);
+        given().body("something xpto something...").when().delete("/test").then().statusCode(SC_OK);
+        given().body("something abcd xpto something...").when().delete("/test").then().statusCode(SC_OK);
+        when().delete("/test").then().statusCode(SC_FORBIDDEN);
     }
-    
+
     @Test
     public void testDeterministic() {
         IntStream.rangeClosed(1, 1000).boxed().parallel().forEach(i -> {
@@ -72,5 +53,24 @@ public class RipServerTest {
             when().get("/test").then().content(containsString("Ok"));
         });
     }
-    
+
+    @Test
+    public void testGet() {
+        when().get("/test").then().content(containsString("Ok"));
+    }
+
+    @Test
+    public void testPost() {
+        when().get("/test").then().content(containsString("Ok"));
+        given().body("teste1").when().post("/test").then().content(containsString("Ok"));
+        given().body("teste2 something xpto").when().post("/test").then().content(containsString("KO"));
+    }
+
+    @Test
+    public void testPut() {
+        given().body("something 123 something 456...").when().put("/test").then().content(containsString("123456"));
+        given().body("something 987 something 789...").when().put("/test").then().content(containsString("789987"));
+        when().put("/test").then().content(containsString("Ok"));
+    }
+
 }

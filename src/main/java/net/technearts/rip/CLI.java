@@ -30,6 +30,6 @@ public class CLI {
         final CommandLine line = commandLine(args);
         final String workDir = line.getOptionValue("w", "/");
         localhost(7777, workDir);
-        //TODO ler reqs em workDir e processar as chamadas
+        // TODO ler reqs em workDir e processar as chamadas
     }
 }

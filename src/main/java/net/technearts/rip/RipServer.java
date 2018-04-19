@@ -7,9 +7,12 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import com.google.common.collect.ComparisonChain;
 
 import spark.Service;
 
@@ -17,7 +20,7 @@ import spark.Service;
  * Servidor Rip rodando em um Jetty, para criação de serviços rest (ou qualquer requisição http) a serem usados para
  * mocks de serviços reais. Os serviços respondem com base apenas no conteúdo do body da requisição.
  */
-public class RipServer {
+public class RipServer implements Comparable<RipServer> {
     private static final Logger logger = LoggerFactory.getLogger(RipServer.class);
     private static final Map<Integer, RipServer> instance = new HashMap<>();
 
@@ -96,26 +99,22 @@ public class RipServer {
     }
 
     @Override
-    public boolean equals(final Object obj) {
-        if (this == obj) {
-            return true;
+    public int compareTo(final RipServer that) {
+        return ComparisonChain.start().compare(port, that.port).result();
+    }
+
+    @Override
+    public boolean equals(final Object object) {
+        if (object instanceof RipServer) {
+            final RipServer that = (RipServer) object;
+            return port == that.port;
         }
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        final RipServer other = (RipServer) obj;
-        return port == other.port;
+        return false;
     }
 
     @Override
     public int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + port;
-        return result;
+        return Objects.hashCode(port);
     }
 
     @Override
