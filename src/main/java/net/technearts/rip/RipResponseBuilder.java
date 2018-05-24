@@ -1,10 +1,5 @@
 package net.technearts.rip;
 
-import static net.technearts.rip.OP.AND;
-import static net.technearts.rip.OP.OR;
-import static org.eclipse.jetty.http.HttpStatus.NOT_FOUND_404;
-import static org.eclipse.jetty.http.HttpStatus.OK_200;
-
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -28,7 +23,15 @@ import org.xml.sax.helpers.DefaultHandler;
 import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.core.JsonParser;
 
+import static java.util.Arrays.asList;
+
+import static net.technearts.rip.OP.AND;
+import static net.technearts.rip.OP.OR;
+import static org.eclipse.jetty.http.HttpStatus.NOT_FOUND_404;
+import static org.eclipse.jetty.http.HttpStatus.OK_200;
+
 import lombok.Data;
+import spark.Request;
 import spark.Route;
 
 enum OP {
@@ -50,23 +53,23 @@ class RipResponse {
  * Um construtor de respostas com base no conteúdo do body da requisição http.
  */
 public class RipResponseBuilder {
-    private static final Map<RipRoute, Map<Predicate<String>, RipResponse>> conditions = new LinkedHashMap<>();
+    private static final Map<RipRoute, Map<Predicate<Request>, RipResponse>> conditions = new LinkedHashMap<>();
     private static final Map<RipRoute, Route> routes = new LinkedHashMap<>();
     private static final Logger logger = LoggerFactory.getLogger(RipResponseBuilder.class);
     private RipRoute route;
-    private Predicate<String> condition;
+    private Predicate<Request> condition;
     private OP op = AND;
 
     RipResponseBuilder(final RipRoute route) {
         logger.info("Criando RipResponseBuilder para requisição {} {}", route.getMethod(), route.getPath());
         this.route = route;
         if (!conditions.containsKey(route)) {
-            conditions.put(route, new LinkedHashMap<Predicate<String>, RipResponse>());
+            conditions.put(route, new LinkedHashMap<Predicate<Request>, RipResponse>());
         }
         if (!routes.containsKey(route)) {
             routes.put(route, (req, res) -> {
-                final Optional<Map.Entry<Predicate<String>, RipResponse>> optional = conditions.get(route).entrySet()
-                        .stream().filter(entry -> entry.getKey().test(req.body())).findFirst();
+                final Optional<Map.Entry<Predicate<Request>, RipResponse>> optional = conditions.get(route).entrySet()
+                        .stream().filter(entry -> entry.getKey().test(req)).findFirst();
                 RipResponse response;
                 String result;
                 if (optional.isPresent()) {
@@ -103,7 +106,7 @@ public class RipResponseBuilder {
      * @return this
      */
     public RipResponseBuilder contains(final String content) {
-        final Predicate<String> newCondition = body -> body.contains(content);
+        final Predicate<Request> newCondition = req -> req.body().contains(content);
         updateConditions(newCondition);
         return this;
     }
@@ -116,7 +119,7 @@ public class RipResponseBuilder {
      * @return this
      */
     public RipResponseBuilder containsAll(final String... contents) {
-        final Predicate<String> newCondition = body -> Arrays.asList(contents).stream().allMatch(body::contains);
+        final Predicate<Request> newCondition = req -> Arrays.asList(contents).stream().allMatch(req.body()::contains);
         updateConditions(newCondition);
         return this;
     }
@@ -129,7 +132,7 @@ public class RipResponseBuilder {
      * @return this
      */
     public RipResponseBuilder containsAny(final String... contents) {
-        final Predicate<String> newCondition = body -> Arrays.asList(contents).stream().anyMatch(body::contains);
+        final Predicate<Request> newCondition = req -> Arrays.asList(contents).stream().anyMatch(req.body()::contains);
         updateConditions(newCondition);
         return this;
     }
@@ -211,6 +214,44 @@ public class RipResponseBuilder {
         }
         return valid;
     }
+    
+    /**
+     * Verifica se o body da requisição http contém determinada sequência
+     *
+     * @param content
+     *            o conteúdo a ser checado no body
+     * @return this
+     */
+    public RipResponseBuilder matches(final Predicate<Request> condition) {
+        updateConditions(condition);
+        return this;
+    }
+
+    /**
+     * Verifica se o body da requisição http contém todas as sequências informadas
+     *
+     * @param contents
+     *            os conteúdos a serem checados no body
+     * @return this
+     */
+    public RipResponseBuilder matchesAll(final Predicate<Request>... conditions) {
+        final Predicate<Request> newCondition = asList(conditions).stream().reduce(req -> true, Predicate::and);
+        updateConditions(newCondition);
+        return this;
+    }
+
+    /**
+     * Verifica se o body da requisição http contém alguma das sequências informadas
+     *
+     * @param contents
+     *            os conteúdos a serem checados no body
+     * @return this
+     */
+    public RipResponseBuilder matachesAny(final Predicate<Request>... conditions) {
+        final Predicate<Request> newCondition = asList(conditions).stream().reduce(req -> false, Predicate::or);
+        updateConditions(newCondition);
+        return this;
+    }
 
     /**
      * Operador lógico OU
@@ -278,7 +319,7 @@ public class RipResponseBuilder {
         createMethod();
     }
 
-    private void updateConditions(final Predicate<String> newCondition) {
+    private void updateConditions(final Predicate<Request> newCondition) {
         if (condition == null) {
             condition = newCondition;
         } else {
