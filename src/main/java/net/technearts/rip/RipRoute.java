@@ -155,7 +155,14 @@ public class RipRoute implements Comparable<RipRoute> {
     public RipResponseBuilder put(final String path) {
         return create(path, put);
     }
-
+    
+    /**
+     * Remove todas as configurações de rotas
+     */
+    public void reset() {
+    	this.ripServer.reset();
+    }
+    
     @Override
     public String toString() {
         return String.format("RipRoute %s => %s %s]", ripServer, method, path);

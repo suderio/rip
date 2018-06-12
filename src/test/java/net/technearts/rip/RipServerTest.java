@@ -20,20 +20,20 @@ import io.restassured.RestAssured;
 public class RipServerTest {
     @BeforeClass
     public static void setUpBeforeClass() throws Exception {
-        RestAssured.port = 8888;
-        localhost(8888).get("/test").respond("Ok");
-        localhost(8888).post("/test").contains("teste1").respond(withFile("/teste1.json"));
-        localhost(8888).post("/test").contains("teste2").and().contains("something").respond(withFile("/teste2.json"));
-        localhost(8888).put("/test").containsAll("123", "456").respond("123456");
-        localhost(8888).put("/test").containsAny("789", "987").respond("789987");
-        localhost(8888).put("/test").respond("Ok");
-        localhost(8888).delete("/test").contains("xpto").or().contains("abcd").respond("Ok", SC_OK);
-        localhost(8888).delete("/test").respond("Not Ok", SC_FORBIDDEN);
+        RestAssured.port = 7777;
+        localhost().get("/test").respond("Ok");
+        localhost().post("/test").contains("teste1").respond(withFile("/teste1.json"));
+        localhost().post("/test").contains("teste2").and().contains("something").respond(withFile("/teste2.json"));
+        localhost().put("/test").containsAll("123", "456").respond("123456");
+        localhost().put("/test").containsAny("789", "987").respond("789987");
+        localhost().put("/test").respond("Ok");
+        localhost().delete("/test").contains("xpto").or().contains("abcd").respond("Ok", SC_OK);
+        localhost().delete("/test").respond("Not Ok", SC_FORBIDDEN);
     }
 
     @AfterClass
     public static void tearDownAfterClass() throws Exception {
-        stop(8888);
+        stop(7777);
     }
 
     @Test

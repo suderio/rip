@@ -108,3 +108,7 @@ Obs.: o serviço irá responder na mesma porta e contexto da aplicação!
 ### Acrescentar os arquivos com as respostas ao path. No maven, sob /src/main/resources, por exemplo:
 - /files/test1.json
 - /files/test2.json
+
+## Construção
+
+Obs.: Para abrir no eclipse é preciso instalar o (lombok)|[https://projectlombok.org]
