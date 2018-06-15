@@ -20,7 +20,7 @@ import spark.route.HttpMethod;
 /**
  * Uma rota (Verbo http + Caminho) associado a um servidor Rip
  */
-public class RipRoute implements Comparable<RipRoute> {
+public class RipRoute implements Comparable<RipRoute>, AutoCloseable {
     private final RipServer ripServer;
     private HttpMethod method;
     private String path;
@@ -178,5 +178,10 @@ public class RipRoute implements Comparable<RipRoute> {
     public RipResponseBuilder trace(final String path) {
         return create(path, trace);
     }
+
+	@Override
+	public void close() {
+		//TODO
+	}
 
 }

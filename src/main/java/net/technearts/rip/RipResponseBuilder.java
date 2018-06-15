@@ -234,7 +234,7 @@ public class RipResponseBuilder {
      *            os conteúdos a serem checados no body
      * @return this
      */
-    public RipResponseBuilder matchesAll(final Predicate<Request>... conditions) {
+    public RipResponseBuilder matchesAll(@SuppressWarnings("unchecked") final Predicate<Request>... conditions) {
         final Predicate<Request> newCondition = asList(conditions).stream().reduce(req -> true, Predicate::and);
         updateConditions(newCondition);
         return this;
@@ -247,7 +247,7 @@ public class RipResponseBuilder {
      *            os conteúdos a serem checados no body
      * @return this
      */
-    public RipResponseBuilder matachesAny(final Predicate<Request>... conditions) {
+    public RipResponseBuilder matachesAny(@SuppressWarnings("unchecked") final Predicate<Request>... conditions) {
         final Predicate<Request> newCondition = asList(conditions).stream().reduce(req -> false, Predicate::or);
         updateConditions(newCondition);
         return this;

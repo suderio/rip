@@ -35,6 +35,12 @@ public class RipServerInstancesTest {
 		when().get("/test").then().statusCode(SC_NOT_FOUND);
 	}
 	
+	public void tryResourcesTest() {
+		try (RipRoute server = localhost(6666)){
+			
+		}
+	}
+	
 	//TODO TRATAR CASO DE CHAMADA DO RESET SEM ROTAS
 
 }
