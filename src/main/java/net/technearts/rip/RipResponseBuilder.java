@@ -36,6 +36,7 @@ import spark.ModelAndView;
 import spark.Request;
 import spark.Route;
 import spark.TemplateEngine;
+import spark.TemplateViewRoute;
 import spark.template.freemarker.FreeMarkerEngine;
 
 enum OP {
@@ -81,19 +82,22 @@ public class RipResponseBuilder {
                 final Optional<Map.Entry<Predicate<Request>, RipResponse>> optional = conditions.get(route).entrySet()
                         .stream().filter(entry -> entry.getKey().test(req)).findFirst();
                 RipResponse response;
-                String result;
+                //String result;
                 if (optional.isPresent()) {
                     response = optional.get().getValue();
                     logger.debug("Respondendo com \n{}", response.getBody());
                     res.status(response.getStatus());
-                    result = response.getBody();
+                    if (response.getModelAndView() == null) {
+                    	res.header("Content-Type", contentType(response.getBody()));
+                    	return response.getBody();
+                    } else {
+                    	return response.getModelAndView();
+                    }
                 } else {
                     res.status(NOT_FOUND_404);
                     logger.debug("Resposta para {} {} não encontrada", route.getMethod(), route.getPath());
-                    result = "";
+                    return "";
                 }
-                res.header("Content-Type", contentType(result));
-                return result;
             });
         }
     }
@@ -162,7 +166,6 @@ public class RipResponseBuilder {
     }
 
     private void createMethod() {
-    	final TemplateEngine templateEngine = new FreeMarkerEngine();
         switch (route.getMethod()) {
         case connect:
             route.getRipServer().service.connect(route.getPath(), routes.get(route));
@@ -172,6 +175,46 @@ public class RipResponseBuilder {
             break;
         case get:
             route.getRipServer().service.get(route.getPath(), routes.get(route));
+            break;
+        case head:
+            route.getRipServer().service.head(route.getPath(), routes.get(route));
+            break;
+        case options:
+            route.getRipServer().service.options(route.getPath(), routes.get(route));
+            break;
+        case patch:
+            route.getRipServer().service.patch(route.getPath(), routes.get(route));
+            break;
+        case post:
+            route.getRipServer().service.post(route.getPath(), routes.get(route));
+            break;
+        case put:
+            route.getRipServer().service.put(route.getPath(), routes.get(route));
+            break;
+        case trace:
+            route.getRipServer().service.trace(route.getPath(), routes.get(route));
+            break;
+        case after:
+        case afterafter:
+        case before:
+        case unsupported:
+        default:
+            logger.error("A opção {} não é suportada!", route.getMethod());
+            break;
+        }
+    }
+    
+    private void createTemplateMethod() {
+    	final TemplateEngine templateEngine = new FreeMarkerEngine();
+        switch (route.getMethod()) {
+        case connect:
+            route.getRipServer().service.connect(route.getPath(), routes.get(route));
+            break;
+        case delete:
+            route.getRipServer().service.delete(route.getPath(), routes.get(route));
+            break;
+        case get:
+            route.getRipServer().service.get(route.getPath(), (TemplateViewRoute) routes.get(route), templateEngine);
             break;
         case head:
             route.getRipServer().service.head(route.getPath(), routes.get(route));
@@ -344,14 +387,6 @@ public class RipResponseBuilder {
             }
         }
     }
-
-    public static final String res(String field) {
-    	return "";
-    }
-    
-    public static final String req(String field) {
-    	return "";
-    }
     
 	public void buildResponse(final Path withFile, final int status, @SuppressWarnings("unchecked") Consumer<Map<String, Object>>... consumers) {
 		Map<String, Object> attributes = new HashMap<>();
@@ -363,7 +398,7 @@ public class RipResponseBuilder {
         }
         final RipResponse res = new RipResponse(new ModelAndView(attributes, withFile.toString()), status);
         conditions.get(route).put(condition, res);
-        createMethod();
+        createTemplateMethod();
 		
 	}
 }

@@ -1,6 +1,5 @@
 package net.technearts.rip;
 
-import static net.technearts.rip.RipResponseBuilder.req;
 import static net.technearts.rip.RipServer.localhost;
 import static net.technearts.rip.RipServer.stop;
 import static net.technearts.rip.RipServer.withFile;
@@ -23,7 +22,7 @@ public class RipTemplatesTest {
     }
 	@Test
 	public void testBasicTemplate() {
-		localhost().get("/test").buildResponse(withFile("/test.json.ftl"), res -> res.put("x", req("x")), res -> res.put("y", "0"));
+		localhost().get("/test").buildResponse(withFile("/test.json.ftl"), 200, res -> res.put("x", "xpto"), res -> res.put("y", "0"));
 	}
 
 }
