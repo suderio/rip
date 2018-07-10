@@ -1,14 +1,22 @@
 package net.technearts.rip;
 
+import static java.util.Arrays.asList;
+import static net.technearts.rip.OP.AND;
+import static net.technearts.rip.OP.OR;
+import static org.eclipse.jetty.http.HttpStatus.NOT_FOUND_404;
+import static org.eclipse.jetty.http.HttpStatus.OK_200;
+
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Optional;
+import java.util.function.Consumer;
 import java.util.function.Predicate;
 
 import javax.xml.parsers.ParserConfigurationException;
@@ -23,16 +31,12 @@ import org.xml.sax.helpers.DefaultHandler;
 import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.core.JsonParser;
 
-import static java.util.Arrays.asList;
-
-import static net.technearts.rip.OP.AND;
-import static net.technearts.rip.OP.OR;
-import static org.eclipse.jetty.http.HttpStatus.NOT_FOUND_404;
-import static org.eclipse.jetty.http.HttpStatus.OK_200;
-
 import lombok.Data;
+import spark.ModelAndView;
 import spark.Request;
 import spark.Route;
+import spark.TemplateEngine;
+import spark.template.freemarker.FreeMarkerEngine;
 
 enum OP {
     AND, OR;
@@ -41,12 +45,18 @@ enum OP {
 @Data
 class RipResponse {
     private String body;
+    private ModelAndView modelAndView;
     private int status;
 
     public RipResponse(final String body, final int status) {
         this.body = body;
         this.status = status;
     }
+
+	public RipResponse(ModelAndView modelAndView, int status) {
+		this.modelAndView = modelAndView;
+		this.status = status;
+	}
 }
 
 /**
@@ -152,6 +162,7 @@ public class RipResponseBuilder {
     }
 
     private void createMethod() {
+    	final TemplateEngine templateEngine = new FreeMarkerEngine();
         switch (route.getMethod()) {
         case connect:
             route.getRipServer().service.connect(route.getPath(), routes.get(route));
@@ -247,7 +258,7 @@ public class RipResponseBuilder {
      *            os conteúdos a serem checados no body
      * @return this
      */
-    public RipResponseBuilder matachesAny(@SuppressWarnings("unchecked") final Predicate<Request>... conditions) {
+    public RipResponseBuilder matchesAny(@SuppressWarnings("unchecked") final Predicate<Request>... conditions) {
         final Predicate<Request> newCondition = asList(conditions).stream().reduce(req -> false, Predicate::or);
         updateConditions(newCondition);
         return this;
@@ -333,4 +344,26 @@ public class RipResponseBuilder {
             }
         }
     }
+
+    public static final String res(String field) {
+    	return "";
+    }
+    
+    public static final String req(String field) {
+    	return "";
+    }
+    
+	public void buildResponse(final Path withFile, final int status, @SuppressWarnings("unchecked") Consumer<Map<String, Object>>... consumers) {
+		Map<String, Object> attributes = new HashMap<>();
+		for (Consumer<Map<String, Object>> consumer : consumers) {
+			consumer.accept(attributes);
+		}
+        if (condition == null) {
+            condition = s -> true;
+        }
+        final RipResponse res = new RipResponse(new ModelAndView(attributes, withFile.toString()), status);
+        conditions.get(route).put(condition, res);
+        createMethod();
+		
+	}
 }
