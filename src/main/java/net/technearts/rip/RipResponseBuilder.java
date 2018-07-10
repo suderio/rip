@@ -388,7 +388,7 @@ public class RipResponseBuilder {
         }
     }
     
-	public void buildResponse(final Path withFile, final int status, @SuppressWarnings("unchecked") Consumer<Map<String, Object>>... consumers) {
+	public void buildResponse(final String withFile, final int status, @SuppressWarnings("unchecked") Consumer<Map<String, Object>>... consumers) {
 		Map<String, Object> attributes = new HashMap<>();
 		for (Consumer<Map<String, Object>> consumer : consumers) {
 			consumer.accept(attributes);

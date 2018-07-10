@@ -22,7 +22,7 @@ public class RipTemplatesTest {
     }
 	@Test
 	public void testBasicTemplate() {
-		localhost().get("/test").buildResponse(withFile("/test.json.ftl"), 200, res -> res.put("x", "xpto"), res -> res.put("y", "0"));
+		localhost().get("/test").buildResponse("/test.json.ftl", 200, res -> res.put("x", "xpto"), res -> res.put("y", "0"));
 	}
 
 }
