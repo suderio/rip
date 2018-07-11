@@ -79,7 +79,7 @@ public class RipResponseBuilder {
 		cfg.setTemplateExceptionHandler(TemplateExceptionHandler.RETHROW_HANDLER);
 		cfg.setLogTemplateExceptions(false);
 		try {
-			cfg.setDirectoryForTemplateLoading(new File("./"));
+			cfg.setDirectoryForTemplateLoading(new File("./src/test/resources"));
 			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -242,7 +242,7 @@ public class RipResponseBuilder {
 	}
 
 	private void createTemplateMethod() {
-		// TODO utilizar Configuration para alterar caminho dos templates
+		// TODO utilizar Configuration para alterar caminho dos templates 
 		// TODO usar método render do FreeMarkerEngine em vez de passar como argumento
 		final TemplateEngine templateEngine = new FreeMarkerEngine(cfg);
 		switch (route.getMethod()) {
