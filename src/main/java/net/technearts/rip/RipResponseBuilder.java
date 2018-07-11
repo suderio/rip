@@ -66,6 +66,7 @@ class RipResponse {
 public class RipResponseBuilder {
     private static final Map<RipRoute, Map<Predicate<Request>, RipResponse>> conditions = new LinkedHashMap<>();
     private static final Map<RipRoute, Route> routes = new LinkedHashMap<>();
+    private static final Map<RipRoute, TemplateRoute> templateRoutes = new LinkedHashMap<>();
     private static final Logger logger = LoggerFactory.getLogger(RipResponseBuilder.class);
     private RipRoute route;
     private Predicate<Request> condition;
@@ -82,22 +83,19 @@ public class RipResponseBuilder {
                 final Optional<Map.Entry<Predicate<Request>, RipResponse>> optional = conditions.get(route).entrySet()
                         .stream().filter(entry -> entry.getKey().test(req)).findFirst();
                 RipResponse response;
-                //String result;
+                String result;
                 if (optional.isPresent()) {
                     response = optional.get().getValue();
                     logger.debug("Respondendo com \n{}", response.getBody());
                     res.status(response.getStatus());
-                    if (response.getModelAndView() == null) {
-                    	res.header("Content-Type", contentType(response.getBody()));
-                    	return response.getBody();
-                    } else {
-                    	return response.getModelAndView();
-                    }
+                    result = response.getBody();
                 } else {
                     res.status(NOT_FOUND_404);
                     logger.debug("Resposta para {} {} não encontrada", route.getMethod(), route.getPath());
-                    return "";
+                    result = "";
                 }
+                res.header("Content-Type", contentType(result));
+                return result
             });
         }
     }
@@ -214,7 +212,7 @@ public class RipResponseBuilder {
             route.getRipServer().service.delete(route.getPath(), routes.get(route));
             break;
         case get:
-            route.getRipServer().service.get(route.getPath(), (TemplateViewRoute) routes.get(route), templateEngine);
+            route.getRipServer().service.get(route.getPath(), templateRoutes.get(route), templateEngine);
             break;
         case head:
             route.getRipServer().service.head(route.getPath(), routes.get(route));
