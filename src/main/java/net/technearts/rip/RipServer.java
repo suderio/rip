@@ -9,7 +9,6 @@ import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Optional;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -67,7 +66,7 @@ public class RipServer implements Comparable<RipServer>, AutoCloseable {
 	 * @param port a porta do servidor
 	 */
 	public static void stop(final int port) {
-		if (!instance.containsKey(port)) {
+		if (instance.containsKey(port)) {
 			instance.get(port).service.stop();
 		}
 	}

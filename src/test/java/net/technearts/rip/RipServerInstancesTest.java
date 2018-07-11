@@ -21,6 +21,7 @@ public class RipServerInstancesTest {
     public static void tearDownAfterClass() throws Exception {
         stop(9999);
         stop(8888);
+        stop(6666);
     }
 	@Test
 	public void resetTest() throws InterruptedException {

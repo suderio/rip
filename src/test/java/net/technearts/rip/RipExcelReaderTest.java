@@ -1,7 +1,5 @@
 package net.technearts.rip;
 
-import static org.junit.Assert.fail;
-
 import java.io.IOException;
 import java.io.InputStream;
 
