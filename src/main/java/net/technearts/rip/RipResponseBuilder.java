@@ -7,6 +7,7 @@ import static org.eclipse.jetty.http.HttpStatus.NOT_FOUND_404;
 import static org.eclipse.jetty.http.HttpStatus.OK_200;
 
 import java.io.ByteArrayInputStream;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
@@ -32,6 +33,8 @@ import org.xml.sax.helpers.DefaultHandler;
 import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.core.JsonParser;
 
+import freemarker.template.Configuration;
+import freemarker.template.TemplateExceptionHandler;
 import lombok.Data;
 import spark.ModelAndView;
 import spark.Request;
@@ -70,6 +73,19 @@ public class RipResponseBuilder {
 	private static final Map<RipRoute, Route> routes = new LinkedHashMap<>();
 	private static final Map<RipRoute, TemplateViewRoute> templateRoutes = new LinkedHashMap<>();
 	private static final Logger logger = LoggerFactory.getLogger(RipResponseBuilder.class);
+	private static final Configuration cfg = new Configuration(Configuration.VERSION_2_3_26);
+	static {
+		cfg.setDefaultEncoding("UTF-8");
+		cfg.setTemplateExceptionHandler(TemplateExceptionHandler.RETHROW_HANDLER);
+		cfg.setLogTemplateExceptions(false);
+		try {
+			cfg.setDirectoryForTemplateLoading(new File("./"));
+			
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 	private RipRoute route;
 	private Predicate<Request> condition;
 	private OP op = AND;
@@ -228,7 +244,7 @@ public class RipResponseBuilder {
 	private void createTemplateMethod() {
 		// TODO utilizar Configuration para alterar caminho dos templates
 		// TODO usar método render do FreeMarkerEngine em vez de passar como argumento
-		final TemplateEngine templateEngine = new FreeMarkerEngine();
+		final TemplateEngine templateEngine = new FreeMarkerEngine(cfg);
 		switch (route.getMethod()) {
 		case connect:
 			route.getRipServer().service.connect(route.getPath(), templateRoutes.get(route), templateEngine);
