@@ -15,7 +15,7 @@ public class RipTemplatesTest {
     @BeforeClass
     public static void setUpBeforeClass() throws Exception {
         RestAssured.port = 2222;
-        localhost(2222).get("/test").buildResponse("/test.json.ftl", 200, res -> res.put("x", "xpto"), res -> res.put("y", "0"));
+        localhost(2222).get("/test/:n").buildResponse("test.json.ftl", 200, att -> att.put("x", req -> "xpto"), att -> att.put("y", req -> req.params("n")));
     }
 
     @AfterClass
@@ -24,7 +24,7 @@ public class RipTemplatesTest {
     }
 	@Test
 	public void testBasicTemplate() {
-		when().get("/test").then().content(containsString("xpto")).and().content(containsString("0"));
+		when().get("/test/0").then().content(containsString("xpto")).and().content(containsString("0"));
 	}
 
 }

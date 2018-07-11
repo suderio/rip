@@ -17,6 +17,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Optional;
 import java.util.function.Consumer;
+import java.util.function.Function;
 import java.util.function.Predicate;
 
 import javax.xml.parsers.ParserConfigurationException;
@@ -45,17 +46,18 @@ enum OP {
 
 @Data
 class RipResponse {
-	private String body;
-	private ModelAndView modelAndView;
+	private String content;
+	private Map<String, Function<Request, String>> attributes;
 	private int status;
 
 	public RipResponse(final String body, final int status) {
-		this.body = body;
+		this.content = body;
 		this.status = status;
 	}
 
-	public RipResponse(ModelAndView modelAndView, int status) {
-		this.modelAndView = modelAndView;
+	public RipResponse(Map<String, Function<Request, String>> attributes, String template, int status) {
+		this.attributes = attributes;
+		this.content = template;
 		this.status = status;
 	}
 }
@@ -86,9 +88,9 @@ public class RipResponseBuilder {
 				String result;
 				if (optional.isPresent()) {
 					response = optional.get().getValue();
-					logger.debug("Respondendo com \n{}", response.getBody());
+					logger.debug("Respondendo com \n{}", response.getContent());
 					res.status(response.getStatus());
-					result = response.getBody();
+					result = response.getContent();
 				} else {
 					res.status(NOT_FOUND_404);
 					logger.debug("Resposta para {} {} não encontrada", route.getMethod(), route.getPath());
@@ -106,9 +108,13 @@ public class RipResponseBuilder {
 				ModelAndView result;
 				if (optional.isPresent()) {
 					response = optional.get().getValue();
-					logger.debug("Respondendo com \n{}", response.getBody());
+					logger.debug("Respondendo com \n{}", response.getContent());
 					res.status(response.getStatus());
-					result = response.getModelAndView();
+					Map<String, Object> attributes = new HashMap<>();
+					for (Map.Entry<String, Function<Request, String>> f : response.getAttributes().entrySet()) {
+						attributes.put(f.getKey(), f.getValue().apply(req));
+					}
+					result = new ModelAndView(attributes, response.getContent());
 				} else {
 					res.status(NOT_FOUND_404);
 					logger.debug("Resposta para {} {} não encontrada", route.getMethod(), route.getPath());
@@ -399,32 +405,68 @@ public class RipResponseBuilder {
 		}
 	}
 
+	/**
+	 * Cria uma resposta utilizando um arquivo de template, substituindo as
+	 * variáveis no arquivo pelo resultado de cada aplicação da função.
+	 * 
+	 * O mapa é alterado através de um <code>Consumer</code> para conveniência
+	 * 
+	 * @param template  o arquivo de template
+	 * @param consumers lista de alterações ao mapa de variáveis X funções
+	 */
 	@SafeVarargs
-	public final void buildResponse(final String withFile, Consumer<Map<String, Object>>... consumers) {
-		buildResponse(withFile, OK_200, consumers);
+	public final void buildResponse(final String template,
+			Consumer<Map<String, Function<Request, String>>>... consumers) {
+		buildResponse(template, OK_200, consumers);
 	}
 
-	public final void buildResponse(final String withFile, Map<String, Object> attributes) {
-		buildResponse(withFile, OK_200, attributes);
+	/**
+	 * Cria uma resposta utilizando um arquivo de template, substituindo as
+	 * variáveis no arquivo pelo resultado de cada aplicação da função.
+	 * 
+	 * @param template  o arquivo de template
+	 * @param consumers lista de alterações ao mapa de variáveis X funções
+	 */
+	public final void buildResponse(final String template, Map<String, Function<Request, String>> attributes) {
+		buildResponse(template, OK_200, attributes);
 	}
 
+	/**
+	 * Cria uma resposta utilizando um arquivo de template, substituindo as
+	 * variáveis no arquivo pelo resultado de cada aplicação da função.
+	 * 
+	 * O mapa é alterado através de um <code>Consumer</code> para conveniência
+	 * 
+	 * @param template  o arquivo de template
+	 * @param status    o status de retorno
+	 * @param consumers lista de alterações ao mapa de variáveis X funções
+	 */
 	@SafeVarargs
-	public final void buildResponse(final String withFile, final int status,
-			Consumer<Map<String, Object>>... consumers) {
-		Map<String, Object> attributes = new HashMap<>();
-		for (Consumer<Map<String, Object>> consumer : consumers) {
+	public final void buildResponse(final String template, final int status,
+			Consumer<Map<String, Function<Request, String>>>... consumers) {
+		Map<String, Function<Request, String>> attributes = new HashMap<>();
+		for (Consumer<Map<String, Function<Request, String>>> consumer : consumers) {
 			consumer.accept(attributes);
 		}
-		buildResponse(withFile, status, attributes);
+		buildResponse(template, status, attributes);
 	}
 
-	public final void buildResponse(final String withFile, final int status, Map<String, Object> attributes) {
+	/**
+	 * Cria uma resposta utilizando um arquivo de template, substituindo as
+	 * variáveis no arquivo pelo resultado de cada aplicação da função.
+	 * 
+	 * @param template  o arquivo de template
+	 * @param status    o status de retorno
+	 * @param consumers lista de alterações ao mapa de variáveis X funções
+	 */
+	public final void buildResponse(final String template, final int status,
+			Map<String, Function<Request, String>> attributes) {
 		if (condition == null) {
 			condition = s -> true;
 		}
-		final RipResponse res = new RipResponse(new ModelAndView(attributes, withFile.toString()), status);
+		final RipResponse res = new RipResponse(attributes, template, status);
 		conditions.get(route).put(condition, res);
 		createTemplateMethod();
-
 	}
+
 }
