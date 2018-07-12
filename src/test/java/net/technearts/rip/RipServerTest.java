@@ -33,7 +33,7 @@ public class RipServerTest {
 
     @AfterClass
     public static void tearDownAfterClass() throws Exception {
-        stop(7777);
+        //stop(7777);
     }
 
     @Test

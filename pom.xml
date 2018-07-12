@@ -216,7 +216,7 @@
 						<phase>package</phase>
 						<configuration>
 							<finalName>uber-rip</finalName>
-							<appendAssemblyId>false</appendAssemblyId>
+							<appendAssemblyId>true</appendAssemblyId>
 							<descriptorRefs>
 								<descriptorRef>jar-with-dependencies</descriptorRef>
 							</descriptorRefs>

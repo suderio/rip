@@ -8,6 +8,7 @@ import static org.hamcrest.CoreMatchers.containsString;
 
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import io.restassured.RestAssured;
@@ -17,13 +18,13 @@ public class RipServerInstancesTest {
     public static void setUpBeforeClass() throws Exception {
         RestAssured.port = 9999;
     }
+    
     @AfterClass
     public static void tearDownAfterClass() throws Exception {
         stop(9999);
         stop(8888);
-        stop(6666);
     }
-	@Test
+	@Test @Ignore
 	public void resetTest() throws InterruptedException {
 		localhost(9999).get("/test").respond("Ok");
 		when().get("/test").then().content(containsString("Ok"));

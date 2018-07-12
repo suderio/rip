@@ -10,6 +10,7 @@ import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URISyntaxException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Arrays;
@@ -79,8 +80,13 @@ public class RipResponseBuilder {
 		cfg.setTemplateExceptionHandler(TemplateExceptionHandler.RETHROW_HANDLER);
 		cfg.setLogTemplateExceptions(false);
 		try {
-			cfg.setDirectoryForTemplateLoading(new File("./src/test/resources"));
-			
+			File f;
+			try {
+			  f = new File(RipResponseBuilder.class.getResource("/").toURI());
+			} catch(URISyntaxException e) {
+			  f = new File(RipResponseBuilder.class.getResource("/").getPath());
+			}
+			cfg.setDirectoryForTemplateLoading(f);			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -242,7 +248,6 @@ public class RipResponseBuilder {
 	}
 
 	private void createTemplateMethod() {
-		// TODO utilizar Configuration para alterar caminho dos templates 
 		// TODO usar método render do FreeMarkerEngine em vez de passar como argumento
 		final TemplateEngine templateEngine = new FreeMarkerEngine(cfg);
 		switch (route.getMethod()) {
