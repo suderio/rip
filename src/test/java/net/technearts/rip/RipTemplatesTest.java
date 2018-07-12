@@ -7,7 +7,6 @@ import static org.hamcrest.CoreMatchers.containsString;
 
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import io.restassured.RestAssured;

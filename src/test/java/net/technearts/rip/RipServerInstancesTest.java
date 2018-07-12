@@ -8,7 +8,6 @@ import static org.hamcrest.CoreMatchers.containsString;
 
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import io.restassured.RestAssured;
@@ -24,7 +23,7 @@ public class RipServerInstancesTest {
         stop(9999);
         stop(8888);
     }
-	@Test @Ignore
+	@Test 
 	public void resetTest() throws InterruptedException {
 		localhost(9999).get("/test").respond("Ok");
 		when().get("/test").then().content(containsString("Ok"));
