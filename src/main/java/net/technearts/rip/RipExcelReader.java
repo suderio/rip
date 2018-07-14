@@ -18,55 +18,57 @@ import com.fasterxml.jackson.core.JsonGenerator;
 
 public class RipExcelReader {
 
-	private OutputStream out;
-	private Workbook workbook;
+  public static RipExcelReader setIO(final InputStream in,
+      final OutputStream out) throws IOException {
+    final RipExcelReader result = new RipExcelReader();
+    result.workbook = new XSSFWorkbook(in);
+    result.out = out;
+    return result;
+  }
 
-	public RipExcelReader() {
+  private OutputStream out;
 
-	}
+  private Workbook workbook;
 
-	public static RipExcelReader setIO(InputStream in, OutputStream out) throws IOException {
-		RipExcelReader result = new RipExcelReader();
-		result.workbook = new XSSFWorkbook(in);
-		result.out = out;
-		return result;
-	}
+  public RipExcelReader() {
 
-	public void read() {
-		readSheet(workbook.getSheetAt(0));
-	}
+  }
 
-	public void readSheet(Sheet sheet) {
-		JsonFactory factory = new JsonFactory();
+  public void read() {
+    readSheet(workbook.getSheetAt(0));
+  }
 
-		try (JsonGenerator generator = factory.createGenerator(out)) {
-			generator.writeStartObject();
-			generator.writeArrayFieldStart(sheet.getSheetName());
-			Iterator<Row> i = sheet.rowIterator();
-			Row r;
-			r = i.next();
-			Cell header;
-			List<String> headers = new ArrayList<>();
-			int col = 0;
-			while ((header = r.getCell(col++)) != null) {
-				headers.add(header.getStringCellValue());
-			}
-			while (i.hasNext()) {
-				r = i.next();
-				generator.writeStartObject();
-				col = 0;
-				for (String key : headers) {
-					generator.writeStringField(key, r.getCell(col++).toString());
+  public void readSheet(final Sheet sheet) {
+    final JsonFactory factory = new JsonFactory();
 
-				}
-				generator.writeEndObject();
-			}
-			generator.writeEndArray();
-			generator.writeEndObject();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
+    try (JsonGenerator generator = factory.createGenerator(out)) {
+      generator.writeStartObject();
+      generator.writeArrayFieldStart(sheet.getSheetName());
+      final Iterator<Row> i = sheet.rowIterator();
+      Row r;
+      r = i.next();
+      Cell header;
+      final List<String> headers = new ArrayList<>();
+      int col = 0;
+      while ((header = r.getCell(col++)) != null) {
+        headers.add(header.getStringCellValue());
+      }
+      while (i.hasNext()) {
+        r = i.next();
+        generator.writeStartObject();
+        col = 0;
+        for (final String key : headers) {
+          generator.writeStringField(key, r.getCell(col++).toString());
+
+        }
+        generator.writeEndObject();
+      }
+      generator.writeEndArray();
+      generator.writeEndObject();
+    } catch (final IOException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    }
+  }
 
 }

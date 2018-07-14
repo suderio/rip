@@ -8,19 +8,21 @@ import org.junit.Test;
 
 public class RipExcelReaderTest {
 
-	private InputStream in;
-	@Before
-	public void setup() {
-		in = this.getClass().getResourceAsStream("Teste1.xlsx");
-	}
-	@Test
-	public void test() {
-		try {
-			RipExcelReader.setIO(in, System.out).read();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
+  private InputStream in;
+
+  @Before
+  public void setup() {
+    in = this.getClass().getResourceAsStream("Teste1.xlsx");
+  }
+
+  @Test
+  public void test() {
+    try {
+      RipExcelReader.setIO(in, System.out).read();
+    } catch (final IOException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    }
+  }
 
 }

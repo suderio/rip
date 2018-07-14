@@ -77,17 +77,17 @@
 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
 			<artifactId>jackson-core</artifactId>
-			<version>2.9.5</version>
+			<version>2.9.6</version>
 		</dependency>
 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
 			<artifactId>jackson-databind</artifactId>
-			<version>2.9.5</version>
+			<version>2.9.6</version>
 		</dependency>
 		<dependency>
 			<groupId>com.google.guava</groupId>
 			<artifactId>guava</artifactId>
-			<version>24.1-jre</version>
+			<version>25.1-jre</version>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.poi</groupId>
@@ -102,13 +102,13 @@
 		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
-			<version>1.16.20</version>
+			<version>1.18.0</version>
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>io.rest-assured</groupId>
 			<artifactId>rest-assured</artifactId>
-			<version>3.0.7</version>
+			<version>3.1.0</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
@@ -127,8 +127,36 @@
 					<version>3.1.0</version>
 				</plugin>
 				<plugin>
+					<artifactId>maven-clean-plugin</artifactId>
+					<version>3.1.0</version>
+				</plugin>
+				<plugin>
+					<artifactId>maven-compiler-plugin</artifactId>
+					<version>3.7.0</version>
+				</plugin>
+				<plugin>
+					<artifactId>maven-deploy-plugin</artifactId>
+					<version>2.8.2</version>
+				</plugin>
+				<plugin>
+					<artifactId>maven-install-plugin</artifactId>
+					<version>2.5.2</version>
+				</plugin>
+				<plugin>
+					<artifactId>maven-resources-plugin</artifactId>
+					<version>3.1.0</version>
+				</plugin>
+				<plugin>
+					<artifactId>maven-dependency-plugin</artifactId>
+					<version>3.1.1</version>
+				</plugin>
+				<plugin>
+					<artifactId>maven-surefire-plugin</artifactId>
+					<version>2.22.0</version>
+				</plugin>
+				<plugin>
 					<artifactId>maven-assembly-plugin</artifactId>
-					<version>3.0.0</version>
+					<version>3.1.0</version>
 				</plugin>
 				<plugin>
 					<artifactId>maven-source-plugin</artifactId>
@@ -136,7 +164,7 @@
 				</plugin>
 				<plugin>
 					<artifactId>maven-javadoc-plugin</artifactId>
-					<version>3.0.0</version>
+					<version>3.0.1</version>
 				</plugin>
 				<plugin>
 					<artifactId>maven-gpg-plugin</artifactId>
@@ -152,8 +180,12 @@
 					<version>2.5.3</version>
 				</plugin>
 				<plugin>
+					<artifactId>maven-antrun-plugin</artifactId>
+					<version>1.8</version>
+				</plugin>
+				<plugin>
 					<artifactId>maven-project-info-reports-plugin</artifactId>
-					<version>2.9</version>
+					<version>3.0.0</version>
 				</plugin>
 				<plugin>
 					<artifactId>maven-jxr-plugin</artifactId>
@@ -161,11 +193,11 @@
 				</plugin>
 				<plugin>
 					<artifactId>maven-surefire-report-plugin</artifactId>
-					<version>2.21.0</version>
+					<version>2.22.0</version>
 				</plugin>
 				<plugin>
 					<artifactId>maven-site-plugin</artifactId>
-					<version>3.7</version>
+					<version>3.7.1</version>
 				</plugin>
 				<plugin>
 					<groupId>com.github.github</groupId>
@@ -180,10 +212,20 @@
 				<plugin>
 					<artifactId>maven-checkstyle-plugin</artifactId>
 					<version>3.0.0</version>
+					<configuration>
+						<configLocation>google_checks.xml</configLocation>
+					</configuration>
 				</plugin>
 				<plugin>
 					<artifactId>maven-pmd-plugin</artifactId>
-					<version>3.9.0</version>
+					<version>3.10.0</version>
+					<configuration>
+						<!-- Erro no pmd -->
+						<excludes>
+							<exclude>net/technearts/rip/RipResponse.java</exclude>
+							<exclude>net/technearts/rip/RipResponseBuilder.java</exclude>
+						</excludes>
+					</configuration>
 				</plugin>
 				<plugin>
 					<groupId>org.codehaus.mojo</groupId>
@@ -215,6 +257,7 @@
 						</goals>
 						<phase>package</phase>
 						<configuration>
+							<skipAssembly>true</skipAssembly>
 							<finalName>uber-rip</finalName>
 							<appendAssemblyId>true</appendAssemblyId>
 							<descriptorRefs>
@@ -376,6 +419,21 @@
 									<report>dependency-updates-report</report>
 									<report>plugin-updates-report</report>
 									<report>property-updates-report</report>
+								</reports>
+							</reportSet>
+						</reportSets>
+					</plugin>
+					<plugin>
+						<groupId>org.owasp</groupId>
+						<artifactId>dependency-check-maven</artifactId>
+						<version>3.2.1</version>
+						<configuration>
+							<assemblyAnalyzerEnabled>false</assemblyAnalyzerEnabled>
+						</configuration>
+						<reportSets>
+							<reportSet>
+								<reports>
+									<report>aggregate</report>
 								</reports>
 							</reportSet>
 						</reportSets>

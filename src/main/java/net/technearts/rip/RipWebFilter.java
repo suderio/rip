@@ -14,24 +14,26 @@ import org.slf4j.LoggerFactory;
 import spark.servlet.SparkFilter;
 
 public class RipWebFilter extends SparkFilter {
-	private static final Logger LOG = LoggerFactory.getLogger(RipWebFilter.class);
+  private static final Logger LOG = LoggerFactory.getLogger(RipWebFilter.class);
 
-	@Override
-	public void init(FilterConfig filterConfig) throws ServletException {
-		LOG.info("Rip Filter iniciando");
-		super.init(filterConfig);
-		LOG.info("Rip Filter iniciado");
-	}
+  @Override
+  public void destroy() {
+    LOG.info("Rip Filter finalizando");
+    super.destroy();
+    LOG.info("Rip Filter finalizado");
+  }
 
-	@Override
-	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
-			throws IOException, ServletException {
-		super.doFilter(request, response, chain);
-	}
+  @Override
+  public void doFilter(final ServletRequest request,
+      final ServletResponse response, final FilterChain chain)
+      throws IOException, ServletException {
+    super.doFilter(request, response, chain);
+  }
 
-	@Override
-	public void destroy() {
-		LOG.info("Rip Filter finalizando");
-		super.destroy();
-		LOG.info("Rip Filter finalizado");
-	}}
+  @Override
+  public void init(final FilterConfig filterConfig) throws ServletException {
+    LOG.info("Rip Filter iniciando");
+    super.init(filterConfig);
+    LOG.info("Rip Filter iniciado");
+  }
+}
