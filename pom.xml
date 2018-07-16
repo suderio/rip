@@ -205,9 +205,9 @@
 					<version>0.12</version>
 				</plugin>
 				<plugin>
-					<groupId>org.codehaus.mojo</groupId>
-					<artifactId>cobertura-maven-plugin</artifactId>
-					<version>2.7</version>
+					<groupId>org.openclover</groupId>
+					<artifactId>clover-maven-plugin</artifactId>
+					<version>4.2.0</version>
 				</plugin>
 				<plugin>
 					<artifactId>maven-checkstyle-plugin</artifactId>
@@ -367,6 +367,18 @@
 							</execution>
 						</executions>
 					</plugin>
+					<plugin>
+						<groupId>org.openclover</groupId>
+						<artifactId>clover-maven-plugin</artifactId>
+						<executions>
+							<execution>
+								<phase>pre-site</phase>
+								<goals>
+									<goal>instrument</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
 				</plugins>
 			</build>
 			<reporting>
@@ -387,15 +399,8 @@
 						<artifactId>maven-surefire-report-plugin</artifactId>
 					</plugin>
 					<plugin>
-						<groupId>org.codehaus.mojo</groupId>
-						<artifactId>cobertura-maven-plugin</artifactId>
-						<reportSets>
-							<reportSet>
-								<reports>
-									<report>cobertura</report>
-								</reports>
-							</reportSet>
-						</reportSets>
+						<groupId>org.openclover</groupId>
+						<artifactId>clover-maven-plugin</artifactId>
 					</plugin>
 					<plugin>
 						<artifactId>maven-checkstyle-plugin</artifactId>
