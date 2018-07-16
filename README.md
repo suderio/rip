@@ -115,7 +115,7 @@ Obs.: o serviço irá responder na mesma porta e contexto da aplicação!
 
 ## Construção
 
-Obs.: Para abrir no eclipse é preciso instalar o [lombok]|(https://projectlombok.org)
+Obs.: Para abrir no eclipse é preciso instalar o [lombok](https://projectlombok.org)
 
 ## Documentação
 
