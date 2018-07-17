@@ -1,0 +1,612 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<coverage generated="1531787890114" clover="4.2.0">
+   <project name="rip 0.0.6" timestamp="1531787807709">
+      <metrics coveredelements="242" complexity="151" loc="1178" methods="80" classes="11" statements="348" packages="1" coveredconditionals="23" coveredmethods="42" elements="474" ncloc="791" files="10" conditionals="46" coveredstatements="177"/>
+      <package name="net.technearts.rip">
+         <metrics coveredelements="242" complexity="151" loc="1178" methods="80" classes="11" statements="348" coveredconditionals="23" coveredmethods="42" elements="474" ncloc="791" files="10" conditionals="46" coveredstatements="177"/>
+         <file path="/home/paulo/Repos/rip/src/main/java/net/technearts/rip/CLI.java" name="CLI.java">
+            <metrics coveredelements="0" coveredconditionals="0" complexity="3" loc="37" coveredmethods="0" methods="2" elements="12" classes="1" ncloc="31" statements="10" conditionals="0" coveredstatements="0"/>
+            <class name="CLI">
+               <metrics coveredelements="0" coveredconditionals="0" complexity="3" coveredmethods="0" methods="2" elements="12" statements="10" conditionals="0" coveredstatements="0"/>
+            </class>
+            <line complexity="2" visibility="private" signature="commandLine(String) : CommandLine" num="17" count="0" type="method"/>
+            <line num="19" count="0" type="stmt"/>
+            <line num="20" count="0" type="stmt"/>
+            <line num="21" count="0" type="stmt"/>
+            <line num="23" count="0" type="stmt"/>
+            <line num="24" count="0" type="stmt"/>
+            <line num="26" count="0" type="stmt"/>
+            <line num="27" count="0" type="stmt"/>
+            <line complexity="1" visibility="public" signature="main(String[]) : void" num="31" count="0" type="method"/>
+            <line num="32" count="0" type="stmt"/>
+            <line num="33" count="0" type="stmt"/>
+            <line num="34" count="0" type="stmt"/>
+         </file>
+         <file path="/home/paulo/Repos/rip/src/main/java/net/technearts/rip/HttpFormatException.java" name="HttpFormatException.java">
+            <metrics coveredelements="0" coveredconditionals="0" complexity="1" loc="9" coveredmethods="0" methods="1" elements="2" classes="1" ncloc="7" statements="1" conditionals="0" coveredstatements="0"/>
+            <class name="HttpFormatException">
+               <metrics coveredelements="0" coveredconditionals="0" complexity="1" coveredmethods="0" methods="1" elements="2" statements="1" conditionals="0" coveredstatements="0"/>
+            </class>
+            <line complexity="1" visibility="public" signature="HttpFormatException(String)" num="6" count="0" type="method"/>
+            <line num="7" count="0" type="stmt"/>
+         </file>
+         <file path="/home/paulo/Repos/rip/src/main/java/net/technearts/rip/HttpRequestParser.java" name="HttpRequestParser.java">
+            <metrics coveredelements="0" coveredconditionals="0" complexity="19" loc="124" coveredmethods="0" methods="11" elements="55" classes="1" ncloc="81" statements="34" conditionals="10" coveredstatements="0"/>
+            <class name="HttpRequestParser">
+               <metrics coveredelements="0" coveredconditionals="0" complexity="19" coveredmethods="0" methods="11" elements="55" statements="34" conditionals="10" coveredstatements="0"/>
+            </class>
+            <line complexity="1" visibility="public" signature="HttpRequestParser()" num="20" count="0" type="method"/>
+            <line num="21" count="0" type="stmt"/>
+            <line num="22" count="0" type="stmt"/>
+            <line complexity="2" visibility="private" signature="appendHeaderParameter(String) : void" num="25" count="0" type="method"/>
+            <line num="27" count="0" type="stmt"/>
+            <line num="28" count="0" type="stmt"/>
+            <line falsecount="0" truecount="0" num="28" type="cond"/>
+            <line num="29" count="0" type="stmt"/>
+            <line num="31" count="0" type="stmt"/>
+            <line complexity="1" visibility="private" signature="appendMessageBody(String) : void" num="35" count="0" type="method"/>
+            <line num="36" count="0" type="stmt"/>
+            <line complexity="1" visibility="public" signature="getHeaderParam(String) : String" num="45" count="0" type="method"/>
+            <line num="46" count="0" type="stmt"/>
+            <line complexity="1" visibility="public" signature="getMessageBody() : String" num="55" count="0" type="method"/>
+            <line num="56" count="0" type="stmt"/>
+            <line complexity="2" visibility="public" signature="getMethod() : HttpMethod" num="59" count="0" type="method"/>
+            <line num="60" count="0" type="stmt"/>
+            <line num="62" count="0" type="stmt"/>
+            <line falsecount="0" truecount="0" num="62" type="cond"/>
+            <line num="63" count="0" type="stmt"/>
+            <line num="65" count="0" type="stmt"/>
+            <line complexity="1" visibility="public" signature="getRequestLine() : String" num="74" count="0" type="method"/>
+            <line num="75" count="0" type="stmt"/>
+            <line complexity="2" visibility="public" signature="getUrl() : URL" num="78" count="0" type="method"/>
+            <line num="79" count="0" type="stmt"/>
+            <line num="80" count="0" type="stmt"/>
+            <line num="81" count="0" type="stmt"/>
+            <line num="82" count="0" type="stmt"/>
+            <line num="83" count="0" type="stmt"/>
+            <line num="84" count="0" type="stmt"/>
+            <line num="86" count="0" type="stmt"/>
+            <line complexity="4" visibility="public" signature="parseRequest(BufferedReader) : void" num="90" count="0" type="method"/>
+            <line num="92" count="0" type="stmt"/>
+            <line num="93" count="0" type="stmt"/>
+            <line num="94" count="0" type="stmt"/>
+            <line falsecount="0" truecount="0" num="94" type="cond"/>
+            <line num="95" count="0" type="stmt"/>
+            <line num="96" count="0" type="stmt"/>
+            <line num="98" count="0" type="stmt"/>
+            <line num="99" count="0" type="stmt"/>
+            <line falsecount="0" truecount="0" num="99" type="cond"/>
+            <line num="100" count="0" type="stmt"/>
+            <line num="101" count="0" type="stmt"/>
+            <line complexity="1" visibility="public" signature="parseRequest(String) : void" num="112" count="0" type="method"/>
+            <line num="114" count="0" type="stmt"/>
+            <line complexity="3" visibility="private" signature="setRequestLine(String) : void" num="117" count="0" type="method"/>
+            <line num="119" count="0" type="stmt"/>
+            <line falsecount="0" truecount="0" num="119" type="cond"/>
+            <line num="120" count="0" type="stmt"/>
+            <line num="122" count="0" type="stmt"/>
+         </file>
+         <file path="/home/paulo/Repos/rip/src/main/java/net/technearts/rip/RipExcelReader.java" name="RipExcelReader.java">
+            <metrics coveredelements="33" coveredconditionals="2" complexity="9" loc="74" coveredmethods="4" methods="4" elements="36" classes="1" ncloc="59" statements="28" conditionals="4" coveredstatements="27"/>
+            <class name="RipExcelReader">
+               <metrics coveredelements="33" coveredconditionals="2" complexity="9" coveredmethods="4" methods="4" elements="36" statements="28" conditionals="4" coveredstatements="27"/>
+            </class>
+            <line complexity="1" visibility="public" signature="setIO(InputStream,OutputStream) : RipExcelReader" num="21" count="1" type="method"/>
+            <line num="23" count="1" type="stmt"/>
+            <line num="24" count="1" type="stmt"/>
+            <line num="25" count="1" type="stmt"/>
+            <line num="26" count="1" type="stmt"/>
+            <line complexity="1" visibility="public" signature="RipExcelReader()" num="33" count="1" type="method"/>
+            <line complexity="1" visibility="public" signature="read() : void" num="37" count="1" type="method"/>
+            <line num="38" count="1" type="stmt"/>
+            <line complexity="6" visibility="public" signature="readSheet(Sheet) : void" num="41" count="1" type="method"/>
+            <line num="42" count="1" type="stmt"/>
+            <line num="44" count="1" type="stmt"/>
+            <line num="44" count="1" type="stmt"/>
+            <line num="45" count="1" type="stmt"/>
+            <line num="46" count="1" type="stmt"/>
+            <line num="47" count="1" type="stmt"/>
+            <line num="48" count="1" type="stmt"/>
+            <line num="49" count="1" type="stmt"/>
+            <line num="50" count="1" type="stmt"/>
+            <line num="51" count="1" type="stmt"/>
+            <line num="52" count="1" type="stmt"/>
+            <line num="53" count="1" type="stmt"/>
+            <line falsecount="0" truecount="0" num="53" type="cond"/>
+            <line num="54" count="7" type="stmt"/>
+            <line num="56" count="1" type="stmt"/>
+            <line falsecount="1" truecount="5" num="56" type="cond"/>
+            <line num="57" count="5" type="stmt"/>
+            <line num="58" count="5" type="stmt"/>
+            <line num="59" count="5" type="stmt"/>
+            <line num="60" count="5" type="stmt"/>
+            <line num="61" count="35" type="stmt"/>
+            <line num="64" count="5" type="stmt"/>
+            <line num="66" count="1" type="stmt"/>
+            <line num="67" count="1" type="stmt"/>
+            <line num="70" count="0" type="stmt"/>
+         </file>
+         <file path="/home/paulo/Repos/rip/src/main/java/net/technearts/rip/RipResponse.java" name="RipResponse.java">
+            <metrics coveredelements="7" coveredconditionals="0" complexity="2" loc="26" coveredmethods="2" methods="2" elements="7" classes="1" ncloc="20" statements="5" conditionals="0" coveredstatements="5"/>
+            <class name="RipResponse">
+               <metrics coveredelements="7" coveredconditionals="0" complexity="2" coveredmethods="2" methods="2" elements="7" statements="5" conditionals="0" coveredstatements="5"/>
+            </class>
+            <line complexity="1" visibility="public" signature="RipResponse(Map&lt;String, Function&lt;Request, String&gt;&gt;,String,int)" num="15" count="1" type="method"/>
+            <line num="17" count="1" type="stmt"/>
+            <line num="18" count="1" type="stmt"/>
+            <line num="19" count="1" type="stmt"/>
+            <line complexity="1" visibility="public" signature="RipResponse(String,int)" num="22" count="8" type="method"/>
+            <line num="23" count="8" type="stmt"/>
+            <line num="24" count="8" type="stmt"/>
+         </file>
+         <file path="/home/paulo/Repos/rip/src/main/java/net/technearts/rip/RipResponseBuilder.java" name="RipResponseBuilder.java">
+            <metrics coveredelements="153" coveredconditionals="18" complexity="75" loc="503" coveredmethods="19" methods="24" elements="240" classes="2" ncloc="354" statements="192" conditionals="24" coveredstatements="116"/>
+            <class name="OP">
+               <metrics coveredelements="0" coveredconditionals="0" complexity="0" coveredmethods="0" methods="0" elements="0" statements="0" conditionals="0" coveredstatements="0"/>
+            </class>
+            <class name="RipResponseBuilder">
+               <metrics coveredelements="153" coveredconditionals="18" complexity="75" coveredmethods="19" methods="24" elements="240" statements="192" conditionals="24" coveredstatements="116"/>
+            </class>
+            <line complexity="3" visibility="package" signature="&lt;clinit&gt;, line 61()" num="61" count="1" type="method"/>
+            <line num="62" count="1" type="stmt"/>
+            <line num="63" count="1" type="stmt"/>
+            <line num="64" count="1" type="stmt"/>
+            <line num="65" count="1" type="stmt"/>
+            <line num="66" count="1" type="stmt"/>
+            <line num="67" count="1" type="stmt"/>
+            <line num="68" count="1" type="stmt"/>
+            <line num="70" count="0" type="stmt"/>
+            <line num="72" count="1" type="stmt"/>
+            <line num="75" count="0" type="stmt"/>
+            <line complexity="6" visibility="package" signature="RipResponseBuilder(RipRoute)" num="82" count="9" type="method"/>
+            <line num="83" count="9" type="stmt"/>
+            <line num="85" count="9" type="stmt"/>
+            <line num="86" count="9" type="stmt"/>
+            <line falsecount="4" truecount="5" num="86" type="cond"/>
+            <line num="87" count="5" type="stmt"/>
+            <line num="90" count="9" type="stmt"/>
+            <line falsecount="4" truecount="5" num="90" type="cond"/>
+            <line num="91" count="5" type="stmt"/>
+            <line num="92" count="3875" type="stmt"/>
+            <line num="95" count="3973" type="stmt"/>
+            <line num="96" count="3986" type="stmt"/>
+            <line num="97" count="3998" type="stmt"/>
+            <line falsecount="0" truecount="3941" num="97" type="cond"/>
+            <line num="98" count="3951" type="stmt"/>
+            <line num="99" count="3961" type="stmt"/>
+            <line num="100" count="3944" type="stmt"/>
+            <line num="101" count="3935" type="stmt"/>
+            <line num="103" count="0" type="stmt"/>
+            <line num="104" count="0" type="stmt"/>
+            <line num="106" count="0" type="stmt"/>
+            <line num="108" count="3938" type="stmt"/>
+            <line num="109" count="3947" type="stmt"/>
+            <line num="112" count="9" type="stmt"/>
+            <line falsecount="4" truecount="5" num="112" type="cond"/>
+            <line num="113" count="5" type="stmt"/>
+            <line num="114" count="1" type="stmt"/>
+            <line num="117" count="1" type="stmt"/>
+            <line num="118" count="1" type="stmt"/>
+            <line num="119" count="1" type="stmt"/>
+            <line falsecount="0" truecount="1" num="119" type="cond"/>
+            <line num="120" count="1" type="stmt"/>
+            <line num="121" count="1" type="stmt"/>
+            <line num="122" count="1" type="stmt"/>
+            <line num="123" count="1" type="stmt"/>
+            <line num="124" count="1" type="stmt"/>
+            <line num="126" count="2" type="stmt"/>
+            <line num="128" count="1" type="stmt"/>
+            <line num="130" count="0" type="stmt"/>
+            <line num="131" count="0" type="stmt"/>
+            <line num="133" count="0" type="stmt"/>
+            <line num="136" count="1" type="stmt"/>
+            <line complexity="1" visibility="public" signature="and() : RipResponseBuilder" num="146" count="1" type="method"/>
+            <line num="147" count="1" type="stmt"/>
+            <line num="148" count="1" type="stmt"/>
+            <line complexity="1" visibility="public" signature="buildResponse(String,Consumer&lt;Map&lt;String, Function&lt;Request, String&gt;&gt;&gt;) : void" num="160" count="0" type="method"/>
+            <line num="163" count="0" type="stmt"/>
+            <line complexity="1" visibility="public" signature="buildResponse(String,int,Consumer&lt;Map&lt;String, Function&lt;Request, String&gt;&gt;&gt;) : void" num="176" count="1" type="method"/>
+            <line num="179" count="1" type="stmt"/>
+            <line num="180" count="1" type="stmt"/>
+            <line num="181" count="2" type="stmt"/>
+            <line num="183" count="1" type="stmt"/>
+            <line complexity="2" visibility="public" signature="buildResponse(String,int,Map&lt;String, Function&lt;Request, String&gt;&gt;) : void" num="194" count="1" type="method"/>
+            <line num="196" count="1" type="stmt"/>
+            <line falsecount="0" truecount="1" num="196" type="cond"/>
+            <line num="197" count="1" type="stmt"/>
+            <line num="199" count="1" type="stmt"/>
+            <line num="200" count="1" type="stmt"/>
+            <line num="201" count="1" type="stmt"/>
+            <line complexity="1" visibility="public" signature="buildResponse(String,Map&lt;String, Function&lt;Request, String&gt;&gt;) : void" num="211" count="0" type="method"/>
+            <line num="213" count="0" type="stmt"/>
+            <line complexity="1" visibility="public" signature="contains(String) : RipResponseBuilder" num="222" count="5" type="method"/>
+            <line num="223" count="5" type="stmt"/>
+            <line num="224" count="5" type="stmt"/>
+            <line num="225" count="5" type="stmt"/>
+            <line complexity="1" visibility="public" signature="containsAll(String) : RipResponseBuilder" num="234" count="1" type="method"/>
+            <line num="235" count="1" type="stmt"/>
+            <line num="237" count="1" type="stmt"/>
+            <line num="238" count="1" type="stmt"/>
+            <line complexity="1" visibility="public" signature="containsAny(String) : RipResponseBuilder" num="248" count="1" type="method"/>
+            <line num="249" count="1" type="stmt"/>
+            <line num="251" count="1" type="stmt"/>
+            <line num="252" count="1" type="stmt"/>
+            <line complexity="6" visibility="private" signature="contentType(String) : String" num="255" count="3947" type="method"/>
+            <line num="256" count="3945" type="stmt"/>
+            <line num="257" count="3951" type="stmt"/>
+            <line falsecount="1985" truecount="1983" num="257" type="cond"/>
+            <line num="258" count="1987" type="stmt"/>
+            <line num="259" count="1987" type="stmt"/>
+            <line falsecount="1942" truecount="0" num="259" type="cond"/>
+            <line num="260" count="0" type="stmt"/>
+            <line falsecount="0" truecount="0" num="260" type="cond"/>
+            <line num="262" count="0" type="stmt"/>
+            <line num="264" count="0" type="stmt"/>
+            <line num="267" count="3917" type="stmt"/>
+            <line complexity="14" visibility="private" signature="createMethod() : void" num="270" count="8" type="method"/>
+            <line num="271" count="8" type="stmt"/>
+            <line num="272" count="0" type="stmt"/>
+            <line num="273" count="0" type="stmt"/>
+            <line num="274" count="0" type="stmt"/>
+            <line num="275" count="2" type="stmt"/>
+            <line num="276" count="2" type="stmt"/>
+            <line num="277" count="2" type="stmt"/>
+            <line num="278" count="1" type="stmt"/>
+            <line num="279" count="1" type="stmt"/>
+            <line num="280" count="1" type="stmt"/>
+            <line num="281" count="0" type="stmt"/>
+            <line num="282" count="0" type="stmt"/>
+            <line num="283" count="0" type="stmt"/>
+            <line num="284" count="0" type="stmt"/>
+            <line num="285" count="0" type="stmt"/>
+            <line num="286" count="0" type="stmt"/>
+            <line num="287" count="0" type="stmt"/>
+            <line num="288" count="0" type="stmt"/>
+            <line num="289" count="0" type="stmt"/>
+            <line num="290" count="2" type="stmt"/>
+            <line num="291" count="2" type="stmt"/>
+            <line num="292" count="2" type="stmt"/>
+            <line num="293" count="3" type="stmt"/>
+            <line num="294" count="3" type="stmt"/>
+            <line num="295" count="3" type="stmt"/>
+            <line num="296" count="0" type="stmt"/>
+            <line num="297" count="0" type="stmt"/>
+            <line num="298" count="0" type="stmt"/>
+            <line num="299" count="0" type="stmt"/>
+            <line num="300" count="0" type="stmt"/>
+            <line num="301" count="0" type="stmt"/>
+            <line num="302" count="0" type="stmt"/>
+            <line num="303" count="0" type="stmt"/>
+            <line num="304" count="0" type="stmt"/>
+            <line num="305" count="0" type="stmt"/>
+            <line complexity="14" visibility="private" signature="createTemplateMethod() : void" num="309" count="1" type="method"/>
+            <line num="312" count="1" type="stmt"/>
+            <line num="313" count="1" type="stmt"/>
+            <line num="314" count="0" type="stmt"/>
+            <line num="315" count="0" type="stmt"/>
+            <line num="317" count="0" type="stmt"/>
+            <line num="318" count="0" type="stmt"/>
+            <line num="319" count="0" type="stmt"/>
+            <line num="321" count="0" type="stmt"/>
+            <line num="322" count="1" type="stmt"/>
+            <line num="323" count="1" type="stmt"/>
+            <line num="325" count="1" type="stmt"/>
+            <line num="326" count="0" type="stmt"/>
+            <line num="327" count="0" type="stmt"/>
+            <line num="329" count="0" type="stmt"/>
+            <line num="330" count="0" type="stmt"/>
+            <line num="331" count="0" type="stmt"/>
+            <line num="333" count="0" type="stmt"/>
+            <line num="334" count="0" type="stmt"/>
+            <line num="335" count="0" type="stmt"/>
+            <line num="337" count="0" type="stmt"/>
+            <line num="338" count="0" type="stmt"/>
+            <line num="339" count="0" type="stmt"/>
+            <line num="341" count="0" type="stmt"/>
+            <line num="342" count="0" type="stmt"/>
+            <line num="343" count="0" type="stmt"/>
+            <line num="345" count="0" type="stmt"/>
+            <line num="346" count="0" type="stmt"/>
+            <line num="347" count="0" type="stmt"/>
+            <line num="349" count="0" type="stmt"/>
+            <line num="350" count="0" type="stmt"/>
+            <line num="351" count="0" type="stmt"/>
+            <line num="352" count="0" type="stmt"/>
+            <line num="353" count="0" type="stmt"/>
+            <line num="354" count="0" type="stmt"/>
+            <line num="355" count="0" type="stmt"/>
+            <line num="356" count="0" type="stmt"/>
+            <line complexity="5" visibility="private" signature="isValidJSON(String) : boolean" num="360" count="3952" type="method"/>
+            <line num="361" count="3956" type="stmt"/>
+            <line num="362" count="3925" type="stmt"/>
+            <line num="362" count="3959" type="stmt"/>
+            <line num="363" count="3953" type="stmt"/>
+            <line falsecount="1992" truecount="5932" num="363" type="cond"/>
+            <line num="364" count="5930" type="stmt"/>
+            <line num="366" count="1999" type="stmt"/>
+            <line num="368" count="1984" type="stmt"/>
+            <line num="370" count="3969" type="stmt"/>
+            <line complexity="4" visibility="private" signature="isValidXML(String) : boolean" num="373" count="1966" type="method"/>
+            <line num="374" count="1979" type="stmt"/>
+            <line num="375" count="1983" type="stmt"/>
+            <line num="375" count="1971" type="stmt"/>
+            <line num="376" count="1991" type="stmt"/>
+            <line num="377" count="1963" type="stmt"/>
+            <line num="378" count="0" type="stmt"/>
+            <line num="380" count="1957" type="stmt"/>
+            <line num="382" count="1984" type="stmt"/>
+            <line complexity="1" visibility="public" signature="matches(Predicate&lt;Request&gt;) : RipResponseBuilder" num="391" count="0" type="method"/>
+            <line num="392" count="0" type="stmt"/>
+            <line num="393" count="0" type="stmt"/>
+            <line complexity="1" visibility="public" signature="matchesAll(Predicate&lt;Request&gt;) : RipResponseBuilder" num="402" count="0" type="method"/>
+            <line num="404" count="0" type="stmt"/>
+            <line num="406" count="0" type="stmt"/>
+            <line num="407" count="0" type="stmt"/>
+            <line complexity="1" visibility="public" signature="matchesAny(Predicate&lt;Request&gt;) : RipResponseBuilder" num="417" count="0" type="method"/>
+            <line num="419" count="0" type="stmt"/>
+            <line num="421" count="0" type="stmt"/>
+            <line num="422" count="0" type="stmt"/>
+            <line complexity="1" visibility="public" signature="or() : RipResponseBuilder" num="430" count="1" type="method"/>
+            <line num="431" count="1" type="stmt"/>
+            <line num="432" count="1" type="stmt"/>
+            <line complexity="1" visibility="public" signature="respond(Path) : void" num="442" count="2" type="method"/>
+            <line num="443" count="2" type="stmt"/>
+            <line complexity="2" visibility="public" signature="respond(Path,int) : void" num="454" count="2" type="method"/>
+            <line num="455" count="2" type="stmt"/>
+            <line num="456" count="2" type="stmt"/>
+            <line num="458" count="0" type="stmt"/>
+            <line complexity="1" visibility="public" signature="respond(String) : void" num="468" count="4" type="method"/>
+            <line num="469" count="4" type="stmt"/>
+            <line complexity="2" visibility="public" signature="respond(String,int) : void" num="479" count="8" type="method"/>
+            <line num="480" count="8" type="stmt"/>
+            <line falsecount="5" truecount="3" num="480" type="cond"/>
+            <line num="481" count="3" type="stmt"/>
+            <line num="483" count="8" type="stmt"/>
+            <line num="484" count="8" type="stmt"/>
+            <line num="485" count="8" type="stmt"/>
+            <line complexity="4" visibility="private" signature="updateConditions(Predicate&lt;Request&gt;) : void" num="488" count="7" type="method"/>
+            <line num="489" count="7" type="stmt"/>
+            <line falsecount="2" truecount="5" num="489" type="cond"/>
+            <line num="490" count="5" type="stmt"/>
+            <line num="492" count="2" type="stmt"/>
+            <line num="493" count="1" type="stmt"/>
+            <line num="494" count="1" type="stmt"/>
+            <line num="495" count="1" type="stmt"/>
+            <line num="496" count="1" type="stmt"/>
+            <line num="497" count="1" type="stmt"/>
+            <line num="498" count="1" type="stmt"/>
+         </file>
+         <file path="/home/paulo/Repos/rip/src/main/java/net/technearts/rip/RipRoute.java" name="RipRoute.java">
+            <metrics coveredelements="27" coveredconditionals="1" complexity="21" loc="189" coveredmethods="11" methods="20" elements="46" classes="1" ncloc="92" statements="24" conditionals="2" coveredstatements="15"/>
+            <class name="RipRoute">
+               <metrics coveredelements="27" coveredconditionals="1" complexity="21" coveredmethods="11" methods="20" elements="46" statements="24" conditionals="2" coveredstatements="15"/>
+            </class>
+            <line complexity="1" visibility="package" signature="RipRoute(RipServer)" num="28" count="9" type="method"/>
+            <line num="29" count="9" type="stmt"/>
+            <line complexity="1" visibility="public" signature="close() : void" num="32" count="0" type="method"/>
+            <line complexity="1" visibility="public" signature="compareTo(RipRoute) : int" num="37" count="0" type="method"/>
+            <line num="39" count="0" type="stmt"/>
+            <line complexity="1" visibility="public" signature="connect(String) : RipResponseBuilder" num="50" count="0" type="method"/>
+            <line num="51" count="0" type="stmt"/>
+            <line complexity="1" visibility="private" signature="create(String,HttpMethod) : RipResponseBuilder" num="54" count="9" type="method"/>
+            <line num="56" count="9" type="stmt"/>
+            <line num="57" count="9" type="stmt"/>
+            <line num="58" count="9" type="stmt"/>
+            <line complexity="1" visibility="public" signature="delete(String) : RipResponseBuilder" num="68" count="2" type="method"/>
+            <line num="69" count="2" type="stmt"/>
+            <line complexity="2" visibility="public" signature="equals(Object) : boolean" num="72" count="20" type="method"/>
+            <line num="74" count="20" type="stmt"/>
+            <line falsecount="0" truecount="20" num="74" type="cond"/>
+            <line num="75" count="20" type="stmt"/>
+            <line num="76" count="20" type="stmt"/>
+            <line num="80" count="0" type="stmt"/>
+            <line complexity="1" visibility="public" signature="get(String) : RipResponseBuilder" num="90" count="2" type="method"/>
+            <line num="91" count="2" type="stmt"/>
+            <line complexity="1" visibility="package" signature="getMethod() : HttpMethod" num="94" count="18" type="method"/>
+            <line num="95" count="18" type="stmt"/>
+            <line complexity="1" visibility="package" signature="getPath() : String" num="98" count="18" type="method"/>
+            <line num="99" count="18" type="stmt"/>
+            <line complexity="1" visibility="package" signature="getRipServer() : RipServer" num="102" count="9" type="method"/>
+            <line num="103" count="9" type="stmt"/>
+            <line complexity="1" visibility="public" signature="hashCode() : int" num="106" count="3951" type="method"/>
+            <line num="108" count="3936" type="stmt"/>
+            <line complexity="1" visibility="public" signature="head(String) : RipResponseBuilder" num="118" count="0" type="method"/>
+            <line num="119" count="0" type="stmt"/>
+            <line complexity="1" visibility="public" signature="options(String) : RipResponseBuilder" num="129" count="0" type="method"/>
+            <line num="130" count="0" type="stmt"/>
+            <line complexity="1" visibility="public" signature="patch(String) : RipResponseBuilder" num="140" count="0" type="method"/>
+            <line num="141" count="0" type="stmt"/>
+            <line complexity="1" visibility="public" signature="post(String) : RipResponseBuilder" num="151" count="2" type="method"/>
+            <line num="152" count="2" type="stmt"/>
+            <line complexity="1" visibility="public" signature="put(String) : RipResponseBuilder" num="162" count="3" type="method"/>
+            <line num="163" count="3" type="stmt"/>
+            <line complexity="1" visibility="public" signature="reset() : void" num="169" count="0" type="method"/>
+            <line num="170" count="0" type="stmt"/>
+            <line complexity="1" visibility="public" signature="toString() : String" num="173" count="0" type="method"/>
+            <line num="175" count="0" type="stmt"/>
+            <line complexity="1" visibility="public" signature="trace(String) : RipResponseBuilder" num="185" count="0" type="method"/>
+            <line num="186" count="0" type="stmt"/>
+         </file>
+         <file path="/home/paulo/Repos/rip/src/main/java/net/technearts/rip/RipServer.java" name="RipServer.java">
+            <metrics coveredelements="22" coveredconditionals="2" complexity="16" loc="139" coveredmethods="6" methods="12" elements="47" classes="1" ncloc="85" statements="29" conditionals="6" coveredstatements="14"/>
+            <class name="RipServer">
+               <metrics coveredelements="22" coveredconditionals="2" complexity="16" coveredmethods="6" methods="12" elements="47" statements="29" conditionals="6" coveredstatements="14"/>
+            </class>
+            <line complexity="1" visibility="public" signature="localhost() : RipRoute" num="34" count="8" type="method"/>
+            <line num="35" count="8" type="stmt"/>
+            <line complexity="1" visibility="public" signature="localhost(int) : RipRoute" num="44" count="9" type="method"/>
+            <line num="45" count="9" type="stmt"/>
+            <line complexity="2" visibility="public" signature="localhost(int,String) : RipRoute" num="55" count="9" type="method"/>
+            <line num="56" count="9" type="stmt"/>
+            <line falsecount="8" truecount="1" num="56" type="cond"/>
+            <line num="57" count="1" type="stmt"/>
+            <line num="58" count="1" type="stmt"/>
+            <line num="60" count="9" type="stmt"/>
+            <line complexity="2" visibility="public" signature="stop(int) : void" num="68" count="0" type="method"/>
+            <line num="69" count="0" type="stmt"/>
+            <line falsecount="0" truecount="0" num="69" type="cond"/>
+            <line num="70" count="0" type="stmt"/>
+            <line complexity="2" visibility="public" signature="withFile(String) : Path" num="80" count="2" type="method"/>
+            <line num="81" count="2" type="stmt"/>
+            <line num="82" count="2" type="stmt"/>
+            <line num="84" count="0" type="stmt"/>
+            <line complexity="1" visibility="private" signature="RipServer(int,String)" num="92" count="1" type="method"/>
+            <line num="93" count="1" type="stmt"/>
+            <line num="94" count="1" type="stmt"/>
+            <line num="95" count="1" type="stmt"/>
+            <line num="96" count="1" type="stmt"/>
+            <line num="97" count="1" type="stmt"/>
+            <line complexity="1" visibility="public" signature="close() : void" num="100" count="0" type="method"/>
+            <line num="102" count="0" type="stmt"/>
+            <line num="104" count="0" type="stmt"/>
+            <line complexity="1" visibility="public" signature="compareTo(RipServer) : int" num="108" count="0" type="method"/>
+            <line num="110" count="0" type="stmt"/>
+            <line complexity="2" visibility="public" signature="equals(Object) : boolean" num="113" count="0" type="method"/>
+            <line num="115" count="0" type="stmt"/>
+            <line falsecount="0" truecount="0" num="115" type="cond"/>
+            <line num="116" count="0" type="stmt"/>
+            <line num="117" count="0" type="stmt"/>
+            <line num="119" count="0" type="stmt"/>
+            <line complexity="1" visibility="public" signature="hashCode() : int" num="122" count="3950" type="method"/>
+            <line num="124" count="3946" type="stmt"/>
+            <line complexity="1" visibility="package" signature="reset() : void" num="127" count="0" type="method"/>
+            <line num="128" count="0" type="stmt"/>
+            <line num="129" count="0" type="stmt"/>
+            <line num="131" count="0" type="stmt"/>
+            <line num="132" count="0" type="stmt"/>
+            <line complexity="1" visibility="public" signature="toString() : String" num="135" count="0" type="method"/>
+            <line num="137" count="0" type="stmt"/>
+         </file>
+         <file path="/home/paulo/Repos/rip/src/main/java/net/technearts/rip/RipWebApp.java" name="RipWebApp.java">
+            <metrics coveredelements="0" coveredconditionals="0" complexity="2" loc="38" coveredmethods="0" methods="1" elements="19" classes="1" ncloc="31" statements="18" conditionals="0" coveredstatements="0"/>
+            <class name="RipWebApp">
+               <metrics coveredelements="0" coveredconditionals="0" complexity="2" coveredmethods="0" methods="1" elements="19" statements="18" conditionals="0" coveredstatements="0"/>
+            </class>
+            <line complexity="2" visibility="public" signature="init() : void" num="13" count="0" type="method"/>
+            <line num="15" count="0" type="stmt"/>
+            <line num="16" count="0" type="stmt"/>
+            <line num="17" count="0" type="stmt"/>
+            <line num="18" count="0" type="stmt"/>
+            <line num="19" count="0" type="stmt"/>
+            <line num="20" count="0" type="stmt"/>
+            <line num="21" count="0" type="stmt"/>
+            <line num="23" count="0" type="stmt"/>
+            <line num="24" count="0" type="stmt"/>
+            <line num="25" count="0" type="stmt"/>
+            <line num="26" count="0" type="stmt"/>
+            <line num="27" count="0" type="stmt"/>
+            <line num="28" count="0" type="stmt"/>
+            <line num="30" count="0" type="stmt"/>
+            <line num="31" count="0" type="stmt"/>
+            <line num="32" count="0" type="stmt"/>
+            <line num="33" count="0" type="stmt"/>
+            <line num="34" count="0" type="stmt"/>
+         </file>
+         <file path="/home/paulo/Repos/rip/src/main/java/net/technearts/rip/RipWebFilter.java" name="RipWebFilter.java">
+            <metrics coveredelements="0" coveredconditionals="0" complexity="3" loc="39" coveredmethods="0" methods="3" elements="10" classes="1" ncloc="31" statements="7" conditionals="0" coveredstatements="0"/>
+            <class name="RipWebFilter">
+               <metrics coveredelements="0" coveredconditionals="0" complexity="3" coveredmethods="0" methods="3" elements="10" statements="7" conditionals="0" coveredstatements="0"/>
+            </class>
+            <line complexity="1" visibility="public" signature="destroy() : void" num="19" count="0" type="method"/>
+            <line num="21" count="0" type="stmt"/>
+            <line num="22" count="0" type="stmt"/>
+            <line num="23" count="0" type="stmt"/>
+            <line complexity="1" visibility="public" signature="doFilter(ServletRequest,ServletResponse,FilterChain) : void" num="26" count="0" type="method"/>
+            <line num="30" count="0" type="stmt"/>
+            <line complexity="1" visibility="public" signature="init(FilterConfig) : void" num="33" count="0" type="method"/>
+            <line num="35" count="0" type="stmt"/>
+            <line num="36" count="0" type="stmt"/>
+            <line num="37" count="0" type="stmt"/>
+         </file>
+      </package>
+   </project>
+   <testproject name="rip 0.0.6" timestamp="1531787807709">
+      <metrics coveredelements="43" complexity="19" loc="198" methods="16" classes="4" statements="43" packages="1" coveredconditionals="0" coveredmethods="12" elements="59" ncloc="155" files="4" conditionals="0" coveredstatements="31"/>
+      <package name="net.technearts.rip">
+         <metrics coveredelements="43" complexity="19" loc="198" methods="16" classes="4" statements="43" coveredconditionals="0" coveredmethods="12" elements="59" ncloc="155" files="4" conditionals="0" coveredstatements="31"/>
+         <file path="/home/paulo/Repos/rip/src/test/java/net/technearts/rip/RipExcelReaderTest.java" name="RipExcelReaderTest.java">
+            <metrics coveredelements="5" coveredconditionals="0" complexity="3" loc="28" coveredmethods="2" methods="2" elements="6" classes="1" ncloc="20" statements="4" conditionals="0" coveredstatements="3"/>
+            <class name="RipExcelReaderTest">
+               <metrics coveredelements="5" complexity="3" methods="2" testruns="1" statements="4" coveredconditionals="0" coveredmethods="2" elements="6" testfailures="0" testduration="0.668" conditionals="0" coveredstatements="3" testpasses="1"/>
+            </class>
+            <line complexity="1" visibility="public" signature="setup() : void" num="13" count="1" type="method"/>
+            <line num="15" count="1" type="stmt"/>
+            <line complexity="2" visibility="public" signature="test() : void" num="18" testsuccess="true" count="1" testduration="0.668" type="method"/>
+            <line num="20" count="1" type="stmt"/>
+            <line num="21" count="1" type="stmt"/>
+            <line num="24" count="0" type="stmt"/>
+         </file>
+         <file path="/home/paulo/Repos/rip/src/test/java/net/technearts/rip/RipServerInstancesTest.java" name="RipServerInstancesTest.java">
+            <metrics coveredelements="0" coveredconditionals="0" complexity="6" loc="49" coveredmethods="0" methods="4" elements="15" classes="1" ncloc="35" statements="11" conditionals="0" coveredstatements="0"/>
+            <class name="RipServerInstancesTest">
+               <metrics coveredelements="0" coveredconditionals="0" complexity="6" coveredmethods="0" methods="4" elements="15" statements="11" conditionals="0" coveredstatements="0"/>
+            </class>
+            <line complexity="1" visibility="public" signature="setUpBeforeClass() : void" num="16" count="0" type="method"/>
+            <line num="18" count="0" type="stmt"/>
+            <line complexity="1" visibility="public" signature="tearDownAfterClass() : void" num="21" count="0" type="method"/>
+            <line complexity="1" visibility="public" signature="resetTest() : void" num="27" count="0" type="method"/>
+            <line num="30" count="0" type="stmt"/>
+            <line num="31" count="0" type="stmt"/>
+            <line num="32" count="0" type="stmt"/>
+            <line num="33" count="0" type="stmt"/>
+            <line num="35" count="0" type="stmt"/>
+            <line num="36" count="0" type="stmt"/>
+            <line num="37" count="0" type="stmt"/>
+            <line num="38" count="0" type="stmt"/>
+            <line complexity="3" visibility="public" signature="tryResourcesTest() : void" num="41" count="0" type="method"/>
+            <line num="42" count="0" type="stmt"/>
+            <line num="42" count="0" type="stmt"/>
+         </file>
+         <file path="/home/paulo/Repos/rip/src/test/java/net/technearts/rip/RipServerTest.java" name="RipServerTest.java">
+            <metrics coveredelements="32" coveredconditionals="0" complexity="7" loc="88" coveredmethods="7" methods="7" elements="32" classes="1" ncloc="75" statements="25" conditionals="0" coveredstatements="25"/>
+            <class name="RipServerTest">
+               <metrics coveredelements="32" complexity="7" methods="7" testruns="5" statements="25" coveredconditionals="0" coveredmethods="7" elements="32" testfailures="0" testduration="9.767999999999999" conditionals="0" coveredstatements="25" testpasses="5"/>
+            </class>
+            <line complexity="1" visibility="public" signature="setUpBeforeClass() : void" num="20" count="1" type="method"/>
+            <line num="22" count="1" type="stmt"/>
+            <line num="23" count="1" type="stmt"/>
+            <line num="24" count="1" type="stmt"/>
+            <line num="26" count="1" type="stmt"/>
+            <line num="28" count="1" type="stmt"/>
+            <line num="29" count="1" type="stmt"/>
+            <line num="30" count="1" type="stmt"/>
+            <line num="31" count="1" type="stmt"/>
+            <line num="33" count="1" type="stmt"/>
+            <line complexity="1" visibility="public" signature="tearDownAfterClass() : void" num="36" count="1" type="method"/>
+            <line complexity="1" visibility="public" signature="testDelete() : void" num="41" testsuccess="true" count="1" testduration="0.024" type="method"/>
+            <line num="43" count="1" type="stmt"/>
+            <line num="45" count="1" type="stmt"/>
+            <line num="47" count="1" type="stmt"/>
+            <line num="49" count="1" type="stmt"/>
+            <line complexity="1" visibility="public" signature="testDeterministic() : void" num="52" testsuccess="true" count="1" testduration="8.227" type="method"/>
+            <line num="54" count="1" type="stmt"/>
+            <line num="55" count="991" type="stmt"/>
+            <line num="57" count="995" type="stmt"/>
+            <line num="59" count="986" type="stmt"/>
+            <line num="61" count="992" type="stmt"/>
+            <line complexity="1" visibility="public" signature="testGet() : void" num="65" testsuccess="true" count="1" testduration="1.308" type="method"/>
+            <line num="67" count="1" type="stmt"/>
+            <line complexity="1" visibility="public" signature="testPost() : void" num="70" testsuccess="true" count="1" testduration="0.075" type="method"/>
+            <line num="72" count="1" type="stmt"/>
+            <line num="73" count="1" type="stmt"/>
+            <line num="75" count="1" type="stmt"/>
+            <line complexity="1" visibility="public" signature="testPut() : void" num="79" testsuccess="true" count="1" testduration="0.134" type="method"/>
+            <line num="81" count="1" type="stmt"/>
+            <line num="83" count="1" type="stmt"/>
+            <line num="85" count="1" type="stmt"/>
+         </file>
+         <file path="/home/paulo/Repos/rip/src/test/java/net/technearts/rip/RipTemplatesTest.java" name="RipTemplatesTest.java">
+            <metrics coveredelements="6" coveredconditionals="0" complexity="3" loc="33" coveredmethods="3" methods="3" elements="6" classes="1" ncloc="25" statements="3" conditionals="0" coveredstatements="3"/>
+            <class name="RipTemplatesTest">
+               <metrics coveredelements="6" complexity="3" methods="3" testruns="1" statements="3" coveredconditionals="0" coveredmethods="3" elements="6" testfailures="0" testduration="0.257" conditionals="0" coveredstatements="3" testpasses="1"/>
+            </class>
+            <line complexity="1" visibility="public" signature="setUpBeforeClass() : void" num="14" count="1" type="method"/>
+            <line num="16" count="1" type="stmt"/>
+            <line num="17" count="1" type="stmt"/>
+            <line complexity="1" visibility="public" signature="tearDownAfterClass() : void" num="22" count="1" type="method"/>
+            <line complexity="1" visibility="public" signature="testBasicTemplate() : void" num="27" testsuccess="true" count="1" testduration="0.257" type="method"/>
+            <line num="29" count="1" type="stmt"/>
+         </file>
+      </package>
+   </testproject>
+</coverage>

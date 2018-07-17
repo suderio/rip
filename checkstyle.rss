@@ -25,9 +25,9 @@ under the License.
     <language>en-us</language>
     <copyright>&#169;2018 Technearts</copyright>
     <item>
-      <title>File: 8,
-             Errors: 204,
-             Warnings: 0,
+      <title>File: 10,
+             Errors: 0,
+             Warnings: 173,
              Infos: 0
       </title>
             <link>https://suderio.github.io/rip/checkstyle.html</link>
@@ -46,30 +46,30 @@ under the License.
           <tbody>
                           <tr>
                 <td>
-                  <a href="https://suderio.github.io/rip/checkstyle.html#net.technearts.rip.RipRoute.java">net/technearts/rip/RipRoute.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  60
-                </td>
-              </tr>
-                          <tr>
-                <td>
                   <a href="https://suderio.github.io/rip/checkstyle.html#net.technearts.rip.RipResponseBuilder.java">net/technearts/rip/RipResponseBuilder.java</a>
                 </td>
                 <td>
                   0
                 </td>
                 <td>
+                  120
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://suderio.github.io/rip/checkstyle.html#net.technearts.rip.RipRoute.java">net/technearts/rip/RipRoute.java</a>
+                </td>
+                <td>
                   0
                 </td>
                 <td>
-                  70
+                  12
+                </td>
+                <td>
+                  0
                 </td>
               </tr>
                           <tr>
@@ -80,10 +80,10 @@ under the License.
                   0
                 </td>
                 <td>
-                  0
+                  3
                 </td>
                 <td>
-                  3
+                  0
                 </td>
               </tr>
                           <tr>
@@ -94,10 +94,10 @@ under the License.
                   0
                 </td>
                 <td>
-                  0
+                  3
                 </td>
                 <td>
-                  9
+                  0
                 </td>
               </tr>
                           <tr>
@@ -108,10 +108,38 @@ under the License.
                   0
                 </td>
                 <td>
+                  14
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://suderio.github.io/rip/checkstyle.html#net.technearts.rip.RipExcelReader.java">net/technearts/rip/RipExcelReader.java</a>
+                </td>
+                <td>
                   0
                 </td>
                 <td>
-                  19
+                  12
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://suderio.github.io/rip/checkstyle.html#net.technearts.rip.RipResponse.java">net/technearts/rip/RipResponse.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  2
+                </td>
+                <td>
+                  0
                 </td>
               </tr>
                           <tr>
@@ -122,10 +150,10 @@ under the License.
                   0
                 </td>
                 <td>
-                  0
+                  6
                 </td>
                 <td>
-                  30
+                  0
                 </td>
               </tr>
                           <tr>
@@ -136,10 +164,10 @@ under the License.
                   0
                 </td>
                 <td>
-                  0
+                  1
                 </td>
                 <td>
-                  9
+                  0
                 </td>
               </tr>
                           <tr>
@@ -153,7 +181,7 @@ under the License.
                   0
                 </td>
                 <td>
-                  4
+                  0
                 </td>
               </tr>
                       </tbody>
