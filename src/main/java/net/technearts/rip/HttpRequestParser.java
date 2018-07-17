@@ -10,7 +10,7 @@ import java.util.HashMap;
 import org.eclipse.jetty.http.HttpMethod;
 
 /**
- * Requisição http (rfc 2612):
+ * Requisição http (rfc 2612).
  */
 public class HttpRequestParser {
   private String reqLine;
@@ -56,6 +56,11 @@ public class HttpRequestParser {
     return msgBody.toString();
   }
 
+  /**
+   * O método http.
+   * 
+   * @return o método http chamado.
+   */
   public HttpMethod getMethod() {
     final HttpMethod method = HttpMethod
         .fromString(getRequestLine().split(" ")[0]);
@@ -69,12 +74,17 @@ public class HttpRequestParser {
    * Seção 5.1: a linha da requisição começar com o método, seguido da URI e
    * versão do protocolo, terminando com CRLF.
    *
-   * @return a linha da requisição
+   * @return a linha da requisição.
    */
   public String getRequestLine() {
     return reqLine;
   }
 
+  /**
+   * A URL.
+   * 
+   * @return a URL da requisição.
+   */
   public URL getUrl() {
     final String protocol = "HTTP";
     final String host = getHeaderParam("Host");
@@ -82,11 +92,18 @@ public class HttpRequestParser {
     final String file = getRequestLine().split(" ")[1];
     try {
       return new URL(protocol, host, port, file);
-    } catch (final MalformedURLException e) {
+    } catch (final MalformedURLException ex) {
       throw new IllegalArgumentException();
     }
   }
 
+  /**
+   * Parse da requisição.
+   *
+   * @param reader Um objeto reader com a requisição.
+   * @throws IOException         Qualquer erro de leitura.
+   * @throws HttpFormatException Qualquer erro de formato
+   */
   public void parseRequest(final BufferedReader reader)
       throws IOException, HttpFormatException {
     setRequestLine(reader.readLine());
