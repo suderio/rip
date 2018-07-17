@@ -34,7 +34,8 @@ Cria o servidor na porta 8888 respondendo à `POST /test` e, se *xpto* e *1234* 
 no body, responde com o conteúdo do arquivo `/test/hello.json` 
 
 ```java
-localhost(8888).post("/test").contains("xpto").and().contains("1234").respond(withFile("/test/hello.json"));
+localhost(8888).post("/test").contains("xpto").and().contains("1234")
+    .respond(withFile("/test/hello.json"));
 ```
 
 Responde à `POST /test` de acordo com o conteúdo do body, caindo no caso default (último)
@@ -44,6 +45,14 @@ se não encontrar nenhuma correspondência
 localhost().post("/test").contains("test1").respond(withFile("/test/1.json"));
 localhost().post("/test").contains("test2").respond(withFile("/test/2.json"));
 localhost().post("/test").respond(withFile("File not found"));
+```
+
+Responde a `GET /test/:n` de acordo com o parâmetro `:n` da query usando um arquivo
+de template `test.json.ftl` [freemarker](https://freemarker.apache.org/)
+
+```java
+localhost().get("/test/:n").buildResponse("test.json.ftl", 200,
+    att -> att.put("param_n", req -> req.params("n")));
 ```
 
 ## Como criar os serviços mockados em uma aplicação dentro de um servlet container qualquer (Ex. tomcat, liberty, jboss)
@@ -63,7 +72,7 @@ utilizada.
         <dependency>
             <groupId>net.technearts</groupId>
             <artifactId>rip</artifactId>
-            <version>0.0.3</version>
+            <version>0.0.5</version>
         </dependency>
 ```
 

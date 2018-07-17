@@ -11,8 +11,8 @@ import org.apache.commons.cli.ParseException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class CLI {
-  private static final Logger logger = LoggerFactory.getLogger(CLI.class);
+public class Cli {
+  private static final Logger logger = LoggerFactory.getLogger(Cli.class);
 
   private static CommandLine commandLine(final String... args)
       throws ParseException {
@@ -22,12 +22,17 @@ public class CLI {
         .desc("Working Directory").hasArg().build());
     try {
       return parser.parse(options, args);
-    } catch (final ParseException e) {
-      logger.error(e.getMessage());
-      throw e;
+    } catch (final ParseException ex) {
+      logger.error(ex.getMessage());
+      throw ex;
     }
   }
 
+  /**
+   * 
+   * @param args parâmetros de linha de comando.
+   * @throws ParseException se os parâmetros estiverem errados.
+   */
   public static void main(final String[] args) throws ParseException {
     final CommandLine line = commandLine(args);
     final String workDir = line.getOptionValue("w", "/");
