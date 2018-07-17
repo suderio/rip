@@ -25,9 +25,9 @@ under the License.
     <language>en-us</language>
     <copyright>&#169;2018 Technearts</copyright>
     <item>
-      <title>File: 9,
+      <title>File: 8,
              Errors: 0,
-             Warnings: 173,
+             Warnings: 165,
              Infos: 0
       </title>
             <link>https://suderio.github.io/rip/checkstyle.html</link>
@@ -75,20 +75,6 @@ under the License.
                           <tr>
                 <td>
                   <a href="https://suderio.github.io/rip/checkstyle.html#net.technearts.rip.RipWebFilter.java">net/technearts/rip/RipWebFilter.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  3
-                </td>
-                <td>
-                  0
-                </td>
-              </tr>
-                          <tr>
-                <td>
-                  <a href="https://suderio.github.io/rip/checkstyle.html#net.technearts.rip.CLI.java">net/technearts/rip/CLI.java</a>
                 </td>
                 <td>
                   0
@@ -150,7 +136,7 @@ under the License.
                   0
                 </td>
                 <td>
-                  6
+                  1
                 </td>
                 <td>
                   0
