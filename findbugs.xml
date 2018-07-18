@@ -1,0 +1,2 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<BugCollection version='3.0.1' threshold='medium' effort='min'><file classname='net.technearts.rip.RipResponseBuilder'><BugInstance type='DM_DEFAULT_ENCODING' priority='High' category='I18N' message='Found reliance on default encoding in net.technearts.rip.RipResponseBuilder.respond(Path, int): new String(byte[])' lineNumber='456'/></file><Error></Error><Project><SrcDir>/home/paulo/Repos/rip/src/main/java</SrcDir><SrcDir>/home/paulo/Repos/rip/src/test/java</SrcDir></Project></BugCollection>
