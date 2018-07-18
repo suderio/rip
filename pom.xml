@@ -453,6 +453,7 @@
 						<version>3.2.1</version>
 						<configuration>
 							<assemblyAnalyzerEnabled>false</assemblyAnalyzerEnabled>
+							<name>OWASP dependency check</name>
 						</configuration>
 						<reportSets>
 							<reportSet>
