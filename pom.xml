@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
@@ -5,28 +6,19 @@
 
 	<groupId>net.technearts</groupId>
 	<artifactId>rip</artifactId>
-	<version>0.0.6</version>
+	<version>0.0.7</version>
 	<packaging>jar</packaging>
 
 	<name>rip</name>
+
 	<description>Rest in peace: Mock rest services for testing</description>
+
 	<url>https://suderio.github.io/rip</url>
 
 	<organization>
 		<name>Technearts</name>
 		<url>https://www.technearts.net</url>
 	</organization>
-
-	<scm>
-		<url>https://github.com/suderio/rip</url>
-		<connection>scm:git:http://github.com/suderio/rip.git</connection>
-		<developerConnection>scm:git:https://github.com/suderio/rip.git</developerConnection>
-	</scm>
-
-	<issueManagement>
-		<url>https://github.com/suderio/rip/issues</url>
-		<system>github</system>
-	</issueManagement>
 
 	<licenses>
 		<license>
@@ -43,6 +35,17 @@
 			<name>Paulo Suderio</name>
 		</developer>
 	</developers>
+
+	<scm>
+		<url>https://github.com/suderio/rip</url>
+		<connection>scm:git:http://github.com/suderio/rip.git</connection>
+		<developerConnection>scm:git:https://github.com/suderio/rip.git</developerConnection>
+	</scm>
+
+	<issueManagement>
+		<url>https://github.com/suderio/rip/issues</url>
+		<system>github</system>
+	</issueManagement>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -61,7 +64,7 @@
 		</dependency>
 		<dependency>
 			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-simple</artifactId>
+			<artifactId>slf4j-api</artifactId>
 			<version>1.7.25</version>
 		</dependency>
 		<dependency>
@@ -104,6 +107,18 @@
 			<artifactId>lombok</artifactId>
 			<version>1.18.0</version>
 			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-log4j12</artifactId>
+			<version>1.7.25</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+			<version>1.2.17</version>
+			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>io.rest-assured</groupId>
@@ -237,13 +252,22 @@
 					<artifactId>jdepend-maven-plugin</artifactId>
 					<version>2.0</version>
 				</plugin>
+				<plugin>
+					<groupId>org.codehaus.mojo</groupId>
+					<artifactId>findbugs-maven-plugin</artifactId>
+					<version>3.0.5</version>
+					<configuration>
+						<xmlOutput>true</xmlOutput>
+						<xmlOutputDirectory>target/site</xmlOutputDirectory>
+					</configuration>
+				</plugin>
 			</plugins>
 		</pluginManagement>
 		<plugins>
 			<plugin>
 				<artifactId>maven-jar-plugin</artifactId>
 				<configuration>
-					<finalName>rip</finalName>
+					<finalName>${project.name}</finalName>
 					<archive>
 						<manifest>
 							<addClasspath>true</addClasspath>
@@ -262,9 +286,7 @@
 						</goals>
 						<phase>package</phase>
 						<configuration>
-							<skipAssembly>true</skipAssembly>
-							<finalName>uber-rip</finalName>
-							<appendAssemblyId>true</appendAssemblyId>
+							<finalName>rip</finalName>
 							<descriptorRefs>
 								<descriptorRef>jar-with-dependencies</descriptorRef>
 							</descriptorRefs>
@@ -279,6 +301,7 @@
 			</plugin>
 		</plugins>
 	</build>
+
 	<profiles>
 		<profile>
 			<id>release</id>
@@ -422,16 +445,7 @@
 					</plugin>
 					<plugin>
 						<groupId>org.codehaus.mojo</groupId>
-						<artifactId>versions-maven-plugin</artifactId>
-						<reportSets>
-							<reportSet>
-								<reports>
-									<report>dependency-updates-report</report>
-									<report>plugin-updates-report</report>
-									<report>property-updates-report</report>
-								</reports>
-							</reportSet>
-						</reportSets>
+						<artifactId>findbugs-maven-plugin</artifactId>
 					</plugin>
 					<plugin>
 						<groupId>org.owasp</groupId>
@@ -451,6 +465,18 @@
 					<plugin>
 						<groupId>org.codehaus.mojo</groupId>
 						<artifactId>jdepend-maven-plugin</artifactId>
+					</plugin>
+					<plugin>
+						<groupId>org.codehaus.mojo</groupId>
+						<artifactId>versions-maven-plugin</artifactId>
+						<reportSets>
+							<reportSet>
+								<reports>
+									<report>dependency-updates-report</report>
+									<report>plugin-updates-report</report>
+								</reports>
+							</reportSet>
+						</reportSets>
 					</plugin>
 				</plugins>
 			</reporting>
