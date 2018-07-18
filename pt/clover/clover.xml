@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1531882406456" clover="4.2.0">
-   <project name="rip 0.0.7" timestamp="1531882290612">
+<coverage generated="1531885349217" clover="4.2.0">
+   <project name="rip 0.0.7" timestamp="1531885262060">
       <metrics coveredelements="242" complexity="151" loc="1200" methods="80" classes="11" statements="348" packages="1" coveredconditionals="23" coveredmethods="42" elements="474" ncloc="791" files="10" conditionals="46" coveredstatements="177"/>
       <package name="net.technearts.rip">
          <metrics coveredelements="242" complexity="151" loc="1200" methods="80" classes="11" statements="348" coveredconditionals="23" coveredmethods="42" elements="474" ncloc="791" files="10" conditionals="46" coveredstatements="177"/>
@@ -167,20 +167,20 @@
             <line num="90" count="9" type="stmt"/>
             <line falsecount="4" truecount="5" num="90" type="cond"/>
             <line num="91" count="5" type="stmt"/>
-            <line num="92" count="3885" type="stmt"/>
-            <line num="95" count="3975" type="stmt"/>
-            <line num="96" count="3993" type="stmt"/>
-            <line num="97" count="3970" type="stmt"/>
+            <line num="92" count="3838" type="stmt"/>
+            <line num="95" count="3983" type="stmt"/>
+            <line num="96" count="3987" type="stmt"/>
+            <line num="97" count="3996" type="stmt"/>
             <line falsecount="0" truecount="3934" num="97" type="cond"/>
-            <line num="98" count="3956" type="stmt"/>
-            <line num="99" count="3960" type="stmt"/>
-            <line num="100" count="3959" type="stmt"/>
-            <line num="101" count="3953" type="stmt"/>
+            <line num="98" count="3972" type="stmt"/>
+            <line num="99" count="3963" type="stmt"/>
+            <line num="100" count="3968" type="stmt"/>
+            <line num="101" count="3954" type="stmt"/>
             <line num="103" count="0" type="stmt"/>
             <line num="104" count="0" type="stmt"/>
             <line num="106" count="0" type="stmt"/>
-            <line num="108" count="3947" type="stmt"/>
-            <line num="109" count="3953" type="stmt"/>
+            <line num="108" count="3960" type="stmt"/>
+            <line num="109" count="3936" type="stmt"/>
             <line num="112" count="9" type="stmt"/>
             <line falsecount="4" truecount="5" num="112" type="cond"/>
             <line num="113" count="5" type="stmt"/>
@@ -231,18 +231,18 @@
             <line num="249" count="1" type="stmt"/>
             <line num="251" count="1" type="stmt"/>
             <line num="252" count="1" type="stmt"/>
-            <line complexity="6" visibility="private" signature="contentType(String) : String" num="255" count="3959" type="method"/>
-            <line num="256" count="3943" type="stmt"/>
-            <line num="257" count="3941" type="stmt"/>
-            <line falsecount="1980" truecount="1981" num="257" type="cond"/>
-            <line num="258" count="1983" type="stmt"/>
-            <line num="259" count="1983" type="stmt"/>
-            <line falsecount="1913" truecount="0" num="259" type="cond"/>
+            <line complexity="6" visibility="private" signature="contentType(String) : String" num="255" count="3962" type="method"/>
+            <line num="256" count="3933" type="stmt"/>
+            <line num="257" count="3953" type="stmt"/>
+            <line falsecount="1985" truecount="1979" num="257" type="cond"/>
+            <line num="258" count="1981" type="stmt"/>
+            <line num="259" count="1985" type="stmt"/>
+            <line falsecount="1918" truecount="0" num="259" type="cond"/>
             <line num="260" count="0" type="stmt"/>
             <line falsecount="0" truecount="0" num="260" type="cond"/>
             <line num="262" count="0" type="stmt"/>
             <line num="264" count="0" type="stmt"/>
-            <line num="267" count="3936" type="stmt"/>
+            <line num="267" count="3926" type="stmt"/>
             <line complexity="14" visibility="private" signature="createMethod() : void" num="270" count="8" type="method"/>
             <line num="271" count="8" type="stmt"/>
             <line num="272" count="0" type="stmt"/>
@@ -316,25 +316,25 @@
             <line num="354" count="0" type="stmt"/>
             <line num="355" count="0" type="stmt"/>
             <line num="356" count="0" type="stmt"/>
-            <line complexity="5" visibility="private" signature="isValidJSON(String) : boolean" num="360" count="3942" type="method"/>
-            <line num="361" count="3949" type="stmt"/>
-            <line num="362" count="3944" type="stmt"/>
-            <line num="362" count="3956" type="stmt"/>
-            <line num="363" count="3939" type="stmt"/>
-            <line falsecount="1987" truecount="5920" num="363" type="cond"/>
-            <line num="364" count="5944" type="stmt"/>
-            <line num="366" count="1990" type="stmt"/>
-            <line num="368" count="1988" type="stmt"/>
-            <line num="370" count="3969" type="stmt"/>
-            <line complexity="4" visibility="private" signature="isValidXML(String) : boolean" num="373" count="1979" type="method"/>
-            <line num="374" count="1987" type="stmt"/>
-            <line num="375" count="1992" type="stmt"/>
+            <line complexity="5" visibility="private" signature="isValidJSON(String) : boolean" num="360" count="3952" type="method"/>
+            <line num="361" count="3962" type="stmt"/>
+            <line num="362" count="3949" type="stmt"/>
+            <line num="362" count="3953" type="stmt"/>
+            <line num="363" count="3952" type="stmt"/>
+            <line falsecount="1997" truecount="5944" num="363" type="cond"/>
+            <line num="364" count="5942" type="stmt"/>
+            <line num="366" count="1993" type="stmt"/>
+            <line num="368" count="1990" type="stmt"/>
+            <line num="370" count="3980" type="stmt"/>
+            <line complexity="4" visibility="private" signature="isValidXML(String) : boolean" num="373" count="1980" type="method"/>
+            <line num="374" count="1960" type="stmt"/>
             <line num="375" count="1984" type="stmt"/>
-            <line num="376" count="1986" type="stmt"/>
-            <line num="377" count="1962" type="stmt"/>
+            <line num="375" count="1993" type="stmt"/>
+            <line num="376" count="1973" type="stmt"/>
+            <line num="377" count="1949" type="stmt"/>
             <line num="378" count="0" type="stmt"/>
-            <line num="380" count="1964" type="stmt"/>
-            <line num="382" count="1992" type="stmt"/>
+            <line num="380" count="1944" type="stmt"/>
+            <line num="382" count="1981" type="stmt"/>
             <line complexity="1" visibility="public" signature="matches(Predicate&lt;Request&gt;) : RipResponseBuilder" num="391" count="0" type="method"/>
             <line num="392" count="0" type="stmt"/>
             <line num="393" count="0" type="stmt"/>
@@ -408,8 +408,8 @@
             <line num="99" count="18" type="stmt"/>
             <line complexity="1" visibility="package" signature="getRipServer() : RipServer" num="102" count="9" type="method"/>
             <line num="103" count="9" type="stmt"/>
-            <line complexity="1" visibility="public" signature="hashCode() : int" num="106" count="3960" type="method"/>
-            <line num="108" count="3958" type="stmt"/>
+            <line complexity="1" visibility="public" signature="hashCode() : int" num="106" count="3927" type="method"/>
+            <line num="108" count="3965" type="stmt"/>
             <line complexity="1" visibility="public" signature="head(String) : RipResponseBuilder" num="118" count="0" type="method"/>
             <line num="119" count="0" type="stmt"/>
             <line complexity="1" visibility="public" signature="options(String) : RipResponseBuilder" num="129" count="0" type="method"/>
@@ -467,8 +467,8 @@
             <line num="116" count="0" type="stmt"/>
             <line num="117" count="0" type="stmt"/>
             <line num="119" count="0" type="stmt"/>
-            <line complexity="1" visibility="public" signature="hashCode() : int" num="122" count="3947" type="method"/>
-            <line num="124" count="3944" type="stmt"/>
+            <line complexity="1" visibility="public" signature="hashCode() : int" num="122" count="3944" type="method"/>
+            <line num="124" count="3939" type="stmt"/>
             <line complexity="1" visibility="package" signature="reset() : void" num="127" count="0" type="method"/>
             <line num="128" count="0" type="stmt"/>
             <line num="129" count="0" type="stmt"/>
@@ -520,18 +520,18 @@
          </file>
       </package>
    </project>
-   <testproject name="rip 0.0.7" timestamp="1531882290612">
+   <testproject name="rip 0.0.7" timestamp="1531885262060">
       <metrics coveredelements="43" complexity="19" loc="198" methods="16" classes="4" statements="43" packages="1" coveredconditionals="0" coveredmethods="12" elements="59" ncloc="155" files="4" conditionals="0" coveredstatements="31"/>
       <package name="net.technearts.rip">
          <metrics coveredelements="43" complexity="19" loc="198" methods="16" classes="4" statements="43" coveredconditionals="0" coveredmethods="12" elements="59" ncloc="155" files="4" conditionals="0" coveredstatements="31"/>
          <file path="/home/paulo/Repos/rip/src/test/java/net/technearts/rip/RipExcelReaderTest.java" name="RipExcelReaderTest.java">
             <metrics coveredelements="5" coveredconditionals="0" complexity="3" loc="28" coveredmethods="2" methods="2" elements="6" classes="1" ncloc="20" statements="4" conditionals="0" coveredstatements="3"/>
             <class name="RipExcelReaderTest">
-               <metrics coveredelements="5" complexity="3" methods="2" testruns="1" statements="4" coveredconditionals="0" coveredmethods="2" elements="6" testfailures="0" testduration="0.689" conditionals="0" coveredstatements="3" testpasses="1"/>
+               <metrics coveredelements="5" complexity="3" methods="2" testruns="1" statements="4" coveredconditionals="0" coveredmethods="2" elements="6" testfailures="0" testduration="0.62" conditionals="0" coveredstatements="3" testpasses="1"/>
             </class>
             <line complexity="1" visibility="public" signature="setup() : void" num="13" count="1" type="method"/>
             <line num="15" count="1" type="stmt"/>
-            <line complexity="2" visibility="public" signature="test() : void" num="18" testsuccess="true" count="1" testduration="0.689" type="method"/>
+            <line complexity="2" visibility="public" signature="test() : void" num="18" testsuccess="true" count="1" testduration="0.62" type="method"/>
             <line num="20" count="1" type="stmt"/>
             <line num="21" count="1" type="stmt"/>
             <line num="24" count="0" type="stmt"/>
@@ -560,7 +560,7 @@
          <file path="/home/paulo/Repos/rip/src/test/java/net/technearts/rip/RipServerTest.java" name="RipServerTest.java">
             <metrics coveredelements="32" coveredconditionals="0" complexity="7" loc="88" coveredmethods="7" methods="7" elements="32" classes="1" ncloc="75" statements="25" conditionals="0" coveredstatements="25"/>
             <class name="RipServerTest">
-               <metrics coveredelements="32" complexity="7" methods="7" testruns="5" statements="25" coveredconditionals="0" coveredmethods="7" elements="32" testfailures="0" testduration="10.769" conditionals="0" coveredstatements="25" testpasses="5"/>
+               <metrics coveredelements="32" complexity="7" methods="7" testruns="5" statements="25" coveredconditionals="0" coveredmethods="7" elements="32" testfailures="0" testduration="9.334999999999999" conditionals="0" coveredstatements="25" testpasses="5"/>
             </class>
             <line complexity="1" visibility="public" signature="setUpBeforeClass() : void" num="20" count="1" type="method"/>
             <line num="22" count="1" type="stmt"/>
@@ -573,24 +573,24 @@
             <line num="31" count="1" type="stmt"/>
             <line num="33" count="1" type="stmt"/>
             <line complexity="1" visibility="public" signature="tearDownAfterClass() : void" num="36" count="1" type="method"/>
-            <line complexity="1" visibility="public" signature="testDelete() : void" num="41" testsuccess="true" count="1" testduration="0.029" type="method"/>
+            <line complexity="1" visibility="public" signature="testDelete() : void" num="41" testsuccess="true" count="1" testduration="0.022" type="method"/>
             <line num="43" count="1" type="stmt"/>
             <line num="45" count="1" type="stmt"/>
             <line num="47" count="1" type="stmt"/>
             <line num="49" count="1" type="stmt"/>
-            <line complexity="1" visibility="public" signature="testDeterministic() : void" num="52" testsuccess="true" count="1" testduration="9.273" type="method"/>
+            <line complexity="1" visibility="public" signature="testDeterministic() : void" num="52" testsuccess="true" count="1" testduration="7.928" type="method"/>
             <line num="54" count="1" type="stmt"/>
-            <line num="55" count="990" type="stmt"/>
-            <line num="57" count="992" type="stmt"/>
-            <line num="59" count="986" type="stmt"/>
+            <line num="55" count="986" type="stmt"/>
+            <line num="57" count="990" type="stmt"/>
+            <line num="59" count="991" type="stmt"/>
             <line num="61" count="992" type="stmt"/>
-            <line complexity="1" visibility="public" signature="testGet() : void" num="65" testsuccess="true" count="1" testduration="1.301" type="method"/>
+            <line complexity="1" visibility="public" signature="testGet() : void" num="65" testsuccess="true" count="1" testduration="1.216" type="method"/>
             <line num="67" count="1" type="stmt"/>
-            <line complexity="1" visibility="public" signature="testPost() : void" num="70" testsuccess="true" count="1" testduration="0.069" type="method"/>
+            <line complexity="1" visibility="public" signature="testPost() : void" num="70" testsuccess="true" count="1" testduration="0.065" type="method"/>
             <line num="72" count="1" type="stmt"/>
             <line num="73" count="1" type="stmt"/>
             <line num="75" count="1" type="stmt"/>
-            <line complexity="1" visibility="public" signature="testPut() : void" num="79" testsuccess="true" count="1" testduration="0.097" type="method"/>
+            <line complexity="1" visibility="public" signature="testPut() : void" num="79" testsuccess="true" count="1" testduration="0.104" type="method"/>
             <line num="81" count="1" type="stmt"/>
             <line num="83" count="1" type="stmt"/>
             <line num="85" count="1" type="stmt"/>
@@ -598,13 +598,13 @@
          <file path="/home/paulo/Repos/rip/src/test/java/net/technearts/rip/RipTemplatesTest.java" name="RipTemplatesTest.java">
             <metrics coveredelements="6" coveredconditionals="0" complexity="3" loc="33" coveredmethods="3" methods="3" elements="6" classes="1" ncloc="25" statements="3" conditionals="0" coveredstatements="3"/>
             <class name="RipTemplatesTest">
-               <metrics coveredelements="6" complexity="3" methods="3" testruns="1" statements="3" coveredconditionals="0" coveredmethods="3" elements="6" testfailures="0" testduration="0.078" conditionals="0" coveredstatements="3" testpasses="1"/>
+               <metrics coveredelements="6" complexity="3" methods="3" testruns="1" statements="3" coveredconditionals="0" coveredmethods="3" elements="6" testfailures="0" testduration="0.093" conditionals="0" coveredstatements="3" testpasses="1"/>
             </class>
             <line complexity="1" visibility="public" signature="setUpBeforeClass() : void" num="14" count="1" type="method"/>
             <line num="16" count="1" type="stmt"/>
             <line num="17" count="1" type="stmt"/>
             <line complexity="1" visibility="public" signature="tearDownAfterClass() : void" num="22" count="1" type="method"/>
-            <line complexity="1" visibility="public" signature="testBasicTemplate() : void" num="27" testsuccess="true" count="1" testduration="0.078" type="method"/>
+            <line complexity="1" visibility="public" signature="testBasicTemplate() : void" num="27" testsuccess="true" count="1" testduration="0.093" type="method"/>
             <line num="29" count="1" type="stmt"/>
          </file>
       </package>
