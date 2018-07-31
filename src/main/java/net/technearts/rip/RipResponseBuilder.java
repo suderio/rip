@@ -7,10 +7,8 @@ import static org.eclipse.jetty.http.HttpStatus.NOT_FOUND_404;
 import static org.eclipse.jetty.http.HttpStatus.OK_200;
 
 import java.io.ByteArrayInputStream;
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.URISyntaxException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Arrays;
@@ -35,7 +33,6 @@ import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.core.JsonParser;
 
 import freemarker.template.Configuration;
-import freemarker.template.TemplateExceptionHandler;
 import spark.ModelAndView;
 import spark.Request;
 import spark.Route;
@@ -51,30 +48,14 @@ enum OP {
  * Um construtor de respostas com base no conteúdo do body da requisição http.
  */
 public class RipResponseBuilder {
+  // TODO passar os três mapas para dentro do RipRoute
   private static final Map<RipRoute, Map<Predicate<Request>, RipResponse>> conditions = new LinkedHashMap<>();
   private static final Map<RipRoute, Route> routes = new LinkedHashMap<>();
   private static final Map<RipRoute, TemplateViewRoute> templateRoutes = new LinkedHashMap<>();
   private static final Logger logger = LoggerFactory
       .getLogger(RipResponseBuilder.class);
-  private static final Configuration cfg = new Configuration(
-      Configuration.VERSION_2_3_26);
-  static {
-    cfg.setDefaultEncoding("UTF-8");
-    cfg.setTemplateExceptionHandler(TemplateExceptionHandler.RETHROW_HANDLER);
-    cfg.setLogTemplateExceptions(false);
-    try {
-      File f;
-      try {
-        f = new File(RipResponseBuilder.class.getResource("/").toURI());
-      } catch (final URISyntaxException e) {
-        f = new File(RipResponseBuilder.class.getResource("/").getPath());
-      }
-      cfg.setDirectoryForTemplateLoading(f);
-    } catch (final IOException e) {
-      // TODO Auto-generated catch block
-      e.printStackTrace();
-    }
-  }
+  private static final Configuration cfg = FreemarkerConfiguration.getDefaultConfiguration();
+
   private RipRoute route;
   private Predicate<Request> condition;
   private OP op = AND;
