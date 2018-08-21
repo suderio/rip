@@ -74,14 +74,13 @@ public class RipResponseBuilder {
       String result;
       if (optional.isPresent()) {
         response = optional.get().getValue();
-        if (req.pathInfo().contains("fgi"))
-          LOG.info("Requisição:\n{}", req.body());
+        LOG.debug("Requisição:\n{}", req.body());
         LOG.debug("Respondendo com \n{}", response.getContent());
         res.status(response.getStatus());
         result = response.getContent();
       } else {
         res.status(NOT_FOUND_404);
-        LOG.debug("Resposta para {} {} não encontrada", route.getMethod(),
+        LOG.warn("Resposta para {} {} não encontrada", route.getMethod(),
             route.getPath());
         result = "";
       }
@@ -236,7 +235,7 @@ public class RipResponseBuilder {
       AutoDetectParser parser = new AutoDetectParser();
       parser.getParsers().entrySet().stream()
           .filter(e -> e.getKey().toString().contains("json"))
-          .forEach(e -> LOG.info(e.getKey() + ": "
+          .forEach(e -> LOG.debug(e.getKey() + ": "
               + e.getValue().getSupportedTypes(new ParseContext())));
       parser.parse(in, contenthandler, metadata);
       return metadata.get(Metadata.CONTENT_TYPE);
@@ -356,7 +355,7 @@ public class RipResponseBuilder {
    */
   public void respond(final Path withFile, final int status) {
     try {
-      LOG.error(withFile.toString() + " Content-type: " + content(withFile));
+      LOG.debug(withFile.toString() + " Content-type: " + content(withFile));
       respond(new String(Files.readAllBytes(withFile)), status);
     } catch (final IOException e) {
       respond("Arquivo não encontrado.", NOT_FOUND_404);
