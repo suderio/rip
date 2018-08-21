@@ -24,14 +24,8 @@ import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 
-import org.apache.tika.exception.TikaException;
-import org.apache.tika.metadata.Metadata;
-import org.apache.tika.parser.AutoDetectParser;
-import org.apache.tika.parser.ParseContext;
-import org.apache.tika.sax.BodyContentHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.xml.sax.ContentHandler;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
@@ -228,22 +222,6 @@ public class RipResponseBuilder {
     return this;
   }
 
-  private String content(final Path file) {
-    try (InputStream in = Files.newInputStream(file)) {
-      ContentHandler contenthandler = new BodyContentHandler();
-      Metadata metadata = new Metadata();
-      AutoDetectParser parser = new AutoDetectParser();
-      parser.getParsers().entrySet().stream()
-          .filter(e -> e.getKey().toString().contains("json"))
-          .forEach(e -> LOG.debug(e.getKey() + ": "
-              + e.getValue().getSupportedTypes(new ParseContext())));
-      parser.parse(in, contenthandler, metadata);
-      return metadata.get(Metadata.CONTENT_TYPE);
-    } catch (IOException | SAXException | TikaException e) {
-      return null;
-    }
-  }
-
   private String contentType(final String body) {
     String result = "text/html;charset=utf-8";
     if (isValidJSON(body)) {
@@ -355,7 +333,6 @@ public class RipResponseBuilder {
    */
   public void respond(final Path withFile, final int status) {
     try {
-      LOG.debug(withFile.toString() + " Content-type: " + content(withFile));
       respond(new String(Files.readAllBytes(withFile)), status);
     } catch (final IOException e) {
       respond("Arquivo não encontrado.", NOT_FOUND_404);
