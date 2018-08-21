@@ -68,7 +68,7 @@ public class RipResponseBuilder {
       String result;
       if (optional.isPresent()) {
         response = optional.get().getValue();
-        LOG.debug("Requisição:\n{}", req.body());
+        LOG.debug("Requisição para {}:\n{}",req.pathInfo(), req.body());
         LOG.debug("Respondendo com \n{}", response.getContent());
         res.status(response.getStatus());
         result = response.getContent();
