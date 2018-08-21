@@ -27,7 +27,7 @@ import javax.xml.parsers.SAXParserFactory;
 import org.apache.tika.exception.TikaException;
 import org.apache.tika.metadata.Metadata;
 import org.apache.tika.parser.AutoDetectParser;
-import org.apache.tika.parser.Parser;
+import org.apache.tika.parser.ParseContext;
 import org.apache.tika.sax.BodyContentHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -42,344 +42,366 @@ import spark.ModelAndView;
 import spark.Request;
 
 enum OP {
-	AND, OR;
+  AND, OR;
 }
 
 /**
  * Um construtor de respostas com base no conteúdo do body da requisição http.
  */
 public class RipResponseBuilder {
-	// TODO passar os três mapas para dentro do RipRoute
-	private static final Map<RipRoute, Map<Predicate<Request>, RipResponse>> CONDITIONS = new LinkedHashMap<>();
-	private static final Logger LOG = LoggerFactory.getLogger(RipResponseBuilder.class);
+  // TODO passar os três mapas para dentro do RipRoute
+  private static final Map<RipRoute, Map<Predicate<Request>, RipResponse>> CONDITIONS = new LinkedHashMap<>();
+  private static final Logger LOG = LoggerFactory
+      .getLogger(RipResponseBuilder.class);
 
-	private RipRoute route;
-	private Predicate<Request> condition;
-	private OP op = AND;
+  private RipRoute route;
+  private Predicate<Request> condition;
+  private OP op = AND;
 
-	RipResponseBuilder(final RipRoute route) {
-		LOG.info("Criando RipResponseBuilder para requisição {} {}", route.getMethod(), route.getPath());
-		this.route = route;
-		if (!CONDITIONS.containsKey(route)) {
-			CONDITIONS.put(route, new LinkedHashMap<Predicate<Request>, RipResponse>());
-		}
-		route.route = (req, res) -> {
-			final Optional<Map.Entry<Predicate<Request>, RipResponse>> optional = CONDITIONS.get(route).entrySet()
-					.stream().filter(entry -> entry.getKey().test(req)).findFirst();
-			RipResponse response;
-			String result;
-			if (optional.isPresent()) {
-				response = optional.get().getValue();
-				if (req.pathInfo().contains("fgi"))
-					LOG.info("Requisição:\n{}", req.body());
-				LOG.debug("Respondendo com \n{}", response.getContent());
-				res.status(response.getStatus());
-				result = response.getContent();
-			} else {
-				res.status(NOT_FOUND_404);
-				LOG.debug("Resposta para {} {} não encontrada", route.getMethod(), route.getPath());
-				result = "";
-			}
-			res.header("Content-Type", contentType(result));
-			return result;
-		};
-		route.templateRoute = (req, res) -> {
-			final Optional<Map.Entry<Predicate<Request>, RipResponse>> optional = CONDITIONS.get(route).entrySet()
-					.stream().filter(entry -> entry.getKey().test(req)).findFirst();
-			RipResponse response;
-			ModelAndView result;
-			if (optional.isPresent()) {
-				response = optional.get().getValue();
-				LOG.debug("Respondendo com \n{}", response.getContent());
-				res.status(response.getStatus());
-				final Map<String, Object> attributes = new HashMap<>();
-				for (final Map.Entry<String, Function<Request, String>> f : response.getAttributes().entrySet()) {
-					attributes.put(f.getKey(), f.getValue().apply(req));
-				}
-				result = new ModelAndView(attributes, response.getContent());
-			} else {
-				res.status(NOT_FOUND_404);
-				LOG.debug("Resposta para {} {} não encontrada", route.getMethod(), route.getPath());
-				result = null;
-			}
-			// res.header("Content-Type", contentType(result));
-			return result;
-		};
-	}
+  RipResponseBuilder(final RipRoute route) {
+    LOG.info("Criando RipResponseBuilder para requisição {} {}",
+        route.getMethod(), route.getPath());
+    this.route = route;
+    if (!CONDITIONS.containsKey(route)) {
+      CONDITIONS.put(route,
+          new LinkedHashMap<Predicate<Request>, RipResponse>());
+    }
+    route.route = (req, res) -> {
+      final Optional<Map.Entry<Predicate<Request>, RipResponse>> optional = CONDITIONS
+          .get(route).entrySet().stream()
+          .filter(entry -> entry.getKey().test(req)).findFirst();
+      RipResponse response;
+      String result;
+      if (optional.isPresent()) {
+        response = optional.get().getValue();
+        if (req.pathInfo().contains("fgi"))
+          LOG.info("Requisição:\n{}", req.body());
+        LOG.debug("Respondendo com \n{}", response.getContent());
+        res.status(response.getStatus());
+        result = response.getContent();
+      } else {
+        res.status(NOT_FOUND_404);
+        LOG.debug("Resposta para {} {} não encontrada", route.getMethod(),
+            route.getPath());
+        result = "";
+      }
+      res.header("Content-Type", contentType(result));
+      return result;
+    };
+    route.templateRoute = (req, res) -> {
+      final Optional<Map.Entry<Predicate<Request>, RipResponse>> optional = CONDITIONS
+          .get(route).entrySet().stream()
+          .filter(entry -> entry.getKey().test(req)).findFirst();
+      RipResponse response;
+      ModelAndView result;
+      if (optional.isPresent()) {
+        response = optional.get().getValue();
+        LOG.debug("Respondendo com \n{}", response.getContent());
+        res.status(response.getStatus());
+        final Map<String, Object> attributes = new HashMap<>();
+        for (final Map.Entry<String, Function<Request, String>> f : response
+            .getAttributes().entrySet()) {
+          attributes.put(f.getKey(), f.getValue().apply(req));
+        }
+        result = new ModelAndView(attributes, response.getContent());
+      } else {
+        res.status(NOT_FOUND_404);
+        LOG.debug("Resposta para {} {} não encontrada", route.getMethod(),
+            route.getPath());
+        result = null;
+      }
+      // res.header("Content-Type", contentType(result));
+      return result;
+    };
+  }
 
-	/**
-	 * Operador lógico E
-	 *
-	 * @return this
-	 */
-	public RipResponseBuilder and() {
-		op = AND;
-		return this;
-	}
+  /**
+   * Operador lógico E
+   *
+   * @return this
+   */
+  public RipResponseBuilder and() {
+    op = AND;
+    return this;
+  }
 
-	/**
-	 * Cria uma resposta utilizando um arquivo de template, substituindo as
-	 * variáveis no arquivo pelo resultado de cada aplicação da função.
-	 * 
-	 * O mapa é alterado através de um <code>Consumer</code> para conveniência
-	 * 
-	 * @param template  o arquivo de template
-	 * @param consumers lista de alterações ao mapa de variáveis X funções
-	 */
-	@SafeVarargs
-	public final void buildResponse(final String template,
-			final Consumer<Map<String, Function<Request, String>>>... consumers) {
-		buildResponse(template, OK_200, consumers);
-	}
+  /**
+   * Cria uma resposta utilizando um arquivo de template, substituindo as
+   * variáveis no arquivo pelo resultado de cada aplicação da função.
+   * 
+   * O mapa é alterado através de um <code>Consumer</code> para conveniência
+   * 
+   * @param template  o arquivo de template
+   * @param consumers lista de alterações ao mapa de variáveis X funções
+   */
+  @SafeVarargs
+  public final void buildResponse(final String template,
+      final Consumer<Map<String, Function<Request, String>>>... consumers) {
+    buildResponse(template, OK_200, consumers);
+  }
 
-	/**
-	 * Cria uma resposta utilizando um arquivo de template, substituindo as
-	 * variáveis no arquivo pelo resultado de cada aplicação da função.
-	 * 
-	 * O mapa é alterado através de um <code>Consumer</code> para conveniência
-	 * 
-	 * @param template  o arquivo de template
-	 * @param status    o status de retorno
-	 * @param consumers lista de alterações ao mapa de variáveis X funções
-	 */
-	@SafeVarargs
-	public final void buildResponse(final String template, final int status,
-			final Consumer<Map<String, Function<Request, String>>>... consumers) {
-		final Map<String, Function<Request, String>> attributes = new HashMap<>();
-		for (final Consumer<Map<String, Function<Request, String>>> consumer : consumers) {
-			consumer.accept(attributes);
-		}
-		buildResponse(template, status, attributes);
-	}
+  /**
+   * Cria uma resposta utilizando um arquivo de template, substituindo as
+   * variáveis no arquivo pelo resultado de cada aplicação da função.
+   * 
+   * O mapa é alterado através de um <code>Consumer</code> para conveniência
+   * 
+   * @param template  o arquivo de template
+   * @param status    o status de retorno
+   * @param consumers lista de alterações ao mapa de variáveis X funções
+   */
+  @SafeVarargs
+  public final void buildResponse(final String template, final int status,
+      final Consumer<Map<String, Function<Request, String>>>... consumers) {
+    final Map<String, Function<Request, String>> attributes = new HashMap<>();
+    for (final Consumer<Map<String, Function<Request, String>>> consumer : consumers) {
+      consumer.accept(attributes);
+    }
+    buildResponse(template, status, attributes);
+  }
 
-	/**
-	 * Cria uma resposta utilizando um arquivo de template, substituindo as
-	 * variáveis no arquivo pelo resultado de cada aplicação da função.
-	 * 
-	 * @param template   o arquivo de template
-	 * @param status     o status de retorno
-	 * @param attributes lista de alterações ao mapa de variáveis X funções
-	 */
-	public final void buildResponse(final String template, final int status,
-			final Map<String, Function<Request, String>> attributes) {
-		if (condition == null) {
-			condition = s -> true;
-		}
-		final RipResponse res = new RipResponse(attributes, template, status);
-		CONDITIONS.get(route).put(condition, res);
-		route.createTemplateMethod();
-	}
+  /**
+   * Cria uma resposta utilizando um arquivo de template, substituindo as
+   * variáveis no arquivo pelo resultado de cada aplicação da função.
+   * 
+   * @param template   o arquivo de template
+   * @param status     o status de retorno
+   * @param attributes lista de alterações ao mapa de variáveis X funções
+   */
+  public final void buildResponse(final String template, final int status,
+      final Map<String, Function<Request, String>> attributes) {
+    if (condition == null) {
+      condition = s -> true;
+    }
+    final RipResponse res = new RipResponse(attributes, template, status);
+    CONDITIONS.get(route).put(condition, res);
+    route.createTemplateMethod();
+  }
 
-	/**
-	 * Cria uma resposta utilizando um arquivo de template, substituindo as
-	 * variáveis no arquivo pelo resultado de cada aplicação da função.
-	 * 
-	 * @param template   o arquivo de template
-	 * @param attributes lista de alterações ao mapa de variáveis X funções
-	 */
-	public final void buildResponse(final String template, final Map<String, Function<Request, String>> attributes) {
-		buildResponse(template, OK_200, attributes);
-	}
+  /**
+   * Cria uma resposta utilizando um arquivo de template, substituindo as
+   * variáveis no arquivo pelo resultado de cada aplicação da função.
+   * 
+   * @param template   o arquivo de template
+   * @param attributes lista de alterações ao mapa de variáveis X funções
+   */
+  public final void buildResponse(final String template,
+      final Map<String, Function<Request, String>> attributes) {
+    buildResponse(template, OK_200, attributes);
+  }
 
-	/**
-	 * Verifica se o body da requisição http contém determinada sequência
-	 *
-	 * @param content o conteúdo a ser checado no body
-	 * @return this
-	 */
-	public RipResponseBuilder contains(final String content) {
-		final Predicate<Request> newCondition = req -> req.body().contains(content);
-		updateConditions(newCondition);
-		return this;
-	}
+  /**
+   * Verifica se o body da requisição http contém determinada sequência
+   *
+   * @param content o conteúdo a ser checado no body
+   * @return this
+   */
+  public RipResponseBuilder contains(final String content) {
+    final Predicate<Request> newCondition = req -> req.body().contains(content);
+    updateConditions(newCondition);
+    return this;
+  }
 
-	/**
-	 * Verifica se o body da requisição http contém todas as sequências informadas
-	 *
-	 * @param contents os conteúdos a serem checados no body
-	 * @return this
-	 */
-	public RipResponseBuilder containsAll(final String... contents) {
-		final Predicate<Request> newCondition = req -> Arrays.asList(contents).stream().allMatch(req.body()::contains);
-		updateConditions(newCondition);
-		return this;
-	}
+  /**
+   * Verifica se o body da requisição http contém todas as sequências informadas
+   *
+   * @param contents os conteúdos a serem checados no body
+   * @return this
+   */
+  public RipResponseBuilder containsAll(final String... contents) {
+    final Predicate<Request> newCondition = req -> Arrays.asList(contents)
+        .stream().allMatch(req.body()::contains);
+    updateConditions(newCondition);
+    return this;
+  }
 
-	/**
-	 * Verifica se o body da requisição http contém alguma das sequências informadas
-	 *
-	 * @param contents os conteúdos a serem checados no body
-	 * @return this
-	 */
-	public RipResponseBuilder containsAny(final String... contents) {
-		final Predicate<Request> newCondition = req -> Arrays.asList(contents).stream().anyMatch(req.body()::contains);
-		updateConditions(newCondition);
-		return this;
-	}
-	
-	private String content(final Path file) {
-		try (InputStream in = Files.newInputStream(file)) {
-			ContentHandler contenthandler = new BodyContentHandler();
-			Metadata metadata = new Metadata();
-			AutoDetectParser parser = new AutoDetectParser();
-			parser.parse(in, contenthandler, metadata);
-			return metadata.get(Metadata.CONTENT_TYPE);
-		} catch (IOException | SAXException | TikaException e) {
-			return null;
-		}
-	}
+  /**
+   * Verifica se o body da requisição http contém alguma das sequências
+   * informadas
+   *
+   * @param contents os conteúdos a serem checados no body
+   * @return this
+   */
+  public RipResponseBuilder containsAny(final String... contents) {
+    final Predicate<Request> newCondition = req -> Arrays.asList(contents)
+        .stream().anyMatch(req.body()::contains);
+    updateConditions(newCondition);
+    return this;
+  }
 
-	private String contentType(final String body) {
-		String result = "text/html;charset=utf-8";
-		if (isValidJSON(body)) {
-			result = "application/json";
-		} else if (isValidXML(body)) {
-			if (body.contains("soap-envelope") && body.contains(":Envelope") && body.contains(":Body")) {
-				result = "application/soap+xml";
-			} else {
-				result = "application/xml";
-			}
-		}
-		return result;
-	}
+  private String content(final Path file) {
+    try (InputStream in = Files.newInputStream(file)) {
+      ContentHandler contenthandler = new BodyContentHandler();
+      Metadata metadata = new Metadata();
+      AutoDetectParser parser = new AutoDetectParser();
+      parser.getParsers().entrySet().stream()
+          .filter(e -> e.getKey().toString().contains("json"))
+          .forEach(e -> LOG.info(e.getKey() + ": "
+              + e.getValue().getSupportedTypes(new ParseContext())));
+      parser.parse(in, contenthandler, metadata);
+      return metadata.get(Metadata.CONTENT_TYPE);
+    } catch (IOException | SAXException | TikaException e) {
+      return null;
+    }
+  }
 
-	private boolean isValidJSON(final String json) {
-		boolean valid = false;
-		try (JsonParser parser = new JsonFactory().createParser(json)) {
-			while (!parser.isClosed()) {
-				parser.nextToken();
-			}
-			valid = true;
-		} catch (final IOException e) {
-			valid = false;
-		}
-		return valid;
-	}
+  private String contentType(final String body) {
+    String result = "text/html;charset=utf-8";
+    if (isValidJSON(body)) {
+      result = "application/json";
+    } else if (isValidXML(body)) {
+      if (body.contains("soap-envelope") && body.contains(":Envelope")
+          && body.contains(":Body")) {
+        result = "application/soap+xml";
+      } else {
+        result = "application/xml";
+      }
+    }
+    return result;
+  }
 
-	private boolean isValidXML(final String xml) {
-		boolean valid = false;
-		try (InputStream stream = new ByteArrayInputStream(xml.getBytes("UTF-8"))) {
-			final SAXParser saxParser = SAXParserFactory.newInstance().newSAXParser();
-			saxParser.parse(stream, new DefaultHandler());
-			valid = true;
-		} catch (SAXException | ParserConfigurationException | IOException e) {
-			valid = false;
-		}
-		return valid;
-	}
+  private boolean isValidJSON(final String json) {
+    boolean valid = false;
+    try (JsonParser parser = new JsonFactory().createParser(json)) {
+      while (!parser.isClosed()) {
+        parser.nextToken();
+      }
+      valid = true;
+    } catch (final IOException e) {
+      valid = false;
+    }
+    return valid;
+  }
 
-	/**
-	 * Verifica se o body da requisição http contém determinada sequência
-	 *
-	 * @param condition a condição a ser checada
-	 * @return this
-	 */
-	public RipResponseBuilder matches(final Predicate<Request> condition) {
-		updateConditions(condition);
-		return this;
-	}
+  private boolean isValidXML(final String xml) {
+    boolean valid = false;
+    try (InputStream stream = new ByteArrayInputStream(xml.getBytes("UTF-8"))) {
+      final SAXParser saxParser = SAXParserFactory.newInstance().newSAXParser();
+      saxParser.parse(stream, new DefaultHandler());
+      valid = true;
+    } catch (SAXException | ParserConfigurationException | IOException e) {
+      valid = false;
+    }
+    return valid;
+  }
 
-	/**
-	 * Verifica se o body da requisição http contém todas as sequências informadas
-	 *
-	 * @param conditions as condições a serem checadas
-	 * @return this
-	 */
-	public RipResponseBuilder matchesAll(@SuppressWarnings("unchecked") final Predicate<Request>... conditions) {
-		final Predicate<Request> newCondition = asList(conditions).stream().reduce(req -> true, Predicate::and);
-		updateConditions(newCondition);
-		return this;
-	}
+  /**
+   * Verifica se o body da requisição http contém determinada sequência
+   *
+   * @param condition a condição a ser checada
+   * @return this
+   */
+  public RipResponseBuilder matches(final Predicate<Request> condition) {
+    updateConditions(condition);
+    return this;
+  }
 
-	/**
-	 * Verifica se o body da requisição http contém alguma das sequências informadas
-	 *
-	 * @param conditions as condições a serem checadas
-	 * @return this
-	 */
-	public RipResponseBuilder matchesAny(@SuppressWarnings("unchecked") final Predicate<Request>... conditions) {
-		final Predicate<Request> newCondition = asList(conditions).stream().reduce(req -> false, Predicate::or);
-		updateConditions(newCondition);
-		return this;
-	}
+  /**
+   * Verifica se o body da requisição http contém todas as sequências informadas
+   *
+   * @param conditions as condições a serem checadas
+   * @return this
+   */
+  public RipResponseBuilder matchesAll(
+      @SuppressWarnings("unchecked") final Predicate<Request>... conditions) {
+    final Predicate<Request> newCondition = asList(conditions).stream()
+        .reduce(req -> true, Predicate::and);
+    updateConditions(newCondition);
+    return this;
+  }
 
-	/**
-	 * Operador lógico OU
-	 *
-	 * @return this
-	 */
-	public RipResponseBuilder or() {
-		op = OR;
-		return this;
-	}
+  /**
+   * Verifica se o body da requisição http contém alguma das sequências
+   * informadas
+   *
+   * @param conditions as condições a serem checadas
+   * @return this
+   */
+  public RipResponseBuilder matchesAny(
+      @SuppressWarnings("unchecked") final Predicate<Request>... conditions) {
+    final Predicate<Request> newCondition = asList(conditions).stream()
+        .reduce(req -> false, Predicate::or);
+    updateConditions(newCondition);
+    return this;
+  }
 
-	/**
-	 * Cria uma resposta com o conteúdo do arquivo informado. Essa é uma operação
-	 * terminal.
-	 *
-	 * @param withFile o caminho relativo para o arquivo, com raiz em
-	 *                 src/main/resources
-	 */
-	public void respond(final Path withFile) {
-		respond(withFile, OK_200);
-	}
+  /**
+   * Operador lógico OU
+   *
+   * @return this
+   */
+  public RipResponseBuilder or() {
+    op = OR;
+    return this;
+  }
 
-	/**
-	 * Cria uma resposta com o conteúdo do arquivo informado, retornando o
-	 * <code>status</code> http. Essa é uma operação terminal.
-	 *
-	 * @param withFile o caminho relativo para o arquivo, com raiz em
-	 *                 src/main/resources
-	 * @param status   o status de retorno
-	 */
-	public void respond(final Path withFile, final int status) {
-		try {
-			LOG.error(withFile.toString() + " Content-type: " + content(withFile));
-			respond(new String(Files.readAllBytes(withFile)), status);
-		} catch (final IOException e) {
-			respond("Arquivo não encontrado.", NOT_FOUND_404);
-		}
-	}
+  /**
+   * Cria uma resposta com o conteúdo do arquivo informado. Essa é uma operação
+   * terminal.
+   *
+   * @param withFile o caminho relativo para o arquivo, com raiz em
+   *                 src/main/resources
+   */
+  public void respond(final Path withFile) {
+    respond(withFile, OK_200);
+  }
 
-	/**
-	 * Cria uma resposta com o conteúdo do arquivo informado, retornando o
-	 * <code>status</code> http. Essa é uma operação terminal.
-	 *
-	 * @param response o conteúdo do corpo da mensagem de retorno
-	 */
-	public void respond(final String response) {
-		respond(response, OK_200);
-	}
+  /**
+   * Cria uma resposta com o conteúdo do arquivo informado, retornando o
+   * <code>status</code> http. Essa é uma operação terminal.
+   *
+   * @param withFile o caminho relativo para o arquivo, com raiz em
+   *                 src/main/resources
+   * @param status   o status de retorno
+   */
+  public void respond(final Path withFile, final int status) {
+    try {
+      LOG.error(withFile.toString() + " Content-type: " + content(withFile));
+      respond(new String(Files.readAllBytes(withFile)), status);
+    } catch (final IOException e) {
+      respond("Arquivo não encontrado.", NOT_FOUND_404);
+    }
+  }
 
-	/**
-	 * Cria uma resposta com o conteúdo do arquivo informado, retornando o
-	 * <code>status</code> http. Essa é uma operação terminal.
-	 *
-	 * @param response o conteúdo do corpo da mensagem de retorno
-	 * @param status   o status de retorno
-	 */
-	public void respond(final String response, final int status) {
-		if (condition == null) {
-			condition = s -> true;
-		}
-		final RipResponse res = new RipResponse(response, status);
-		CONDITIONS.get(route).put(condition, res);
-		route.createMethod();
-	}
+  /**
+   * Cria uma resposta com o conteúdo do arquivo informado, retornando o
+   * <code>status</code> http. Essa é uma operação terminal.
+   *
+   * @param response o conteúdo do corpo da mensagem de retorno
+   */
+  public void respond(final String response) {
+    respond(response, OK_200);
+  }
 
-	private void updateConditions(final Predicate<Request> newCondition) {
-		if (condition == null) {
-			condition = newCondition;
-		} else {
-			switch (op) {
-			case OR:
-				condition = condition.or(newCondition);
-				break;
-			case AND:
-				condition = condition.and(newCondition);
-				break;
-			}
-		}
-	}
+  /**
+   * Cria uma resposta com o conteúdo do arquivo informado, retornando o
+   * <code>status</code> http. Essa é uma operação terminal.
+   *
+   * @param response o conteúdo do corpo da mensagem de retorno
+   * @param status   o status de retorno
+   */
+  public void respond(final String response, final int status) {
+    if (condition == null) {
+      condition = s -> true;
+    }
+    final RipResponse res = new RipResponse(response, status);
+    CONDITIONS.get(route).put(condition, res);
+    route.createMethod();
+  }
+
+  private void updateConditions(final Predicate<Request> newCondition) {
+    if (condition == null) {
+      condition = newCondition;
+    } else {
+      switch (op) {
+      case OR:
+        condition = condition.or(newCondition);
+        break;
+      case AND:
+        condition = condition.and(newCondition);
+        break;
+      }
+    }
+  }
 
 }

@@ -73,7 +73,7 @@ public class RipServerTest {
     given().body("teste1").when().post("/test").then()
         .content(containsString("Ok"));
     given().body("teste2 something xpto").when().post("/test").then()
-        .content(containsString("KO"));
+        .content(containsString("Ko"));
   }
 
   @Test
