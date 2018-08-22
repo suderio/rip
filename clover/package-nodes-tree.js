@@ -9,7 +9,7 @@ var Packages = {
     "text": "net.technearts.rip",
     "package": "net.technearts.rip",
     "url": "net/technearts/rip/pkg-summary.html",
-            "coverage": "53.5%",
+            "coverage": "50.4%",
         "icon": "aui-icon aui-icon-small aui-iconfont-devtools-folder-closed",
             "li_attr": {"data-is-link": "true"},
         "a_attr": {"href": "net/technearts/rip/pkg-summary.html"},
