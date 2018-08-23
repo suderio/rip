@@ -1,5 +1,3 @@
-(A) Fechar versão 0.0.8 para permitir log
-(B) Melhorar a detecção de content-type
 (C) Finalizar versão autocloseable
 (C) Incluir parâmetro de content-type esperado
 (C) Melhorar cobertura de testes
