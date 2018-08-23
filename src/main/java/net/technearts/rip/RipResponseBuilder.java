@@ -7,6 +7,7 @@ import static org.eclipse.jetty.http.HttpStatus.NOT_FOUND_404;
 import static org.eclipse.jetty.http.HttpStatus.OK_200;
 
 import java.io.ByteArrayInputStream;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
@@ -32,6 +33,11 @@ import org.xml.sax.helpers.DefaultHandler;
 import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.core.JsonParser;
 
+import net.sf.jmimemagic.Magic;
+import net.sf.jmimemagic.MagicException;
+import net.sf.jmimemagic.MagicMatch;
+import net.sf.jmimemagic.MagicMatchNotFoundException;
+import net.sf.jmimemagic.MagicParseException;
 import spark.ModelAndView;
 import spark.Request;
 
@@ -221,6 +227,23 @@ public class RipResponseBuilder {
     updateConditions(newCondition);
     return this;
   }
+  
+  private String contentType(Path file) {
+    MagicMatch match = null;
+    try {
+      match = Magic.getMagicMatch(Files.readAllBytes(file), false);
+      if (match.getSubMatches().size() > 0) {
+        return match.getSubMatches().toArray()[0].toString();
+      }
+      return match.getMimeType();
+    } catch (MagicParseException | MagicMatchNotFoundException | MagicException
+        | IOException | NullPointerException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+      return null;
+    }
+
+  }
 
   private String contentType(final String body) {
     String result = "text/html;charset=utf-8";
@@ -333,6 +356,7 @@ public class RipResponseBuilder {
    */
   public void respond(final Path withFile, final int status) {
     try {
+      LOG.info(withFile + ": " + contentType(withFile));
       respond(new String(Files.readAllBytes(withFile)), status);
     } catch (final IOException e) {
       respond("Arquivo não encontrado.", NOT_FOUND_404);
