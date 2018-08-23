@@ -1,5 +1,7 @@
+(B) Tratar charsets
 (C) Finalizar versão autocloseable
 (C) Incluir parâmetro de content-type esperado
 (C) Melhorar cobertura de testes
 (C) Criar exemplo de template com conteúdo do body
 (B) Criar ação de log para uma rota
+(D) Verificar se magic.xml funciona corretamente no uber jar (tem que substituir o do jmimemagic)
