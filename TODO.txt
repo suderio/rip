@@ -5,3 +5,4 @@
 (C) Criar exemplo de template com conteúdo do body
 (B) Criar ação de log para uma rota
 (D) Verificar se magic.xml funciona corretamente no uber jar (tem que substituir o do jmimemagic)
+(C) Alterar SṕyRequest para usar http

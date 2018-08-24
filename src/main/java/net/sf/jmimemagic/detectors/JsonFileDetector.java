@@ -115,7 +115,7 @@ public class JsonFileDetector implements MagicDetector
           return new String[] { "application/json" };
         } catch (IOException e) {
           
-          log.error("JsonFileDetector: failed to process data", e);
+          log.error("JsonFileDetector: failed to process data");
         }
 
         return null;
@@ -149,7 +149,7 @@ public class JsonFileDetector implements MagicDetector
                 return process(b, offset, length, bitmask, comparator, mimeType, params);
             }
         } catch (IOException e) {
-            log.error("JsonFileDetector: error", e);
+            log.error("JsonFileDetector: error");
         } finally {
         	IOUtils.closeQuietly(is);
         }
