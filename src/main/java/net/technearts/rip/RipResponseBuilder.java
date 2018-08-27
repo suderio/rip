@@ -71,13 +71,17 @@ public class RipResponseBuilder {
         LOG.debug("Respondendo com \n{}", response.getContent());
         res.status(response.getStatus());
         result = response.getContent();
+        if (response.getContentType() == null) {
+          res.header("Content-Type", contentType(result.getBytes(UTF_8)));
+        } else {
+          res.header("Content-Type", response.getContentType());
+        }
       } else {
         res.status(NOT_FOUND_404);
         LOG.warn("Resposta para {} {} não encontrada", route.getMethod(),
             route.getPath());
         result = "";
       }
-      res.header("Content-Type", contentType(result.getBytes(UTF_8)));
       ofNullable(LOGS.get(route)).ifPresent(f -> f.apply(req, res));
       return result;
     };
@@ -318,11 +322,19 @@ public class RipResponseBuilder {
    * @param status   o status de retorno
    */
   public void respond(final Path withFile, final int status) {
+    respond(withFile, status, null);
+  }
+  
+  public void respond(final Path withFile, String contentType) {
+    respond(withFile, OK_200, contentType);
+  }
+  
+  public void respond(final Path withFile, final int status, String contentType) {
     try {
-      respond(new String(Files.readAllBytes(withFile)), status);
-    } catch (final IOException e) {
-      respond("Arquivo não encontrado.", NOT_FOUND_404);
-    }
+	  respond(new String(Files.readAllBytes(withFile)), status, contentType);
+	} catch (final IOException e) {
+	  respond("Arquivo não encontrado.", NOT_FOUND_404);
+	}
   }
 
   /**
@@ -334,6 +346,10 @@ public class RipResponseBuilder {
   public void respond(final String response) {
     respond(response, OK_200);
   }
+  
+  public void respond(final String response, String contentType) {
+	    respond(response, OK_200, contentType);
+	  }
 
   /**
    * Cria uma resposta com o conteúdo do arquivo informado, retornando o
@@ -343,12 +359,16 @@ public class RipResponseBuilder {
    * @param status   o status de retorno
    */
   public void respond(final String response, final int status) {
-    if (condition == null) {
-      condition = s -> true;
-    }
-    final RipResponse res = new RipResponse(response, status);
-    CONDITIONS.get(route).put(condition, res);
-    route.createMethod();
+	respond(response, status, null);
+  }
+  
+  public void respond(final String response, final int status, final String contentType) {
+	if (condition == null) {
+	  condition = s -> true;
+	}
+	final RipResponse res = new RipResponse(response, status, contentType);
+	CONDITIONS.get(route).put(condition, res);
+	route.createMethod();
   }
 
   private void updateConditions(final Predicate<Request> newCondition) {
