@@ -14,10 +14,11 @@ class RipResponse {
   private String contentType;
 
   public RipResponse(final Map<String, Function<Request, String>> attributes,
-      final String template, final int status) {
+      final String template, final int status, final String contentType) {
     this.attributes = attributes;
     content = template;
     this.status = status;
+    this.contentType = contentType;
   }
 
   public RipResponse(final String body, final int status, final String contentType) {

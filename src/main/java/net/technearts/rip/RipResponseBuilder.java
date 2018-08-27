@@ -59,6 +59,7 @@ public class RipResponseBuilder {
       CONDITIONS.put(route,
           new LinkedHashMap<Predicate<Request>, RipResponse>());
     }
+    // TODO isso deveria estar no RipResponse
     route.route = (req, res) -> {
       final Optional<Map.Entry<Predicate<Request>, RipResponse>> optional = CONDITIONS
           .get(route).entrySet().stream()
@@ -100,6 +101,11 @@ public class RipResponseBuilder {
             .getAttributes().entrySet()) {
           attributes.put(f.getKey(), f.getValue().apply(req));
         }
+        if (response.getContentType() != null) {
+        	res.header("Content-Type", response.getContentType());
+          } else {
+        	res.header("Content-Type", "text/plain");
+          }
         result = new ModelAndView(attributes, response.getContent());
       } else {
         res.status(NOT_FOUND_404);
@@ -107,7 +113,6 @@ public class RipResponseBuilder {
             route.getPath());
         result = null;
       }
-      // res.header("Content-Type", contentType(result));
       return result;
     };
   }
@@ -136,6 +141,18 @@ public class RipResponseBuilder {
       final Consumer<Map<String, Function<Request, String>>>... consumers) {
     buildResponse(template, OK_200, consumers);
   }
+  
+  @SafeVarargs
+public final void buildResponse(final String template, final String contentType,
+	final Consumer<Map<String, Function<Request, String>>>... consumers) {
+	buildResponse(template, OK_200, contentType, consumers);
+  }
+  
+  @SafeVarargs
+public final void buildResponse(final String template, final int status,
+	      final Consumer<Map<String, Function<Request, String>>>... consumers) {
+	  buildResponse(template, status, null, consumers);
+  }
 
   /**
    * Cria uma resposta utilizando um arquivo de template, substituindo as
@@ -148,13 +165,13 @@ public class RipResponseBuilder {
    * @param consumers lista de alterações ao mapa de variáveis X funções
    */
   @SafeVarargs
-  public final void buildResponse(final String template, final int status,
+  public final void buildResponse(final String template, final int status, final String contentType,
       final Consumer<Map<String, Function<Request, String>>>... consumers) {
     final Map<String, Function<Request, String>> attributes = new HashMap<>();
     for (final Consumer<Map<String, Function<Request, String>>> consumer : consumers) {
       consumer.accept(attributes);
     }
-    buildResponse(template, status, attributes);
+    buildResponse(template, status, contentType, attributes);
   }
 
   /**
@@ -165,12 +182,12 @@ public class RipResponseBuilder {
    * @param status     o status de retorno
    * @param attributes lista de alterações ao mapa de variáveis X funções
    */
-  public final void buildResponse(final String template, final int status,
+  public final void buildResponse(final String template, final int status, final String contentType,
       final Map<String, Function<Request, String>> attributes) {
     if (condition == null) {
       condition = s -> true;
     }
-    final RipResponse res = new RipResponse(attributes, template, status);
+    final RipResponse res = new RipResponse(attributes, template, status, contentType);
     CONDITIONS.get(route).put(condition, res);
     route.createTemplateMethod();
   }
@@ -184,7 +201,12 @@ public class RipResponseBuilder {
    */
   public final void buildResponse(final String template,
       final Map<String, Function<Request, String>> attributes) {
-    buildResponse(template, OK_200, attributes);
+    buildResponse(template, OK_200, null, attributes);
+  }
+  
+  public final void buildResponse(final String template, final String contentType,
+	final Map<String, Function<Request, String>> attributes) {
+	buildResponse(template, OK_200, contentType, attributes);
   }
 
   /**
