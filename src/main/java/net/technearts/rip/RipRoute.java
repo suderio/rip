@@ -45,6 +45,12 @@ import spark.template.freemarker.FreeMarkerEngine;
 
 /**
  * Uma rota (Verbo http + Caminho) associado a um servidor Rip
+ * 
+ * Um RipRoute é responsável por decidir qual resposta enviar a qual requisição.
+ * Isso é feito através de um <code>Predicate&lt;Request&gt;</code> que decide
+ * qual <code>RipResponse</code> será usado para gerar a resposta.
+ * 
+ * 
  */
 public class RipRoute implements Comparable<RipRoute>, AutoCloseable {
 	private static final Logger LOG = LoggerFactory.getLogger(RipRoute.class);
@@ -63,16 +69,42 @@ public class RipRoute implements Comparable<RipRoute>, AutoCloseable {
 		this.ripServer = ripServer;
 	}
 
+	/**
+	 * Configura a condição para que essa rota seja usada, e a resposta que será
+	 * enviada.
+	 * 
+	 * Deve ser o último método a ser chamado para essa rota.
+	 * 
+	 * @param predicate As condições para que essa rota seja utilizada
+	 * @param response  A resposta que será enviada
+	 */
 	public void setCondition(Predicate<Request> predicate, RipResponse response) {
 		putCondition(predicate, response);
 		createMethod();
 	}
-	
+
+	/**
+	 * Configura a condição para que essa rota seja usada, e a resposta que será
+	 * enviada.
+	 * 
+	 * Deve ser o último método a ser chamado para essa rota.
+	 * 
+	 * @param predicate As condições para que essa rota seja utilizada
+	 * @param response  A resposta que será enviada com o template a ser renderizado
+	 */
 	public void setTemplateCondition(Predicate<Request> predicate, RipResponse response) {
 		putCondition(predicate, response);
-		createTemplateMethod();;
+		createTemplateMethod();
+		;
 	}
-	
+
+	/**
+	 * Configura a condição para que essa rota seja usada, e a resposta que será
+	 * enviada.
+	 * 
+	 * @param predicate As condições para que essa rota seja utilizada
+	 * @param response  A resposta que será enviada
+	 */
 	private void putCondition(Predicate<Request> predicate, RipResponse response) {
 		Map<Predicate<Request>, RipResponse> map = CONDITIONS.get(this);
 		if (map == null) {
@@ -82,6 +114,12 @@ public class RipRoute implements Comparable<RipRoute>, AutoCloseable {
 		map.put(predicate, response);
 	}
 
+	/**
+	 * Acrescenta uma chamada de log à rota.
+	 * 
+	 * @param log Uma função que constrói a mensagem de log a partir do request e
+	 *            response
+	 */
 	public void addLog(BiFunction<Request, Response, String> log) {
 		LOGS.put(this, log);
 	}
@@ -108,6 +146,12 @@ public class RipRoute implements Comparable<RipRoute>, AutoCloseable {
 		return create(path, connect);
 	}
 
+	/**
+	 * Utiliza o jmimemagic para detectar o content type de um stream
+	 * 
+	 * @param stream o stream a ser analisado
+	 * @return o mime content type detectado
+	 */
 	private String contentType(final byte[] stream) {
 		MagicMatch match = null;
 		try {
@@ -121,6 +165,13 @@ public class RipRoute implements Comparable<RipRoute>, AutoCloseable {
 		return match.getMimeType();
 	}
 
+	/**
+	 * Constói um <code>Route</code> que verifica dinamicamente se deve ser chamado
+	 * em determinada rota.
+	 * 
+	 * @return Um <code>spark.Route</code> que será usado no servidor para responder
+	 *         à rota
+	 */
 	private Route getRoute() {
 		return (req, res) -> {
 			final Optional<Map.Entry<Predicate<Request>, RipResponse>> optional = CONDITIONS.get(this).entrySet()
@@ -148,6 +199,13 @@ public class RipRoute implements Comparable<RipRoute>, AutoCloseable {
 		};
 	}
 
+	/**
+	 * Constói um <code>TemplateViewRoute</code> que verifica dinamicamente se deve
+	 * ser chamado em determinada rota.
+	 * 
+	 * @return Um <code>spark.TemplateViewRoute</code> que será usado no servidor
+	 *         para responder à rota
+	 */
 	private TemplateViewRoute getTemplateRoute() {
 		return (req, res) -> {
 			final Optional<Map.Entry<Predicate<Request>, RipResponse>> optional = CONDITIONS.get(this).entrySet()

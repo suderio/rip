@@ -29,6 +29,11 @@ enum OP {
 
 /**
  * Um construtor de respostas com base no conteúdo do body da requisição http.
+ * 
+ * Um <code>RipResponseBuilder</code> é usado em três etapas: a criação através
+ * da vinculação com um <code>RipRoute</code>, a configuração de condições para
+ * a chamada à rota ser respondida e a resposta a ser enviada se todas as
+ * condições forem atendidas.
  */
 public class RipResponseBuilder {
 	private static final Logger LOG = LoggerFactory.getLogger(RipResponseBuilder.class);
