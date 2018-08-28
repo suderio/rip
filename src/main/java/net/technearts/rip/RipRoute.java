@@ -1,6 +1,9 @@
 package net.technearts.rip;
 
+import static java.nio.charset.StandardCharsets.UTF_8;
 import static java.util.Objects.hash;
+import static java.util.Optional.ofNullable;
+import static org.eclipse.jetty.http.HttpStatus.NOT_FOUND_404;
 import static spark.route.HttpMethod.connect;
 import static spark.route.HttpMethod.delete;
 import static spark.route.HttpMethod.get;
@@ -11,7 +14,14 @@ import static spark.route.HttpMethod.post;
 import static spark.route.HttpMethod.put;
 import static spark.route.HttpMethod.trace;
 
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
+import java.util.function.BiFunction;
+import java.util.function.Function;
+import java.util.function.Predicate;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,6 +29,14 @@ import org.slf4j.LoggerFactory;
 import com.google.common.collect.ComparisonChain;
 
 import freemarker.template.Configuration;
+import net.sf.jmimemagic.Magic;
+import net.sf.jmimemagic.MagicException;
+import net.sf.jmimemagic.MagicMatch;
+import net.sf.jmimemagic.MagicMatchNotFoundException;
+import net.sf.jmimemagic.MagicParseException;
+import spark.ModelAndView;
+import spark.Request;
+import spark.Response;
 import spark.Route;
 import spark.TemplateEngine;
 import spark.TemplateViewRoute;
@@ -32,6 +50,10 @@ public class RipRoute implements Comparable<RipRoute>, AutoCloseable {
   private static final Logger LOG = LoggerFactory.getLogger(RipRoute.class);
   private static final Configuration CFG = FreemarkerConfiguration
       .getDefaultConfiguration();
+  /* TODO esses dois devem ser criados/retornados por um Factory */
+  private static final Map<RipRoute, Map<Predicate<Request>, RipResponse>> CONDITIONS = new LinkedHashMap<>();
+  private static final Map<RipRoute, BiFunction<Request, Response, String>> LOGS = new LinkedHashMap<>();
+  
   private final RipServer ripServer;
   private HttpMethod method;
   private String path;
@@ -42,6 +64,23 @@ public class RipRoute implements Comparable<RipRoute>, AutoCloseable {
     this.ripServer = ripServer;
   }
 
+  public Map<Predicate<Request>, RipResponse> getConditions() {
+	  Map<Predicate<Request>, RipResponse> result = CONDITIONS.get(this);
+	  if (result == null) {
+		  result = new LinkedHashMap<Predicate<Request>, RipResponse>();
+	      CONDITIONS.put(this, result);
+	  }
+	  return result;
+  }
+  
+  public BiFunction<Request, Response, String> getLogs() {
+	  return LOGS.get(this);
+  }
+  
+  public void setLogs(BiFunction<Request, Response, String> log) {
+	  LOGS.put(this, log);
+  }
+  
   @Override
   public void close() {
     // TODO
@@ -64,10 +103,86 @@ public class RipRoute implements Comparable<RipRoute>, AutoCloseable {
     return create(path, connect);
   }
 
+  private String contentType(final byte[] stream) {
+	    MagicMatch match = null;
+	    try {
+	      match = Magic.getMagicMatch(stream, false);
+	      if (match.getSubMatches().size() > 0) {
+	        return match.getSubMatches().toArray()[0].toString();
+	      }
+	    } catch (MagicParseException | MagicMatchNotFoundException | MagicException
+	        | NullPointerException e) {
+	      return "text/html;charset=utf-8";
+	    }
+	    return match.getMimeType();
+	  }
+  
+  private Route getRoute() {
+	  return (req, res) -> {
+	        final Optional<Map.Entry<Predicate<Request>, RipResponse>> optional = this.getConditions()
+	                .entrySet().stream()
+	                .filter(entry -> entry.getKey().test(req)).findFirst();
+	            RipResponse response;
+	            String result;
+	            if (optional.isPresent()) {
+	              response = optional.get().getValue();
+	              LOG.debug("Requisição para {}:\n{}", req.pathInfo(), req.body());
+	              LOG.debug("Respondendo com \n{}", response.getContent());
+	              res.status(response.getStatus());
+	              result = response.getContent();
+	              if (response.getContentType() == null) {
+	                res.header("Content-Type", contentType(result.getBytes(UTF_8)));
+	              } else {
+	                res.header("Content-Type", response.getContentType());
+	              }
+	            } else {
+	              res.status(NOT_FOUND_404);
+	              LOG.warn("Resposta para {} {} não encontrada", this.getMethod(),
+	                  this.getPath());
+	              result = "";
+	            }
+	            ofNullable(this.getLogs()).ifPresent(f -> f.apply(req, res));
+	            return result;
+	          };
+  }
+  
+  private TemplateViewRoute getTemplateRoute() {
+	  return (req, res) -> {
+	        final Optional<Map.Entry<Predicate<Request>, RipResponse>> optional = this.getConditions()
+	        		  .entrySet().stream()
+	              .filter(entry -> entry.getKey().test(req)).findFirst();
+	          RipResponse response;
+	          ModelAndView result;
+	          if (optional.isPresent()) {
+	            response = optional.get().getValue();
+	            LOG.debug("Respondendo com \n{}", response.getContent());
+	            res.status(response.getStatus());
+	            final Map<String, Object> attributes = new HashMap<>();
+	            for (final Map.Entry<String, Function<Request, String>> f : response
+	                .getAttributes().entrySet()) {
+	              attributes.put(f.getKey(), f.getValue().apply(req));
+	            }
+	            if (response.getContentType() != null) {
+	              res.header("Content-Type", response.getContentType());
+	            } else {
+	              res.header("Content-Type", "text/plain");
+	            }
+	            result = new ModelAndView(attributes, response.getContent());
+	          } else {
+	            res.status(NOT_FOUND_404);
+	            LOG.debug("Resposta para {} {} não encontrada", this.getMethod(),
+	                this.getPath());
+	            result = null;
+	          }
+	          return result;
+	        };
+  }
   private RipResponseBuilder create(final String path,
       final HttpMethod method) {
     this.method = method;
     this.path = path;
+    this.route = getRoute();
+    this.templateRoute = getTemplateRoute();
     return new RipResponseBuilder(this);
   }
 

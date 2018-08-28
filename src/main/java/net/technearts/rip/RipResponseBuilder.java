@@ -13,7 +13,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Optional;
 import java.util.function.BiFunction;
@@ -41,9 +40,6 @@ enum OP {
  * Um construtor de respostas com base no conteúdo do body da requisição http.
  */
 public class RipResponseBuilder {
-  // TODO passar os três mapas para dentro do RipRoute
-  private static final Map<RipRoute, Map<Predicate<Request>, RipResponse>> CONDITIONS = new LinkedHashMap<>();
-  private static final Map<RipRoute, BiFunction<Request, Response, String>> LOGS = new LinkedHashMap<>();
   private static final Logger LOG = LoggerFactory
       .getLogger(RipResponseBuilder.class);
 
@@ -55,66 +51,6 @@ public class RipResponseBuilder {
     LOG.info("Criando RipResponseBuilder para requisição {} {}",
         route.getMethod(), route.getPath());
     this.route = route;
-    if (!CONDITIONS.containsKey(route)) {
-      CONDITIONS.put(route,
-          new LinkedHashMap<Predicate<Request>, RipResponse>());
-    }
-    // TODO isso deveria estar no RipResponse
-    route.route = (req, res) -> {
-      final Optional<Map.Entry<Predicate<Request>, RipResponse>> optional = CONDITIONS
-          .get(route).entrySet().stream()
-          .filter(entry -> entry.getKey().test(req)).findFirst();
-      RipResponse response;
-      String result;
-      if (optional.isPresent()) {
-        response = optional.get().getValue();
-        LOG.debug("Requisição para {}:\n{}", req.pathInfo(), req.body());
-        LOG.debug("Respondendo com \n{}", response.getContent());
-        res.status(response.getStatus());
-        result = response.getContent();
-        if (response.getContentType() == null) {
-          res.header("Content-Type", contentType(result.getBytes(UTF_8)));
-        } else {
-          res.header("Content-Type", response.getContentType());
-        }
-      } else {
-        res.status(NOT_FOUND_404);
-        LOG.warn("Resposta para {} {} não encontrada", route.getMethod(),
-            route.getPath());
-        result = "";
-      }
-      ofNullable(LOGS.get(route)).ifPresent(f -> f.apply(req, res));
-      return result;
-    };
-    route.templateRoute = (req, res) -> {
-      final Optional<Map.Entry<Predicate<Request>, RipResponse>> optional = CONDITIONS
-          .get(route).entrySet().stream()
-          .filter(entry -> entry.getKey().test(req)).findFirst();
-      RipResponse response;
-      ModelAndView result;
-      if (optional.isPresent()) {
-        response = optional.get().getValue();
-        LOG.debug("Respondendo com \n{}", response.getContent());
-        res.status(response.getStatus());
-        final Map<String, Object> attributes = new HashMap<>();
-        for (final Map.Entry<String, Function<Request, String>> f : response
-            .getAttributes().entrySet()) {
-          attributes.put(f.getKey(), f.getValue().apply(req));
-        }
-        if (response.getContentType() != null) {
-          res.header("Content-Type", response.getContentType());
-        } else {
-          res.header("Content-Type", "text/plain");
-        }
-        result = new ModelAndView(attributes, response.getContent());
-      } else {
-        res.status(NOT_FOUND_404);
-        LOG.debug("Resposta para {} {} não encontrada", route.getMethod(),
-            route.getPath());
-        result = null;
-      }
-      return result;
-    };
   }
 
   /**
@@ -185,7 +121,7 @@ public class RipResponseBuilder {
     }
     final RipResponse res = new RipResponse(attributes, template, status,
         contentType);
-    CONDITIONS.get(route).put(condition, res);
+    route.getConditions().put(condition, res);
     route.createTemplateMethod();
   }
 
@@ -253,20 +189,6 @@ public class RipResponseBuilder {
     return this;
   }
 
-  private String contentType(final byte[] stream) {
-    MagicMatch match = null;
-    try {
-      match = Magic.getMagicMatch(stream, false);
-      if (match.getSubMatches().size() > 0) {
-        return match.getSubMatches().toArray()[0].toString();
-      }
-    } catch (MagicParseException | MagicMatchNotFoundException | MagicException
-        | NullPointerException e) {
-      return "text/html;charset=utf-8";
-    }
-    return match.getMimeType();
-  }
-
   /**
    * Cria um log dos objetos Request/Response na chamada ao Route. Várias
    * chamadas ao método apenas substituem o log criado anteriormente.
@@ -275,7 +197,7 @@ public class RipResponseBuilder {
    * @return this
    */
   public RipResponseBuilder log(final BiFunction<Request, Response, String> f) {
-    LOGS.put(route, f);
+    route.setLogs(f);
     return this;
   }
 
@@ -392,7 +314,7 @@ public class RipResponseBuilder {
       condition = s -> true;
     }
     final RipResponse res = new RipResponse(response, status, contentType);
-    CONDITIONS.get(route).put(condition, res);
+    route.getConditions().put(condition, res);
     route.createMethod();
   }
 
