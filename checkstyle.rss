@@ -25,9 +25,9 @@ under the License.
     <language>en-us</language>
     <copyright>&#169;2018 Technearts</copyright>
     <item>
-      <title>File: 12,
+      <title>File: 13,
              Errors: 0,
-             Warnings: 476,
+             Warnings: 184,
              Infos: 0
       </title>
             <link>https://suderio.github.io/rip/checkstyle.html</link>
@@ -60,20 +60,6 @@ under the License.
               </tr>
                           <tr>
                 <td>
-                  <a href="https://suderio.github.io/rip/checkstyle.html#net.technearts.rip.RipRoute.java">net/technearts/rip/RipRoute.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  390
-                </td>
-                <td>
-                  0
-                </td>
-              </tr>
-                          <tr>
-                <td>
                   <a href="https://suderio.github.io/rip/checkstyle.html#net.technearts.rip.Cli.java">net/technearts/rip/Cli.java</a>
                 </td>
                 <td>
@@ -81,20 +67,6 @@ under the License.
                 </td>
                 <td>
                   0
-                </td>
-                <td>
-                  0
-                </td>
-              </tr>
-                          <tr>
-                <td>
-                  <a href="https://suderio.github.io/rip/checkstyle.html#net.technearts.rip.RipWebFilter.java">net/technearts/rip/RipWebFilter.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  3
                 </td>
                 <td>
                   0
@@ -116,13 +88,13 @@ under the License.
               </tr>
                           <tr>
                 <td>
-                  <a href="https://suderio.github.io/rip/checkstyle.html#net.technearts.rip.RipServer.java">net/technearts/rip/RipServer.java</a>
+                  <a href="https://suderio.github.io/rip/checkstyle.html#net.sf.jmimemagic.detectors.JsonFileDetector.java">net/sf/jmimemagic/detectors/JsonFileDetector.java</a>
                 </td>
                 <td>
                   0
                 </td>
                 <td>
-                  14
+                  16
                 </td>
                 <td>
                   0
@@ -137,6 +109,48 @@ under the License.
                 </td>
                 <td>
                   12
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://suderio.github.io/rip/checkstyle.html#net.technearts.rip.RipRoute.java">net/technearts/rip/RipRoute.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  82
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://suderio.github.io/rip/checkstyle.html#net.technearts.rip.RipWebFilter.java">net/technearts/rip/RipWebFilter.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  3
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://suderio.github.io/rip/checkstyle.html#net.technearts.rip.RipServer.java">net/technearts/rip/RipServer.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  14
                 </td>
                 <td>
                   0

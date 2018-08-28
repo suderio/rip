@@ -25,9 +25,9 @@ under the License.
     <language>en-us</language>
     <copyright>&#169;2018 Technearts</copyright>
     <item>
-      <title>File: 10,
+      <title>File: 11,
              Errors: 0,
-             Warnings: 476,
+             Warnings: 184,
              Infos: 0
       </title>
             <link>https://suderio.github.io/rip/checkstyle.html</link>
@@ -66,7 +66,7 @@ under the License.
                   0
                 </td>
                 <td>
-                  390
+                  82
                 </td>
                 <td>
                   0
@@ -95,6 +95,20 @@ under the License.
                 </td>
                 <td>
                   5
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://suderio.github.io/rip/checkstyle.html#net.sf.jmimemagic.detectors.JsonFileDetector.java">net/sf/jmimemagic/detectors/JsonFileDetector.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  16
                 </td>
                 <td>
                   0

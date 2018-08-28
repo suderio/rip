@@ -19,19 +19,23 @@
 <a class="jxr_linenumber" name="L11" href="#L11">11</a>    <strong class="jxr_keyword">private</strong> String content;
 <a class="jxr_linenumber" name="L12" href="#L12">12</a>    <strong class="jxr_keyword">private</strong> Map&lt;String, Function&lt;Request, String&gt;&gt; attributes;
 <a class="jxr_linenumber" name="L13" href="#L13">13</a>    <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">int</strong> status;
-<a class="jxr_linenumber" name="L14" href="#L14">14</a>  
-<a class="jxr_linenumber" name="L15" href="#L15">15</a>    <strong class="jxr_keyword">public</strong> <a href="../../../net/technearts/rip/RipResponse.html">RipResponse</a>(<strong class="jxr_keyword">final</strong> Map&lt;String, Function&lt;Request, String&gt;&gt; attributes,
-<a class="jxr_linenumber" name="L16" href="#L16">16</a>        <strong class="jxr_keyword">final</strong> String template, <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">int</strong> status) {
-<a class="jxr_linenumber" name="L17" href="#L17">17</a>      <strong class="jxr_keyword">this</strong>.attributes = attributes;
-<a class="jxr_linenumber" name="L18" href="#L18">18</a>      content = template;
-<a class="jxr_linenumber" name="L19" href="#L19">19</a>      <strong class="jxr_keyword">this</strong>.status = status;
-<a class="jxr_linenumber" name="L20" href="#L20">20</a>    }
-<a class="jxr_linenumber" name="L21" href="#L21">21</a>  
-<a class="jxr_linenumber" name="L22" href="#L22">22</a>    <strong class="jxr_keyword">public</strong> <a href="../../../net/technearts/rip/RipResponse.html">RipResponse</a>(<strong class="jxr_keyword">final</strong> String body, <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">int</strong> status) {
-<a class="jxr_linenumber" name="L23" href="#L23">23</a>      content = body;
-<a class="jxr_linenumber" name="L24" href="#L24">24</a>      <strong class="jxr_keyword">this</strong>.status = status;
-<a class="jxr_linenumber" name="L25" href="#L25">25</a>    }
-<a class="jxr_linenumber" name="L26" href="#L26">26</a>  }
+<a class="jxr_linenumber" name="L14" href="#L14">14</a>    <strong class="jxr_keyword">private</strong> String contentType;
+<a class="jxr_linenumber" name="L15" href="#L15">15</a>  
+<a class="jxr_linenumber" name="L16" href="#L16">16</a>    <strong class="jxr_keyword">public</strong> <a href="../../../net/technearts/rip/RipResponse.html">RipResponse</a>(<strong class="jxr_keyword">final</strong> Map&lt;String, Function&lt;Request, String&gt;&gt; attributes,
+<a class="jxr_linenumber" name="L17" href="#L17">17</a>        <strong class="jxr_keyword">final</strong> String template, <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">int</strong> status, <strong class="jxr_keyword">final</strong> String contentType) {
+<a class="jxr_linenumber" name="L18" href="#L18">18</a>      <strong class="jxr_keyword">this</strong>.attributes = attributes;
+<a class="jxr_linenumber" name="L19" href="#L19">19</a>      content = template;
+<a class="jxr_linenumber" name="L20" href="#L20">20</a>      <strong class="jxr_keyword">this</strong>.status = status;
+<a class="jxr_linenumber" name="L21" href="#L21">21</a>      <strong class="jxr_keyword">this</strong>.contentType = contentType;
+<a class="jxr_linenumber" name="L22" href="#L22">22</a>    }
+<a class="jxr_linenumber" name="L23" href="#L23">23</a>  
+<a class="jxr_linenumber" name="L24" href="#L24">24</a>    <strong class="jxr_keyword">public</strong> <a href="../../../net/technearts/rip/RipResponse.html">RipResponse</a>(<strong class="jxr_keyword">final</strong> String body, <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">int</strong> status,
+<a class="jxr_linenumber" name="L25" href="#L25">25</a>        <strong class="jxr_keyword">final</strong> String contentType) {
+<a class="jxr_linenumber" name="L26" href="#L26">26</a>      content = body;
+<a class="jxr_linenumber" name="L27" href="#L27">27</a>      <strong class="jxr_keyword">this</strong>.status = status;
+<a class="jxr_linenumber" name="L28" href="#L28">28</a>      <strong class="jxr_keyword">this</strong>.contentType = contentType;
+<a class="jxr_linenumber" name="L29" href="#L29">29</a>    }
+<a class="jxr_linenumber" name="L30" href="#L30">30</a>  }
 </pre>
 <hr/>
 <div id="footer">Copyright &#169; 2018 <a href="https://www.technearts.net">Technearts</a>. All rights reserved.</div>
