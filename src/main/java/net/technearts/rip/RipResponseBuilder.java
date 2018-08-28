@@ -107,8 +107,7 @@ public class RipResponseBuilder {
 			condition = s -> true;
 		}
 		final RipResponse res = new RipResponse(attributes, template, status, contentType);
-		route.putCondition(condition, res);
-		route.createTemplateMethod();
+		route.setTemplateCondition(condition, res);
 	}
 
 	/**
@@ -287,8 +286,7 @@ public class RipResponseBuilder {
 			condition = s -> true;
 		}
 		final RipResponse res = new RipResponse(response, status, contentType);
-		route.putCondition(condition, res);
-		route.createMethod();
+		route.setCondition(condition, res);
 	}
 
 	public void respond(final String response, final String contentType) {

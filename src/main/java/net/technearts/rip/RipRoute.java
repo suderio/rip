@@ -63,7 +63,17 @@ public class RipRoute implements Comparable<RipRoute>, AutoCloseable {
 		this.ripServer = ripServer;
 	}
 
-	public void putCondition(Predicate<Request> predicate, RipResponse response) {
+	public void setCondition(Predicate<Request> predicate, RipResponse response) {
+		putCondition(predicate, response);
+		createMethod();
+	}
+	
+	public void setTemplateCondition(Predicate<Request> predicate, RipResponse response) {
+		putCondition(predicate, response);
+		createTemplateMethod();;
+	}
+	
+	private void putCondition(Predicate<Request> predicate, RipResponse response) {
 		Map<Predicate<Request>, RipResponse> map = CONDITIONS.get(this);
 		if (map == null) {
 			map = new LinkedHashMap<Predicate<Request>, RipResponse>();
@@ -175,7 +185,7 @@ public class RipRoute implements Comparable<RipRoute>, AutoCloseable {
 		return new RipResponseBuilder(this);
 	}
 
-	void createMethod() {
+	private void createMethod() {
 		switch (getMethod()) {
 		case connect:
 			ripServer.service.connect(path, route);
@@ -214,7 +224,7 @@ public class RipRoute implements Comparable<RipRoute>, AutoCloseable {
 		}
 	}
 
-	void createTemplateMethod() {
+	private void createTemplateMethod() {
 		// TODO usar método render do FreeMarkerEngine em vez de passar como
 		// argumento
 		final TemplateEngine templateEngine = new FreeMarkerEngine(CFG);
