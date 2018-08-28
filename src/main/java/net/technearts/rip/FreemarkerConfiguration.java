@@ -8,6 +8,10 @@ import freemarker.template.Configuration;
 import freemarker.template.TemplateExceptionHandler;
 
 public class FreemarkerConfiguration extends Configuration {
+  public static Configuration getDefaultConfiguration() {
+    return new FreemarkerConfiguration();
+  }
+
   private FreemarkerConfiguration() {
     super(VERSION_2_3_26);
     setDefaultEncoding("UTF-8");
@@ -25,9 +29,5 @@ public class FreemarkerConfiguration extends Configuration {
       // TODO Auto-generated catch block
       e.printStackTrace();
     }
-  }
-
-  public static Configuration getDefaultConfiguration() {
-    return new FreemarkerConfiguration();
   }
 }

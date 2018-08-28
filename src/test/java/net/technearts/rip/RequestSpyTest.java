@@ -7,9 +7,10 @@ import org.junit.Test;
 
 public class RequestSpyTest {
 
-  @Test @Ignore
+  @Test
+  @Ignore
   public void test() {
-    RequestSpy rs = new RequestSpy("www.google.com", 80);
+    final RequestSpy rs = new RequestSpy("www.google.com", 80);
     assertTrue(rs.spyRequest("GET / HTTP/1.1").startsWith("HTTP/1.1 200 OK"));
   }
 

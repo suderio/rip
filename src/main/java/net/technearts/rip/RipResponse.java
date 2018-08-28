@@ -21,7 +21,8 @@ class RipResponse {
     this.contentType = contentType;
   }
 
-  public RipResponse(final String body, final int status, final String contentType) {
+  public RipResponse(final String body, final int status,
+      final String contentType) {
     content = body;
     this.status = status;
     this.contentType = contentType;

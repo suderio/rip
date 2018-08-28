@@ -12,21 +12,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class RequestSpy {
-  private static final Logger logger = LoggerFactory.getLogger(RequestSpy.class);
-  private String host;
-  private int port;
+  private static final Logger logger = LoggerFactory
+      .getLogger(RequestSpy.class);
 
-  public RequestSpy(String host, int port) {
-    this.host = host;
-    this.port = port;
-  }
-
-  public final String spyRequest(String req) {
-    return spyRequest(host, port, req);
-  }
-
-  public static final String spyRequest(String host, int port, String req) {
-    StringBuilder result = new StringBuilder();
+  public static final String spyRequest(final String host, final int port,
+      final String req) {
+    final StringBuilder result = new StringBuilder();
     try (Socket socket = new Socket(host, port);
         BufferedWriter out = new BufferedWriter(
             new OutputStreamWriter(socket.getOutputStream(), "UTF8"));
@@ -38,7 +29,7 @@ public class RequestSpy {
       while ((line = lin.readLine()) != null) {
         try {
           out.write(line + "\r\n");
-        } catch (IOException e) {
+        } catch (final IOException e) {
           logger.error(
               "Erro ao enviar request para o socket em " + host + ":" + port,
               e);
@@ -52,9 +43,22 @@ public class RequestSpy {
         result.append(line);
       }
       logger.info(result.toString());
-    } catch (IOException e) {
+    } catch (final IOException e) {
       logger.error("Erro ao espionar o request em " + host + ":" + port, e);
     }
     return result.toString();
+  }
+
+  private final String host;
+
+  private final int port;
+
+  public RequestSpy(final String host, final int port) {
+    this.host = host;
+    this.port = port;
+  }
+
+  public final String spyRequest(final String req) {
+    return spyRequest(host, port, req);
   }
 }

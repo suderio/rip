@@ -58,7 +58,7 @@ public class HttpRequestParser {
 
   /**
    * O método http.
-   * 
+   *
    * @return o método http chamado.
    */
   public HttpMethod getMethod() {
@@ -82,7 +82,7 @@ public class HttpRequestParser {
 
   /**
    * A URL.
-   * 
+   *
    * @return a URL da requisição.
    */
   public URL getUrl() {

@@ -29,7 +29,7 @@ public class Cli {
   }
 
   /**
-   * 
+   *
    * @param args parâmetros de linha de comando.
    * @throws ParseException se os parâmetros estiverem errados.
    */

@@ -102,10 +102,10 @@ public class RipResponseBuilder {
           attributes.put(f.getKey(), f.getValue().apply(req));
         }
         if (response.getContentType() != null) {
-        	res.header("Content-Type", response.getContentType());
-          } else {
-        	res.header("Content-Type", "text/plain");
-          }
+          res.header("Content-Type", response.getContentType());
+        } else {
+          res.header("Content-Type", "text/plain");
+        }
         result = new ModelAndView(attributes, response.getContent());
       } else {
         res.status(NOT_FOUND_404);
@@ -130,9 +130,9 @@ public class RipResponseBuilder {
   /**
    * Cria uma resposta utilizando um arquivo de template, substituindo as
    * variáveis no arquivo pelo resultado de cada aplicação da função.
-   * 
+   *
    * O mapa é alterado através de um <code>Consumer</code> para conveniência
-   * 
+   *
    * @param template  o arquivo de template
    * @param consumers lista de alterações ao mapa de variáveis X funções
    */
@@ -141,31 +141,26 @@ public class RipResponseBuilder {
       final Consumer<Map<String, Function<Request, String>>>... consumers) {
     buildResponse(template, OK_200, consumers);
   }
-  
+
   @SafeVarargs
-public final void buildResponse(final String template, final String contentType,
-	final Consumer<Map<String, Function<Request, String>>>... consumers) {
-	buildResponse(template, OK_200, contentType, consumers);
-  }
-  
-  @SafeVarargs
-public final void buildResponse(final String template, final int status,
-	      final Consumer<Map<String, Function<Request, String>>>... consumers) {
-	  buildResponse(template, status, null, consumers);
+  public final void buildResponse(final String template, final int status,
+      final Consumer<Map<String, Function<Request, String>>>... consumers) {
+    buildResponse(template, status, null, consumers);
   }
 
   /**
    * Cria uma resposta utilizando um arquivo de template, substituindo as
    * variáveis no arquivo pelo resultado de cada aplicação da função.
-   * 
+   *
    * O mapa é alterado através de um <code>Consumer</code> para conveniência
-   * 
+   *
    * @param template  o arquivo de template
    * @param status    o status de retorno
    * @param consumers lista de alterações ao mapa de variáveis X funções
    */
   @SafeVarargs
-  public final void buildResponse(final String template, final int status, final String contentType,
+  public final void buildResponse(final String template, final int status,
+      final String contentType,
       final Consumer<Map<String, Function<Request, String>>>... consumers) {
     final Map<String, Function<Request, String>> attributes = new HashMap<>();
     for (final Consumer<Map<String, Function<Request, String>>> consumer : consumers) {
@@ -177,17 +172,19 @@ public final void buildResponse(final String template, final int status,
   /**
    * Cria uma resposta utilizando um arquivo de template, substituindo as
    * variáveis no arquivo pelo resultado de cada aplicação da função.
-   * 
+   *
    * @param template   o arquivo de template
    * @param status     o status de retorno
    * @param attributes lista de alterações ao mapa de variáveis X funções
    */
-  public final void buildResponse(final String template, final int status, final String contentType,
+  public final void buildResponse(final String template, final int status,
+      final String contentType,
       final Map<String, Function<Request, String>> attributes) {
     if (condition == null) {
       condition = s -> true;
     }
-    final RipResponse res = new RipResponse(attributes, template, status, contentType);
+    final RipResponse res = new RipResponse(attributes, template, status,
+        contentType);
     CONDITIONS.get(route).put(condition, res);
     route.createTemplateMethod();
   }
@@ -195,7 +192,7 @@ public final void buildResponse(final String template, final int status,
   /**
    * Cria uma resposta utilizando um arquivo de template, substituindo as
    * variáveis no arquivo pelo resultado de cada aplicação da função.
-   * 
+   *
    * @param template   o arquivo de template
    * @param attributes lista de alterações ao mapa de variáveis X funções
    */
@@ -203,10 +200,18 @@ public final void buildResponse(final String template, final int status,
       final Map<String, Function<Request, String>> attributes) {
     buildResponse(template, OK_200, null, attributes);
   }
-  
-  public final void buildResponse(final String template, final String contentType,
-	final Map<String, Function<Request, String>> attributes) {
-	buildResponse(template, OK_200, contentType, attributes);
+
+  @SafeVarargs
+  public final void buildResponse(final String template,
+      final String contentType,
+      final Consumer<Map<String, Function<Request, String>>>... consumers) {
+    buildResponse(template, OK_200, contentType, consumers);
+  }
+
+  public final void buildResponse(final String template,
+      final String contentType,
+      final Map<String, Function<Request, String>> attributes) {
+    buildResponse(template, OK_200, contentType, attributes);
   }
 
   /**
@@ -248,7 +253,7 @@ public final void buildResponse(final String template, final int status,
     return this;
   }
 
-  private String contentType(byte[] stream) {
+  private String contentType(final byte[] stream) {
     MagicMatch match = null;
     try {
       match = Magic.getMagicMatch(stream, false);
@@ -260,6 +265,18 @@ public final void buildResponse(final String template, final int status,
       return "text/html;charset=utf-8";
     }
     return match.getMimeType();
+  }
+
+  /**
+   * Cria um log dos objetos Request/Response na chamada ao Route. Várias
+   * chamadas ao método apenas substituem o log criado anteriormente.
+   *
+   * @param f a Função que irá retornar a mensagem de log
+   * @return this
+   */
+  public RipResponseBuilder log(final BiFunction<Request, Response, String> f) {
+    LOGS.put(route, f);
+    return this;
   }
 
   /**
@@ -313,18 +330,6 @@ public final void buildResponse(final String template, final int status,
   }
 
   /**
-   * Cria um log dos objetos Request/Response na chamada ao Route. Várias
-   * chamadas ao método apenas substituem o log criado anteriormente.
-   * 
-   * @param f a Função que irá retornar a mensagem de log
-   * @return this
-   */
-  public RipResponseBuilder log(BiFunction<Request, Response, String> f) {
-    LOGS.put(this.route, f);
-    return this;
-  }
-
-  /**
    * Cria uma resposta com o conteúdo do arquivo informado. Essa é uma operação
    * terminal.
    *
@@ -346,17 +351,18 @@ public final void buildResponse(final String template, final int status,
   public void respond(final Path withFile, final int status) {
     respond(withFile, status, null);
   }
-  
-  public void respond(final Path withFile, String contentType) {
-    respond(withFile, OK_200, contentType);
-  }
-  
-  public void respond(final Path withFile, final int status, String contentType) {
+
+  public void respond(final Path withFile, final int status,
+      final String contentType) {
     try {
-	  respond(new String(Files.readAllBytes(withFile)), status, contentType);
-	} catch (final IOException e) {
-	  respond("Arquivo não encontrado.", NOT_FOUND_404);
-	}
+      respond(new String(Files.readAllBytes(withFile)), status, contentType);
+    } catch (final IOException e) {
+      respond("Arquivo não encontrado.", NOT_FOUND_404);
+    }
+  }
+
+  public void respond(final Path withFile, final String contentType) {
+    respond(withFile, OK_200, contentType);
   }
 
   /**
@@ -368,10 +374,6 @@ public final void buildResponse(final String template, final int status,
   public void respond(final String response) {
     respond(response, OK_200);
   }
-  
-  public void respond(final String response, String contentType) {
-	    respond(response, OK_200, contentType);
-	  }
 
   /**
    * Cria uma resposta com o conteúdo do arquivo informado, retornando o
@@ -381,16 +383,21 @@ public final void buildResponse(final String template, final int status,
    * @param status   o status de retorno
    */
   public void respond(final String response, final int status) {
-	respond(response, status, null);
+    respond(response, status, null);
   }
-  
-  public void respond(final String response, final int status, final String contentType) {
-	if (condition == null) {
-	  condition = s -> true;
-	}
-	final RipResponse res = new RipResponse(response, status, contentType);
-	CONDITIONS.get(route).put(condition, res);
-	route.createMethod();
+
+  public void respond(final String response, final int status,
+      final String contentType) {
+    if (condition == null) {
+      condition = s -> true;
+    }
+    final RipResponse res = new RipResponse(response, status, contentType);
+    CONDITIONS.get(route).put(condition, res);
+    route.createMethod();
+  }
+
+  public void respond(final String response, final String contentType) {
+    respond(response, OK_200, contentType);
   }
 
   private void updateConditions(final Predicate<Request> newCondition) {
