@@ -147,7 +147,7 @@
 				</plugin>
 				<plugin>
 					<artifactId>maven-compiler-plugin</artifactId>
-					<version>3.7.0</version>
+					<version>3.8.0</version>
 				</plugin>
 				<plugin>
 					<artifactId>maven-deploy-plugin</artifactId>
@@ -226,7 +226,7 @@
 				<plugin>
 					<groupId>org.openclover</groupId>
 					<artifactId>clover-maven-plugin</artifactId>
-					<version>4.2.1</version>
+					<version>4.3.0</version>
 				</plugin>
 				<plugin>
 					<artifactId>maven-checkstyle-plugin</artifactId>

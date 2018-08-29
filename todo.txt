@@ -1,0 +1,10 @@
+(B) Tratar charsets
+(A) Finalizar versão autocloseable
+(C) Melhorar cobertura de testes
+(C) Criar exemplo de template com conteúdo do body
+(B) Criar ação de log para uma rota
+(C) Alterar SṕyRequest para usar http
+(D) Corrigir leitura de strings usando encoding correto
+(D) Tratar logs do spark para não serem exibidos
+(C) Refactoring do RipResponseBuilder
+(E) launch4j para gerar executáveis

@@ -1,6 +1,0 @@
-(B) Tratar charsets
-(C) Finalizar versão autocloseable
-(C) Melhorar cobertura de testes
-(C) Criar exemplo de template com conteúdo do body
-(D) Alterar magic.xml do uber jar (tem que substituir o do jmimemagic) (usar maven-shade-plugin)
-(C) Alterar SṕyRequest para usar http
