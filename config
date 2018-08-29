@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<launch4jConfig>
+  <dontWrapJar>false</dontWrapJar>
+  <headerType>console</headerType>
+  <jar>target/rip-0.1.0-SNAPSHOT-shade.jar</jar>
+  <outfile>/home/paulo/Repos/technearts/rip/target/rip.exe</outfile>
+  <errTitle>RIP</errTitle>
+  <priority>normal</priority>
+  <stayAlive>false</stayAlive>
+  <restartOnCrash>false</restartOnCrash>
+  <classPath>
+    <mainClass>net.technearts.rip.Cli</mainClass>
+  </classPath>
+  <jre>
+    <path>/usr/lib/jvm/java-8-oracle</path>
+    <bundledJre64Bit>true</bundledJre64Bit>
+    <bundledJreAsFallback>false</bundledJreAsFallback>
+    <minVersion>1.8.0</minVersion>
+    <opt>-Djava.endorsed.dirs=./endorsed</opt>
+  </jre>
+  <versionInfo>
+    <fileVersion>1.2.3.4</fileVersion>
+    <txtFileVersion>txt file version?</txtFileVersion>
+    <fileDescription>a description</fileDescription>
+    <copyright>my copyright</copyright>
+    <productVersion>4.3.2.1</productVersion>
+    <txtProductVersion>txt product version</txtProductVersion>
+    <productName>E-N-C-C</productName>
+    <internalName>ccne</internalName>
+    <originalFilename>original.exe</originalFilename>
+    <language>ENGLISH_US</language>
+  </versionInfo>
+</launch4jConfig>
