@@ -14,12 +14,11 @@ import org.slf4j.LoggerFactory;
 public class Cli {
   private static final Logger logger = LoggerFactory.getLogger(Cli.class);
 
-  private static CommandLine commandLine(final String... args)
-      throws ParseException {
+  private static CommandLine commandLine(final String... args) throws ParseException {
     final CommandLineParser parser = new DefaultParser();
     final Options options = new Options();
-    options.addOption(Option.builder("w").longOpt("workDir")
-        .desc("Working Directory").hasArg().build());
+    options.addOption(
+        Option.builder("w").longOpt("workDir").desc("Working Directory").hasArg().build());
     try {
       return parser.parse(options, args);
     } catch (final ParseException ex) {

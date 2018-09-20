@@ -12,17 +12,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class RequestSpy {
-  private static final Logger logger = LoggerFactory
-      .getLogger(RequestSpy.class);
+  private static final Logger logger = LoggerFactory.getLogger(RequestSpy.class);
 
-  public static final String spyRequest(final String host, final int port,
-      final String req) {
+  public static final String spyRequest(final String host, final int port, final String req) {
     final StringBuilder result = new StringBuilder();
     try (Socket socket = new Socket(host, port);
-        BufferedWriter out = new BufferedWriter(
-            new OutputStreamWriter(socket.getOutputStream(), "UTF8"));
-        BufferedReader in = new BufferedReader(
-            new InputStreamReader(socket.getInputStream()));
+        BufferedWriter out =
+            new BufferedWriter(new OutputStreamWriter(socket.getOutputStream(), "UTF8"));
+        BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
         BufferedReader lin = new BufferedReader(new StringReader(req));) {
       logger.info(req);
       String line = null;
@@ -30,9 +27,7 @@ public class RequestSpy {
         try {
           out.write(line + "\r\n");
         } catch (final IOException e) {
-          logger.error(
-              "Erro ao enviar request para o socket em " + host + ":" + port,
-              e);
+          logger.error("Erro ao enviar request para o socket em " + host + ":" + port, e);
         }
       }
       out.write("\r\n");

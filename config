@@ -2,8 +2,8 @@
 <launch4jConfig>
   <dontWrapJar>false</dontWrapJar>
   <headerType>console</headerType>
-  <jar>target/rip-0.1.0-SNAPSHOT-shade.jar</jar>
-  <outfile>/home/paulo/Repos/technearts/rip/target/rip.exe</outfile>
+  <jar>target\rip-0.1.0-SNAPSHOT-shade.jar</jar>
+  <outfile>D:\repos\rip\target\rip.exe</outfile>
   <errTitle>RIP</errTitle>
   <priority>normal</priority>
   <stayAlive>false</stayAlive>
@@ -12,7 +12,7 @@
     <mainClass>net.technearts.rip.Cli</mainClass>
   </classPath>
   <jre>
-    <path>/usr/lib/jvm/java-8-oracle</path>
+    <path>C:\Java\jdk1.8.0</path>
     <bundledJre64Bit>true</bundledJre64Bit>
     <bundledJreAsFallback>false</bundledJreAsFallback>
     <minVersion>1.8.0</minVersion>

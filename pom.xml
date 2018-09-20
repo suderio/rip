@@ -265,6 +265,14 @@
 						<xmlOutputDirectory>target/site</xmlOutputDirectory>
 					</configuration>
 				</plugin>
+				<plugin>
+					<groupId>net.revelc.code.formatter</groupId>
+					<artifactId>formatter-maven-plugin</artifactId>
+					<version>2.7.5</version>
+					<configuration>
+						<configFile>${project.basedir}/eclipse-java-google-style.xml</configFile>
+					</configuration>
+				</plugin>
 			</plugins>
 		</pluginManagement>
 		<plugins>
@@ -279,6 +287,17 @@
 						</manifest>
 					</archive>
 				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>net.revelc.code.formatter</groupId>
+				<artifactId>formatter-maven-plugin</artifactId>
+				<executions>
+					<execution>
+						<goals>
+							<goal>format</goal>
+						</goals>
+					</execution>
+				</executions>
 			</plugin>
 			<plugin>
 				<artifactId>maven-shade-plugin</artifactId>
@@ -305,6 +324,7 @@
 			<plugin>
 				<groupId>com.akathist.maven.plugins.launch4j</groupId>
 				<artifactId>launch4j-maven-plugin</artifactId>
+				<version>1.7.23</version>
 				<executions>
 					<execution>
 						<id>l4j-cli</id>

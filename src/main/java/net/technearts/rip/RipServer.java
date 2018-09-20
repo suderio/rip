@@ -18,9 +18,9 @@ import com.google.common.collect.ComparisonChain;
 import spark.Service;
 
 /**
- * Servidor Rip rodando em um Jetty, para criação de serviços rest (ou qualquer
- * requisição http) a serem usados para mocks de serviços reais. Os serviços
- * respondem com base apenas no conteúdo do body da requisição.
+ * Servidor Rip rodando em um Jetty, para criação de serviços rest (ou qualquer requisição http) a
+ * serem usados para mocks de serviços reais. Os serviços respondem com base apenas no conteúdo do
+ * body da requisição.
  */
 public class RipServer implements Comparable<RipServer>, AutoCloseable {
   private static final Logger logger = LoggerFactory.getLogger(RipServer.class);
@@ -48,7 +48,7 @@ public class RipServer implements Comparable<RipServer>, AutoCloseable {
   /**
    * Cria um RipServer na porta <code>port</code>
    *
-   * @param port     a porta do servidor
+   * @param port a porta do servidor
    * @param location o local dos arquivos
    * @return Um RipRoute para criação das rotas
    */
@@ -99,8 +99,7 @@ public class RipServer implements Comparable<RipServer>, AutoCloseable {
 
   @Override
   public void close() throws Exception {
-    instance.values().stream().parallel()
-        .forEach(server -> server.service.stop());
+    instance.values().stream().parallel().forEach(server -> server.service.stop());
     instance.clear();
 
   }
@@ -126,8 +125,7 @@ public class RipServer implements Comparable<RipServer>, AutoCloseable {
 
   void reset() {
     logger.info("Apagando rotas no servidor local na porta {}", port);
-    ofNullable(instance.remove(port))
-        .ifPresent(server -> server.service.stop());
+    ofNullable(instance.remove(port)).ifPresent(server -> server.service.stop());
     logger.info("Recriando servidor local na porta {} sem rotas", port);
     instance.put(port, new RipServer(port, location));
   }

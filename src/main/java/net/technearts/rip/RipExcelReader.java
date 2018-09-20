@@ -18,8 +18,8 @@ import com.fasterxml.jackson.core.JsonGenerator;
 
 public class RipExcelReader {
 
-  public static RipExcelReader setIO(final InputStream in,
-      final OutputStream out) throws IOException {
+  public static RipExcelReader setIO(final InputStream in, final OutputStream out)
+      throws IOException {
     final RipExcelReader result = new RipExcelReader();
     result.workbook = new XSSFWorkbook(in);
     result.out = out;

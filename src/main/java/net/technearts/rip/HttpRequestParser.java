@@ -22,14 +22,12 @@ public class HttpRequestParser {
     msgBody = new StringBuilder();
   }
 
-  private void appendHeaderParameter(final String header)
-      throws HttpFormatException {
+  private void appendHeaderParameter(final String header) throws HttpFormatException {
     final int idx = header.indexOf(':');
     if (idx == -1) {
       throw new HttpFormatException("Invalid Header Parameter: " + header);
     }
-    reqHeaders.put(header.substring(0, idx),
-        header.substring(idx + 1, header.length()));
+    reqHeaders.put(header.substring(0, idx), header.substring(idx + 1, header.length()));
   }
 
   private void appendMessageBody(final String bodyLine) {
@@ -47,8 +45,8 @@ public class HttpRequestParser {
   }
 
   /**
-   * Corpo da mensagem (body). Ver diferença entre corpo da mensagem e corpo da
-   * entidade (seção 14.41)
+   * Corpo da mensagem (body). Ver diferença entre corpo da mensagem e corpo da entidade (seção
+   * 14.41)
    *
    * @return o corpo da mensagem
    */
@@ -62,8 +60,7 @@ public class HttpRequestParser {
    * @return o método http chamado.
    */
   public HttpMethod getMethod() {
-    final HttpMethod method = HttpMethod
-        .fromString(getRequestLine().split(" ")[0]);
+    final HttpMethod method = HttpMethod.fromString(getRequestLine().split(" ")[0]);
     if (method == null) {
       throw new IllegalArgumentException();
     }
@@ -71,8 +68,8 @@ public class HttpRequestParser {
   }
 
   /**
-   * Seção 5.1: a linha da requisição começar com o método, seguido da URI e
-   * versão do protocolo, terminando com CRLF.
+   * Seção 5.1: a linha da requisição começar com o método, seguido da URI e versão do protocolo,
+   * terminando com CRLF.
    *
    * @return a linha da requisição.
    */
@@ -101,11 +98,10 @@ public class HttpRequestParser {
    * Parse da requisição.
    *
    * @param reader Um objeto reader com a requisição.
-   * @throws IOException         Qualquer erro de leitura.
+   * @throws IOException Qualquer erro de leitura.
    * @throws HttpFormatException Qualquer erro de formato
    */
-  public void parseRequest(final BufferedReader reader)
-      throws IOException, HttpFormatException {
+  public void parseRequest(final BufferedReader reader) throws IOException, HttpFormatException {
     setRequestLine(reader.readLine());
     String header = reader.readLine();
     while (header != null && header.length() > 0) {
@@ -123,16 +119,14 @@ public class HttpRequestParser {
    * Parse da requisição.
    *
    * @param request A requisição http.
-   * @throws IOException         Qualquer erro de leitura.
+   * @throws IOException Qualquer erro de leitura.
    * @throws HttpFormatException Qualquer erro de formato
    */
-  public void parseRequest(final String request)
-      throws IOException, HttpFormatException {
+  public void parseRequest(final String request) throws IOException, HttpFormatException {
     parseRequest(new BufferedReader(new StringReader(request)));
   }
 
-  private void setRequestLine(final String requestLine)
-      throws HttpFormatException {
+  private void setRequestLine(final String requestLine) throws HttpFormatException {
     if (requestLine == null || requestLine.length() == 0) {
       throw new HttpFormatException("Invalid Request-Line: " + requestLine);
     }
