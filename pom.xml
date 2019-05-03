@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>net.technearts</groupId>
@@ -49,6 +47,7 @@
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<maven.compiler.target>1.8</maven.compiler.target>
 		<project.scm.id>github</project.scm.id>
@@ -56,81 +55,207 @@
 		<dependency.locations.enabled>false</dependency.locations.enabled>
 	</properties>
 
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>com.sparkjava</groupId>
+				<artifactId>spark-core</artifactId>
+				<version>2.7.2</version>
+			</dependency>
+			<dependency>
+				<groupId>org.slf4j</groupId>
+				<artifactId>slf4j-api</artifactId>
+				<version>1.7.25</version>
+			</dependency>
+			<dependency>
+				<groupId>commons-cli</groupId>
+				<artifactId>commons-cli</artifactId>
+				<version>1.4</version>
+			</dependency>
+			<dependency>
+				<groupId>com.fasterxml.jackson.core</groupId>
+				<artifactId>jackson-core</artifactId>
+				<version>2.9.6</version>
+			</dependency>
+			<dependency>
+				<groupId>com.google.guava</groupId>
+				<artifactId>guava</artifactId>
+				<version>26.0-jre</version>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.poi</groupId>
+				<artifactId>poi-ooxml</artifactId>
+				<version>3.17</version>
+			</dependency>
+			<dependency>
+				<groupId>com.sparkjava</groupId>
+				<artifactId>spark-template-freemarker</artifactId>
+				<version>2.7.1</version>
+			</dependency>
+			<dependency>
+				<groupId>net.sf.jmimemagic</groupId>
+				<artifactId>jmimemagic</artifactId>
+				<version>0.1.5</version>
+			</dependency>
+			<dependency>
+				<groupId>org.projectlombok</groupId>
+				<artifactId>lombok</artifactId>
+				<version>1.18.0</version>
+				<scope>provided</scope>
+			</dependency>
+			<dependency>
+				<groupId>org.slf4j</groupId>
+				<artifactId>slf4j-log4j12</artifactId>
+				<version>1.7.25</version>
+				<scope>test</scope>
+			</dependency>
+			<dependency>
+				<groupId>log4j</groupId>
+				<artifactId>log4j</artifactId>
+				<version>1.2.17</version>
+				<scope>test</scope>
+			</dependency>
+			<dependency>
+				<groupId>io.rest-assured</groupId>
+				<artifactId>rest-assured</artifactId>
+				<version>3.1.1</version>
+				<scope>test</scope>
+			</dependency>
+			<dependency>
+				<groupId>junit</groupId>
+				<artifactId>junit</artifactId>
+				<version>4.12</version>
+				<scope>test</scope>
+			</dependency>
+			<!-- dependências que foram identificadas pelo dependency analyzer -->
+			<dependency>
+				<groupId>org.apache.poi</groupId>
+				<artifactId>poi</artifactId>
+				<version>3.17</version>
+			</dependency>
+			<dependency>
+				<groupId>org.hamcrest</groupId>
+				<artifactId>hamcrest-core</artifactId>
+				<version>1.3</version>
+				<scope>test</scope>
+			</dependency>
+			<dependency>
+				<groupId>javax.servlet</groupId>
+				<artifactId>javax.servlet-api</artifactId>
+				<version>3.1.0</version>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.httpcomponents</groupId>
+				<artifactId>httpcore</artifactId>
+				<version>4.4.6</version>
+				<scope>test</scope>
+			</dependency>
+			<dependency>
+				<groupId>commons-logging</groupId>
+				<artifactId>commons-logging</artifactId>
+				<version>1.0.4</version>
+			</dependency>
+			<dependency>
+				<groupId>org.freemarker</groupId>
+				<artifactId>freemarker</artifactId>
+				<version>2.3.26-incubating</version>
+			</dependency>
+			<dependency>
+				<groupId>org.eclipse.jetty</groupId>
+				<artifactId>jetty-http</artifactId>
+				<version>9.4.8.v20171121</version>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+
 	<dependencies>
 		<dependency>
 			<groupId>com.sparkjava</groupId>
 			<artifactId>spark-core</artifactId>
-			<version>2.7.2</version>
 		</dependency>
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-api</artifactId>
-			<version>1.7.25</version>
 		</dependency>
 		<dependency>
 			<groupId>commons-cli</groupId>
 			<artifactId>commons-cli</artifactId>
-			<version>1.4</version>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.commons</groupId>
-			<artifactId>commons-lang3</artifactId>
-			<version>3.8</version>
 		</dependency>
 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
 			<artifactId>jackson-core</artifactId>
-			<version>2.9.6</version>
 		</dependency>
 		<dependency>
 			<groupId>com.google.guava</groupId>
 			<artifactId>guava</artifactId>
-			<version>26.0-jre</version>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.poi</groupId>
 			<artifactId>poi-ooxml</artifactId>
-			<version>3.17</version>
 		</dependency>
 		<dependency>
 			<groupId>com.sparkjava</groupId>
 			<artifactId>spark-template-freemarker</artifactId>
-			<version>2.7.1</version>
 		</dependency>
 		<dependency>
 			<groupId>net.sf.jmimemagic</groupId>
 			<artifactId>jmimemagic</artifactId>
-			<version>0.1.5</version>
 		</dependency>
 		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
-			<version>1.18.0</version>
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-log4j12</artifactId>
-			<version>1.7.25</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>log4j</groupId>
 			<artifactId>log4j</artifactId>
-			<version>1.2.17</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>io.rest-assured</groupId>
 			<artifactId>rest-assured</artifactId>
-			<version>3.1.1</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
-			<version>4.12</version>
 			<scope>test</scope>
+		</dependency>
+		<!-- dependências que foram identificadas pelo dependency analyzer -->
+		<dependency>
+			<groupId>org.apache.poi</groupId>
+			<artifactId>poi</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.hamcrest</groupId>
+			<artifactId>hamcrest-core</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>javax.servlet-api</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.httpcomponents</groupId>
+			<artifactId>httpcore</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>commons-logging</groupId>
+			<artifactId>commons-logging</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.freemarker</groupId>
+			<artifactId>freemarker</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.eclipse.jetty</groupId>
+			<artifactId>jetty-http</artifactId>
 		</dependency>
 	</dependencies>
 
@@ -231,20 +356,17 @@
 				<plugin>
 					<artifactId>maven-checkstyle-plugin</artifactId>
 					<version>3.0.0</version>
-					<configuration>
-						<configLocation>google_checks.xml</configLocation>
-					</configuration>
+					<dependencies>
+						<dependency>
+							<groupId>com.puppycrawl.tools</groupId>
+							<artifactId>checkstyle</artifactId>
+							<version>8.20</version>
+						</dependency>
+					</dependencies>
 				</plugin>
 				<plugin>
 					<artifactId>maven-pmd-plugin</artifactId>
 					<version>3.10.0</version>
-					<configuration>
-						<!-- Erro no pmd -->
-						<excludes>
-							<exclude>net/technearts/rip/RipResponse.java</exclude>
-							<exclude>net/technearts/rip/RipResponseBuilder.java</exclude>
-						</excludes>
-					</configuration>
 				</plugin>
 				<plugin>
 					<groupId>org.codehaus.mojo</groupId>
@@ -260,22 +382,43 @@
 					<groupId>org.codehaus.mojo</groupId>
 					<artifactId>findbugs-maven-plugin</artifactId>
 					<version>3.0.5</version>
-					<configuration>
-						<xmlOutput>true</xmlOutput>
-						<xmlOutputDirectory>target/site</xmlOutputDirectory>
-					</configuration>
 				</plugin>
 				<plugin>
 					<groupId>net.revelc.code.formatter</groupId>
 					<artifactId>formatter-maven-plugin</artifactId>
 					<version>2.7.5</version>
-					<configuration>
-						<configFile>${project.basedir}/eclipse-java-google-style.xml</configFile>
-					</configuration>
+				</plugin>
+				<plugin>
+					<groupId>org.jacoco</groupId>
+					<artifactId>jacoco-maven-plugin</artifactId>
+					<version>0.8.3</version>
+				</plugin>
+				<plugin>
+					<artifactId>maven-failsafe-plugin</artifactId>
+					<version>3.0.0-M1</version>
+				</plugin>
+				<plugin>
+					<artifactId>maven-enforcer-plugin</artifactId>
+					<version>1.2</version>
+				</plugin>
+				<plugin>
+					<groupId>pl.project13.maven</groupId>
+					<artifactId>git-commit-id-plugin</artifactId>
+					<version>3.0.0</version>
 				</plugin>
 			</plugins>
 		</pluginManagement>
+		
 		<plugins>
+			<plugin>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<optimize>true</optimize>
+					<debug>true</debug>
+					<showDeprecation>false</showDeprecation>
+					<showWarnings>false</showWarnings>
+				</configuration>
+			</plugin>
 			<plugin>
 				<artifactId>maven-jar-plugin</artifactId>
 				<configuration>
@@ -284,13 +427,25 @@
 							<addClasspath>true</addClasspath>
 							<mainClass>net.technearts.rip.Cli</mainClass>
 							<classpathPrefix>dependency-jars/</classpathPrefix>
+							<addDefaultImplementationEntries>true</addDefaultImplementationEntries>
+							<addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>
 						</manifest>
+						<manifestEntries>
+							<Specification-Title>${project.name}</Specification-Title>
+							<Specification-Version>${project.version}</Specification-Version>
+							<Implementation-Title>${project.groupId}.${project.artifactId}</Implementation-Title>
+							<Implementation-Build-Time>${maven.build.timestamp}</Implementation-Build-Time>
+							<X-Git-SHA-1>${git.commit.id.abbrev}</X-Git-SHA-1>
+						</manifestEntries>
 					</archive>
 				</configuration>
 			</plugin>
 			<plugin>
 				<groupId>net.revelc.code.formatter</groupId>
 				<artifactId>formatter-maven-plugin</artifactId>
+				<configuration>
+					<configFile>${project.basedir}/eclipse-java-google-style.xml</configFile>
+				</configuration>
 				<executions>
 					<execution>
 						<goals>
@@ -311,64 +466,180 @@
 							<shadedArtifactAttached>true</shadedArtifactAttached>
 							<minimizeJar>true</minimizeJar>
 							<shadedClassifierName>shade</shadedClassifierName>
+							<createDependencyReducedPom>false</createDependencyReducedPom>
 							<transformers>
-								<transformer
-									implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+								<transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
 									<mainClass>br.gov.bndes.apa2ope.Processador</mainClass>
+									<manifestEntries>
+										<Specification-Title>${project.name} Fat Jar</Specification-Title>
+										<Specification-Version>${project.version}</Specification-Version>
+										<Implementation-Title>${project.groupId}.${project.artifactId}</Implementation-Title>
+									</manifestEntries>
+								</transformer>
+								<transformer implementation="org.apache.maven.plugins.shade.resource.ApacheLicenseResourceTransformer"></transformer>
+								<transformer implementation="org.apache.maven.plugins.shade.resource.ApacheNoticeResourceTransformer">
+									<addHeader>true</addHeader>
 								</transformer>
 							</transformers>
+							<filters>
+								<filter>
+									<artifact>*:*</artifact>
+									<excludes>
+										<exclude>META-INF/*.SF</exclude>
+										<exclude>META-INF/*.DSA</exclude>
+										<exclude>META-INF/*.RSA</exclude>
+									</excludes>
+								</filter>
+							</filters>
 						</configuration>
 					</execution>
 				</executions>
 			</plugin>
 			<plugin>
-				<groupId>com.akathist.maven.plugins.launch4j</groupId>
-				<artifactId>launch4j-maven-plugin</artifactId>
-				<version>1.7.23</version>
+				<groupId>org.jacoco</groupId>
+				<artifactId>jacoco-maven-plugin</artifactId>
 				<executions>
 					<execution>
-						<id>l4j-cli</id>
-						<phase>package</phase>
+						<id>jacoco-initialize</id>
+						<phase>initialize</phase>
 						<goals>
-							<goal>launch4j</goal>
+							<goal>prepare-agent</goal>
+						</goals>
+					</execution>
+					<execution>
+						<id>jacoco-check</id>
+						<phase>test</phase>
+						<goals>
+							<goal>check</goal>
 						</goals>
 						<configuration>
-							<headerType>console</headerType>
-							<outfile>target/rip.exe</outfile>
-							<jar>target/${project.artifactId}-${project.version}-shade.jar</jar>
-							<errTitle>RIP</errTitle>
-							<configOutfile>config</configOutfile>
-							<saveConfig>true</saveConfig>
-							<classPath>
-								<mainClass>net.technearts.rip.Cli</mainClass>
-								<addDependencies>false</addDependencies>
-							</classPath>
-							<jre>
-								<bundledJre64Bit>true</bundledJre64Bit>
-								<path>${env.JAVA_HOME}</path>
-								<minVersion>1.8.0</minVersion>
-								<opts>
-									<opt>-Djava.endorsed.dirs=./endorsed</opt>
-								</opts>
-							</jre>
-							<versionInfo>
-								<fileVersion>1.2.3.4</fileVersion>
-								<txtFileVersion>txt file version?</txtFileVersion>
-								<fileDescription>a description</fileDescription>
-								<copyright>my copyright</copyright>
-								<productVersion>4.3.2.1</productVersion>
-								<txtProductVersion>txt product version</txtProductVersion>
-								<productName>E-N-C-C</productName>
-								<internalName>ccne</internalName>
-								<originalFilename>original.exe</originalFilename>
-							</versionInfo>
+							<rules>
+								<rule implementation="org.jacoco.maven.RuleConfiguration">
+									<element>BUNDLE</element>
+									<excludes>
+										<exclude>**/*Test.*</exclude>
+										<exclude>**/*Tests.*</exclude>
+									</excludes>
+									<limits>
+										<limit>
+											<counter>INSTRUCTION</counter>
+											<value>COVEREDRATIO</value>
+											<minimum>0.40</minimum>
+										</limit>
+									</limits>
+								</rule>
+							</rules>
 						</configuration>
+					</execution>
+					<execution>
+						<id>jacoco-site</id>
+						<phase>verify</phase>
+						<goals>
+							<goal>report</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<artifactId>maven-failsafe-plugin</artifactId>
+				<configuration>
+					<skip>false</skip>
+					<includes>
+						<include>**/*IT.*</include>
+					</includes>
+				</configuration>
+				<executions>
+					<execution>
+						<id>integration-test</id>
+						<goals>
+							<goal>integration-test</goal>
+							<goal>verify</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<artifactId>maven-enforcer-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>default-cli</id>
+						<goals>
+							<goal>enforce</goal>
+						</goals>
+						<configuration>
+							<rules>
+								<requireMavenVersion>
+									<version>3.5.0</version>
+								</requireMavenVersion>
+								<requireJavaVersion>
+									<version>1.8</version>
+								</requireJavaVersion>
+								<requireNoRepositories>
+									<!-- Define allowed repositories, use repo id -->
+									<allowedRepositories>
+										<id>bintray</id>
+										<id>spring-milestones</id>
+										<id>confluent</id>
+										<id>projectlombok.org</id>
+									</allowedRepositories>
+									<allowedPluginRepositories>
+										<id>bintray</id>
+										<id>spring-milestones</id>
+										<id>confluent</id>
+										<id>projectlombok.org</id>
+									</allowedPluginRepositories>
+								</requireNoRepositories>
+								<requireReleaseDeps>
+									<message>No Snapshots Allowed in releases!</message>
+									<onlyWhenRelease>true</onlyWhenRelease>
+								</requireReleaseDeps>
+							</rules>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<artifactId>maven-dependency-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>analyze</id>
+						<goals>
+							<goal>analyze-only</goal>
+						</goals>
+						<configuration>
+							<failOnWarning>true</failOnWarning>
+							<outputXML>true</outputXML>
+							<ignoredUnusedDeclaredDependencies>
+								<ignoredUnusedDeclaredDependency>org.projectlombok:lombok::</ignoredUnusedDeclaredDependency>
+								<ignoredUnusedDeclaredDependency>log4j:log4j:jar::</ignoredUnusedDeclaredDependency>
+								<ignoredUnusedDeclaredDependency>org.slf4j:slf4j-log4j12::</ignoredUnusedDeclaredDependency>
+							</ignoredUnusedDeclaredDependencies>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>pl.project13.maven</groupId>
+				<artifactId>git-commit-id-plugin</artifactId>
+				<configuration>
+					<useNativeGit>true</useNativeGit>
+					<injectAllReactorProjects>true</injectAllReactorProjects>
+					<generateGitPropertiesFile>true</generateGitPropertiesFile>
+					<generateGitPropertiesFilename>${project.build.outputDirectory}/git.properties</generateGitPropertiesFilename>
+					<failOnNoGitDirectory>false</failOnNoGitDirectory>
+				</configuration>
+				<executions>
+					<execution>
+						<id>get-the-git-infos</id>
+						<goals>
+							<goal>revision</goal>
+						</goals>
+						<phase>validate</phase>
 					</execution>
 				</executions>
 			</plugin>
 		</plugins>
 	</build>
-
 	<profiles>
 		<profile>
 			<id>release</id>
@@ -492,6 +763,14 @@
 					</plugin>
 					<plugin>
 						<artifactId>maven-surefire-report-plugin</artifactId>
+						<reportSets>
+							<reportSet>
+								<id>integration-tests</id>
+								<reports>
+									<report>failsafe-report-only</report>
+								</reports>
+							</reportSet>
+						</reportSets>
 					</plugin>
 					<plugin>
 						<groupId>org.openclover</groupId>
@@ -499,6 +778,10 @@
 					</plugin>
 					<plugin>
 						<artifactId>maven-checkstyle-plugin</artifactId>
+						<configuration>
+							<configLocation>google_checks.xml</configLocation>
+							<encoding>${project.build.sourceEncoding}</encoding>
+						</configuration>
 						<reportSets>
 							<reportSet>
 								<reports>
@@ -509,10 +792,21 @@
 					</plugin>
 					<plugin>
 						<artifactId>maven-pmd-plugin</artifactId>
+						<configuration>
+							<!-- Erro no pmd -->
+							<excludes>
+								<exclude>net/technearts/rip/RipResponse.java</exclude>
+								<exclude>net/technearts/rip/RipResponseBuilder.java</exclude>
+							</excludes>
+						</configuration>
 					</plugin>
 					<plugin>
 						<groupId>org.codehaus.mojo</groupId>
 						<artifactId>findbugs-maven-plugin</artifactId>
+						<configuration>
+							<xmlOutput>true</xmlOutput>
+							<xmlOutputDirectory>target/site</xmlOutputDirectory>
+						</configuration>
 					</plugin>
 					<plugin>
 						<groupId>org.owasp</groupId>

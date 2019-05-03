@@ -24,13 +24,13 @@ import net.sf.jmimemagic.MagicDetector;
  * @author $Author$
  * @version $Revision$
  */
-public class JsonFileDetector implements MagicDetector {
-  private static Log log = LogFactory.getLog(JsonFileDetector.class);
+public class RipJsonFileDetector implements MagicDetector {
+  private static Log log = LogFactory.getLog(RipJsonFileDetector.class);
 
   /**
    * Creates a new TextFileDetector object.
    */
-  public JsonFileDetector() {
+  public RipJsonFileDetector() {
     super();
   }
 
@@ -107,7 +107,7 @@ public class JsonFileDetector implements MagicDetector {
       }
       return new String[] {"application/json"};
     } catch (final IOException e) {
-      log.debug("JsonFileDetector: failed to process data");
+      log.debug("RipJsonFileDetector: failed to process data");
     }
     return null;
   }
@@ -136,7 +136,7 @@ public class JsonFileDetector implements MagicDetector {
         return process(b, offset, length, bitmask, comparator, mimeType, params);
       }
     } catch (final IOException e) {
-      log.info("JsonFileDetector: file " + file.getName());
+      log.info("RipJsonFileDetector: file " + file.getName());
     }
     return null;
   }

@@ -3546,7 +3546,7 @@
 	<mimetype>application/json</mimetype>
 	<extension></extension>
 	<description>JavaScript Object Notation data interchange format</description>
-	<test type="detector" offset="0" length="" bitmask="" comparator="=">net.sf.jmimemagic.detectors.JsonFileDetector</test>
+	<test type="detector" offset="0" length="" bitmask="" comparator="=">net.sf.jmimemagic.detectors.RipJsonFileDetector</test>
 </match>
 <match>
 	<mimetype>text/plain</mimetype>
