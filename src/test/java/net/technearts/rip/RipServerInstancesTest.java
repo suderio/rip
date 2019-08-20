@@ -28,19 +28,18 @@ public class RipServerInstancesTest {
   @Test
   public void resetTest() throws InterruptedException {
     localhost(7777).get("/test").respond("Ok");
-    when().get("/test").then().content(containsString("Ok"));
+    when().get("/test").then().body(containsString("Ok"));
     localhost(7777).reset();
     localhost(7777).get("/test2").respond("Ok");
     // TODO TRATAR ERRO ABAIXO
     localhost(8888).get("/").respond("");
     localhost(8888).reset();
-    when().get("/test2").then().content(containsString("Ok"));
+    when().get("/test2").then().body(containsString("Ok"));
     when().get("/test").then().statusCode(SC_NOT_FOUND);
   }
 
   public void tryResourcesTest() {
     try (RipRoute server = localhost(6666)) {
-
     }
   }
 
