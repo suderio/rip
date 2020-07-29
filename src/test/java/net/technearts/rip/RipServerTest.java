@@ -55,34 +55,34 @@ public class RipServerTest {
       given().body("something abcd xpto something...").when().delete("/test")
           .then().statusCode(SC_OK);
       given().body("something 987 something 789...").when().put("/test").then()
-          .content(containsString("789987"));
+          .body(containsString("789987"));
       given().body("teste1").when().post("/test").then()
-          .content(containsString("Ok"));
-      when().get("/test").then().content(containsString("Ok"));
+          .body(containsString("Ok"));
+      when().get("/test").then().body(containsString("Ok"));
     });
   }
 
   @Test
   public void testGet() {
-    when().get("/test").then().content(containsString("Ok"));
+    when().get("/test").then().body(containsString("Ok"));
   }
 
   @Test
   public void testPost() {
-    when().get("/test").then().content(containsString("Ok"));
+    when().get("/test").then().body(containsString("Ok"));
     given().body("teste1").when().post("/test").then()
-        .content(containsString("Ok"));
+        .body(containsString("Ok"));
     given().body("teste2 something xpto").when().post("/test").then()
-        .content(containsString("Ko"));
+        .body(containsString("Ko"));
   }
 
   @Test
   public void testPut() {
     given().body("something 123 something 456...").when().put("/test").then()
-        .content(containsString("123456"));
+        .body(containsString("123456"));
     given().body("something 987 something 789...").when().put("/test").then()
-        .content(containsString("789987"));
-    when().put("/test").then().content(containsString("Ok"));
+        .body(containsString("789987"));
+    when().put("/test").then().body(containsString("Ok"));
   }
 
 }

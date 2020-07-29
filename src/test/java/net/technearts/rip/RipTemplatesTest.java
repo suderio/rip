@@ -26,8 +26,8 @@ public class RipTemplatesTest {
 
   @Test
   public void testBasicTemplate() {
-    when().get("/test/0").then().content(containsString("xpto")).and()
-        .content(containsString("0"));
+    when().get("/test/0").then().body(containsString("xpto")).and()
+        .body(containsString("0"));
   }
 
 }
